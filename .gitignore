@@ -1,0 +1,50 @@
+# ─────────────────────────────
+# Backend (Python / uv)
+# ─────────────────────────────
+backend/.venv/
+**/__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# uv 캐시 (uv.lock, .python-version은 커밋해야 하므로 무시하지 않음)
+.uv/
+
+# ─────────────────────────────
+# Frontend (Node / Vite)
+# ─────────────────────────────
+node_modules/
+frontend/dist/
+frontend/.vite/
+*.local
+
+# 로그
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ─────────────────────────────
+# 환경 변수 (.env.example은 커밋)
+# ─────────────────────────────
+.env
+.env.local
+.env.*.local
+
+# ─────────────────────────────
+# OS
+# ─────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ─────────────────────────────
+# Editor / IDE
+# ─────────────────────────────
+.idea/
+*.swp
+
+# VS Code: 공유할 설정만 남기고 나머지는 무시
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
