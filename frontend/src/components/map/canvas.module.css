@@ -1,0 +1,32 @@
+.area {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: grab;
+}
+
+.dragging {
+  cursor: grabbing;
+}
+
+/* 1056×976 레이어를 영역 중앙에 */
+.layer {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1056px;
+  height: 976px;
+  margin-left: -528px;
+  margin-top: -488px;
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+
+.layer img {
+  width: 1056px;
+  height: 976px;
+  pointer-events: none;
+}
