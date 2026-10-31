@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "extract:maps": "node scripts/extract-map-data.mjs"
   },
   "dependencies": {
     "react": "^19.2.7",

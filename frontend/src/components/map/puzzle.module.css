@@ -1,0 +1,53 @@
+.svg {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+}
+
+.piece {
+  transition:
+    transform 300ms ease-out,
+    opacity 150ms;
+}
+
+.interactive {
+  cursor: pointer;
+  outline: none;
+}
+
+.zoomGroup {
+  transition: transform 400ms ease-out;
+}
+
+.fadeOut {
+  position: absolute;
+  inset: 0;
+  transition: opacity 300ms ease-out;
+}
+
+.labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.label {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  background: rgba(22, 27, 36, 0.8);
+  color: #eaeef5;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.4;
+  white-space: nowrap;
+  transition:
+    left 300ms ease-out,
+    top 300ms ease-out,
+    opacity 150ms;
+}
+
+.raised {
+  transform: translate(-50%, calc(-100% - 10px));
+}

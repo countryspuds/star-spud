@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef } from "react";
+import type { ComponentPropsWithRef } from "react";
 import styles from "./ui.module.css";
 
 type Variant = "solid" | "glass" | "light";
@@ -14,7 +14,7 @@ export function Card({
   variant = "solid",
   className,
   ...rest
-}: ComponentPropsWithoutRef<"section"> & { variant?: Variant }) {
+}: ComponentPropsWithRef<"section"> & { variant?: Variant }) {
   return (
     <section
       className={[styles.card, variantClass[variant], className].filter(Boolean).join(" ")}

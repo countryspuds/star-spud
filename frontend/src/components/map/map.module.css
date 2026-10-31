@@ -300,3 +300,35 @@
   text-overflow: ellipsis;
   pointer-events: none;
 }
+
+.emptyState {
+  position: absolute;
+  left: 50%;
+  bottom: 56px;
+  transform: translateX(-50%);
+  z-index: 2;
+  width: min(360px, calc(100% - 28px));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: rgba(22, 27, 36, 0.88);
+  border: 1px solid var(--edge);
+  text-align: center;
+}
+
+.emptyState strong {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.emptyState span {
+  font-size: 12px;
+  color: var(--fg-2);
+}
+
+.emptyState button {
+  margin-top: 6px;
+}
