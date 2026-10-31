@@ -85,7 +85,7 @@ star-spud/
 
 ### 사전 요구사항
 - **JDK 17+** — Gradle 실행용. 빌드에 쓰는 JDK 25는 Gradle이 자동으로 내려받으므로 별도 설치 불필요
-- **Node.js** 22+ (Vite 8 기준)
+- **Node.js** 22.13.0 이상 (Vite 8 · ESLint 10 최소 요건)
 - **Docker** & Docker Compose
 
 ### 1. 저장소 클론

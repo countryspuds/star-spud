@@ -160,7 +160,7 @@ grid-template-columns: 300px minmax(0,1fr); gap:16px
    - `cells-by-region-approx.json`의 지역 경계는 도시 앵커 기준 **근사치**다. 실제 구현 시 행정구역 GeoJSON(시도·시군구)으로 셀마다 코드를 다시 매긴다.
 
 ### 4.4 게이지 바 (`<NightGauge>`)
-입력: `{ sunset, astroEnd, astroStart, sunrise, moonrise, moonset, moonIllum, waxing, now }` (모두 ISO 시각). 가로축 = `sunset−30min` ~ `sunrise+30min`, 위치 % = (t − start)/(end − start). 달 아이콘: `waxing ? moon-waxing-0XX : moon-waning-0XX` (XX = 10% 반올림, 0 → `moon-000`, 100 → `moon-100`). 한 줄 답 = 천문박명 끝 ~ (월출 또는 박명 시작 중 빠른 것) 구간 길이.
+입력: `{ sunset, astroEnd, astroStart, sunrise, moonrise, moonset, moonIllum, waxing, now }` (모두 ISO 시각). 가로축 = `sunset−30min` ~ `sunrise+30min`, 위치 % = (t − start)/(end − start). 달 아이콘: `waxing ? moon-waxing-0XX : moon-waning-0XX` (XX = 조도 %를 10 단위 반올림, 0 → `moon-000`, 100 → `moon-100`). 한 줄 답("달 없는 완전한 밤")은 **`specs/12` 규칙**(관측 창에서 달이 떠 있는 구간을 뺀 가장 긴 구간, 없으면 "밤새 달이 떠 있어요")을 따르고 서버가 `darkWindow`로 내려준 값을 그린다. 프론트 `src/lib/night.ts`는 같은 규칙의 mock용 구현.
 
 ---
 
@@ -276,8 +276,8 @@ mock 이미지: `assets/maps/starscore-5km.svg` (광공해 + 명소 앵커 20개
 
 ### 11.2 규칙
 - **촬영 적기 띠** = 하현일 ~ 상현일 (달이 자정 전후에 떠서 초저녁 밤이 어두운 구간). 월령 API로 하현(≈22.1)·상현(≈7.4) 날짜를 찾아 그 사이를 칠한다.
-- **중요 천문현상** = 신월, 유성우 극대기 중 ZHR ≥ 10, 일식·월식, 슈퍼문. 그 외(절기·행성 합 등)는 보통 표기.
-- 달 아이콘: `moonIllum`(%)을 10% 단위로 반올림 → `assets/moon/moon-{waxing|waning}-0XX.svg`. 조도는 월령에서 계산: `illum = (1 − cos(2π · lunAge / 29.53)) / 2`, waxing = lunAge < 14.77.
+- **중요 천문현상**(라임 테두리) = 서버가 준 `important`(신월 · 보름 · ZHR ≥ 10 유성우 극대 · 일식·월식 · 슈퍼문, `specs/12`). 감자 판정용 `isMajor`와는 다른 값이며 프론트는 둘 다 계산하지 않는다. 그 외(절기·행성 합 등)는 보통 표기.
+- 달 아이콘: 서버가 준 `moonIllum`(정수 0~100)을 10 단위로 반올림 → `assets/moon/moon-{waxing|waning}-0XX.svg`. 조도·방향 계산 공식은 `specs/12`가 기준(`src/lib/moon.ts`는 mock용 동일 구현).
 - 셀 클릭 → 그 날 "오늘 밤" 상세(게이지 바 + 추천 명소) 모달 또는 `/map?date=` 이동 (Phase 2).
 - 알림 설정은 Phase 2 (서비스워커 푸시). 버튼 자리만.
 
