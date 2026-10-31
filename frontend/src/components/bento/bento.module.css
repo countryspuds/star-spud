@@ -76,8 +76,9 @@
 /* ── 광공해 지도 위젯 ──────────── */
 .teaser {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 20px 16px;
   overflow: hidden;
   transition: border-color 0.15s;
 }
@@ -87,12 +88,10 @@
 }
 
 .teaserHead {
-  position: absolute;
-  top: 18px;
-  left: 20px;
   display: flex;
   flex-direction: column;
   gap: 2px;
+  padding-right: 40px;
 }
 
 .teaserTitle {
@@ -101,11 +100,36 @@
 }
 
 .teaserMap {
+  flex: 1 1 0;
+  min-height: 0;
   width: min(84%, 560px);
-  height: auto;
-  max-height: calc(100% - 100px);
+  align-self: center;
   object-fit: contain;
-  margin-top: 48px;
+}
+
+/* 별보기 위젯 범례 (좌하단) */
+.scoreLegend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+}
+
+.scoreSwatches {
+  display: flex;
+  gap: 2px;
+}
+
+.scoreSwatches span {
+  width: 10px;
+  height: 10px;
+}
+
+.scoreLegendText {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--fg-2);
+  white-space: nowrap;
 }
 
 .arrow,

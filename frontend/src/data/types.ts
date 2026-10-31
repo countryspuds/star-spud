@@ -98,3 +98,16 @@ export interface Spot {
   distanceKm: number;
   elevationM: number;
 }
+
+/** 별보기 점수 격자 해상도 — Phase 1은 5 km만 */
+export type StarScoreRes = "5km";
+
+/**
+ * 별보기 점수 셀 — `GET /api/grid/starscore?res=5km` 응답 (명세 §10).
+ * [x, y, score, regionCode]: 격자 인덱스, 0~100 점수, 시·도 코드. 점수는 서버가 계산하고 프론트는 그리기만 한다.
+ */
+export type StarScoreCell = [x: number, y: number, score: number, regionCode: string];
+
+export interface StarScoreGrid {
+  cells: StarScoreCell[];
+}

@@ -2,8 +2,8 @@ import { Suspense, use } from "react";
 import { getEvents } from "../data";
 import { EventCard } from "../components/bento/EventCard";
 import { IndexChart } from "../components/bento/IndexChart";
-import { MapTeaser } from "../components/bento/MapTeaser";
 import { PhotoOfMonth } from "../components/bento/PhotoOfMonth";
+import { StarScoreTeaser } from "../components/bento/StarScoreTeaser";
 import { TonightDetails } from "../components/bento/TonightDetails";
 import styles from "./Home.module.css";
 
@@ -23,7 +23,7 @@ export function Home() {
     <Suspense fallback={null}>
       <div className={styles.bento}>
         <PhotoOfMonth className={styles.photo} />
-        <MapTeaser className={styles.map} />
+        <StarScoreTeaser className={styles.map} />
         <IndexChart className={styles.index} />
         <TonightDetails className={styles.tonight} />
       </div>

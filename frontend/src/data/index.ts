@@ -11,7 +11,16 @@ import spotsJson from "./spots.json";
 import fieldJson from "./field.json";
 import photoPlaceholder from "../assets/photo-of-month-placeholder.png";
 import { buildIndexDays } from "./starIndex";
-import type { AstroEvent, Field, Index10d, PhotoOfMonth, Spot, Tonight } from "./types";
+import type {
+  AstroEvent,
+  Field,
+  Index10d,
+  PhotoOfMonth,
+  Spot,
+  StarScoreGrid,
+  StarScoreRes,
+  Tonight,
+} from "./types";
 
 export type * from "./types";
 
@@ -70,4 +79,12 @@ export function getSpots(sido?: string, sigungu?: string): Promise<Spot[]> {
 /** 내 감자밭 — 심은 셀 목록. TODO(Phase 2): GET /api/me/field */
 export function getField(): Promise<Field> {
   return cached("field", () => fieldJson as Field);
+}
+
+/**
+ * 별보기 점수 격자 — TODO(Phase 2): GET /api/grid/starscore?res=5km
+ * 지금은 셀 데이터 대신 `assets/maps/starscore-5km.svg`(예시 이미지)를 그대로 보여주므로 빈 격자를 돌려준다.
+ */
+export function getStarScoreGrid(res: StarScoreRes): Promise<StarScoreGrid> {
+  return cached(`starscore:${res}`, () => ({ cells: [] }));
 }
