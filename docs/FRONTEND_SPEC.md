@@ -218,7 +218,7 @@ src/
 ```
 
 ## 9. 완료 기준
-- `npm run dev`로 `/`, `/map`, `/map/lp`, `/map/lp/48`, `/map/weather`, `/map/terrain`, `/map/field`, `/calendar`가 뜬다
+- `npm run dev`로 `/`, `/map`, `/map/lp`, `/map/lp/gyeongnam`, `/map/weather`, `/map/terrain`, `/map/field`, `/calendar`가 뜬다
 - 홈: 4칸 벤토가 화면 폭을 채우고 1440px·390px에서 깨지지 않는다
 - 지도: 드래그/휠/버튼 줌이 동작하고 탭 전환 시 pan/zoom이 유지된다. 전국 클릭 → 17조각 분리 애니메이션 → 경남 클릭 → 시·군 퍼즐 → ← 전국
 - 게이지 바: `tonight.json`을 바꾸면 눈금·달 세그먼트·'지금' 위치가 따라 움직인다
