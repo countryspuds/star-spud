@@ -31,11 +31,12 @@
 **Backend**
 - Spring Boot 4.1 (Java 25)
 - 빌드: **Gradle** (Kotlin DSL, Wrapper 포함)
-- Spring Data JPA + Hibernate Spatial (PostGIS 공간 쿼리)
+- Spring Data JPA + Hibernate Spatial (PostGIS 공간 쿼리) + Flyway (마이그레이션)
 - Spring Security OAuth2 Client (카카오/네이버 로그인) + JWT
 - Spring Data Redis (캐시) + `@Scheduled` (알림 푸시·외부 데이터 주기 갱신)
 - 천문 계산(달 위상·이벤트): 한국천문연구원 API 우선, JVM 천문 라이브러리 병행 검토
-- Testcontainers (통합 테스트)
+- springdoc-openapi (API 문서 → 프론트 타입 생성)
+- JUnit 5 + Testcontainers (테스트)
 
 **Data / Infra**
 - PostgreSQL + PostGIS
@@ -65,7 +66,9 @@ star-spud/
 │   │       ├── service/     # 비즈니스 로직·외부 데이터 연동
 │   │       ├── repository/  # Spring Data JPA
 │   │       └── domain/      # JPA 엔티티
-│   ├── src/main/resources/application.yml
+│   ├── src/main/resources/
+│   │   ├── application.yml
+│   │   └── db/migration/    # Flyway V*.sql
 │   ├── src/test/java/       # Testcontainers 통합 테스트
 │   ├── build.gradle.kts     # 의존성 정의
 │   ├── settings.gradle.kts  # JDK 25 자동 설치 설정 (foojay)

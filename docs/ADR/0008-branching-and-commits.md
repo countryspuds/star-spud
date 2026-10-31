@@ -18,7 +18,7 @@
 
 feat(map): 명소 핀에 관측 조건 색상 표시
 fix(weather): 격자 변환 시 경도 반올림 오류 수정
-chore(deps): astropy 추가
+chore(deps): springdoc-openapi 추가
 docs(adr): 광공해 데이터 결정 기록
 ```
 type: `feat` `fix` `chore` `docs` `refactor` `test` `ci`. scope는 도메인 또는 영역(`map`, `potato`, `auth`, `weather`, `backend`, `frontend`, `adr` 등).

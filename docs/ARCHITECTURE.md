@@ -16,14 +16,15 @@ flowchart LR
     Android[Android 앱 Kotlin *Phase 3*]
   end
 
-  subgraph backend [백엔드 · FastAPI]
+  subgraph backend [백엔드 · Spring Boot]
     API[REST API /api/v1]
-    Sched[스케줄러 APScheduler]
-    Admin[관리자 웹 sqladmin]
+    Sched[스케줄러 @Scheduled]
+    Admin[관리자 API /api/v1/admin]
   end
 
   subgraph data [데이터]
     PG[(PostgreSQL + PostGIS)]
+    Redis[(Redis 캐시)]
     R2[(오브젝트 스토리지 R2 / S3)]
   end
 
@@ -39,6 +40,7 @@ flowchart LR
   Android --> API
   Web -. 지도 SDK .-> Kakao
   API --> PG
+  API --> Redis
   API --> R2
   Sched --> PG
   Sched --> KMA
@@ -50,7 +52,7 @@ flowchart LR
 ```
 
 - 클라이언트는 모두 같은 REST API를 쓴다. 웹·앱 공용 계약이므로 API에 웹 전용 가정을 넣지 않는다.
-- 스케줄러는 API와 같은 프로세스 안에서 돈다 ([ADR-0004](./ADR/0004-no-celery-in-mvp.md)). 푸시가 생기는 시점에 Celery + Redis로 분리한다.
+- 스케줄러는 API와 같은 프로세스 안에서 `@Scheduled`로 돈다 ([ADR-0004](./ADR/0004-no-celery-in-mvp.md)). 푸시가 생기는 시점에 별도 워커 + 큐로 분리한다. Redis는 캐시 용도.
 - 광공해 오버레이는 서버가 아니라 오브젝트 스토리지의 정적 타일에서 직접 로드한다 ([ADR-0002](./ADR/0002-light-pollution-viirs.md)).
 
 ---
@@ -58,38 +60,37 @@ flowchart LR
 ## 2. 백엔드
 
 ### 2.1 스택
-FastAPI (Python 3.13, async) · SQLAlchemy 2 + GeoAlchemy2 · Alembic · Authlib + JWT · astropy · httpx · APScheduler · pytest · uv.
+Spring Boot 4.1 (Java 25) · Spring Web MVC · Spring Data JPA + Hibernate Spatial · Flyway · Spring Security OAuth2 Client + JWT · Spring Data Redis · `@Scheduled` · `RestClient` · springdoc-openapi · JUnit 5 + Testcontainers · Gradle (Kotlin DSL). 천문 계산은 KASI API 우선, JVM 천문 라이브러리는 검토 중.
 
 ### 2.2 디렉토리
 
 ```
 backend/
-├── app/
-│   ├── main.py            # FastAPI 앱, 라우터·스케줄러 등록
-│   ├── core/              # 설정(pydantic-settings), DB 세션, 보안(JWT)
-│   ├── api/v1/            # 라우터. 도메인별 파일
-│   │   ├── spots.py  conditions.py  events.py  potatoes.py
-│   │   ├── auth.py   notifications.py
-│   │   └── (Phase 2+) posts.py  meetups.py  gear.py  follows.py
-│   ├── models/            # SQLAlchemy 모델 (도메인별)
-│   ├── schemas/           # Pydantic 요청·응답 스키마
-│   ├── services/          # 비즈니스 로직·외부 연동
-│   │   ├── weather.py     # 기상청 호출·격자 변환·스냅샷 저장
-│   │   ├── astro.py       # 달 위상·출몰·박명 계산 (astropy)
-│   │   ├── conditions.py  # 좋은 날 판정
-│   │   ├── potato.py      # 먹이 결정·등급·방치 상태
-│   │   └── lightpollution.py  # VIIRS 샘플링
-│   ├── tasks/             # 스케줄 작업 (날씨 갱신, 감자 상태 배치)
-│   └── admin/             # sqladmin 설정
+├── src/main/java/com/starspud/
+│   ├── StarSpudApplication.java
+│   ├── config/            # 보안(JWT·OAuth2), Redis 캐시, 스케줄링, OpenAPI 설정
+│   ├── common/            # 에러 응답 {code, message}(@RestControllerAdvice), 공통 DTO
+│   ├── spot/              # 도메인 패키지 — 아래 구조를 도메인마다 반복
+│   │   ├── controller/    # REST API (얇게)
+│   │   ├── service/       # 비즈니스 로직·외부 연동
+│   │   ├── repository/    # Spring Data JPA
+│   │   ├── domain/        # JPA 엔티티
+│   │   └── dto/           # 요청·응답 record + Bean Validation
+│   ├── condition/         # 좋은 날 판정 (WeatherService: 기상청 호출·격자 변환·스냅샷, AstroService: 달·박명)
+│   ├── event/  potato/  auth/  notification/  admin/
+│   ├── (Phase 2+) post/  meetup/  gear/  follow/
+│   └── scheduler/         # 스케줄 작업 진입점 (날씨 갱신, 감자 상태 배치) — 로직은 서비스에
+├── src/main/resources/
+│   ├── application.yml
+│   └── db/migration/      # Flyway V*.sql
+├── src/test/java/         # JUnit 5 · Testcontainers(PostGIS·Redis)
 ├── scripts/               # 시드(큐레이션 30곳), VIIRS 타일 생성
-├── tests/
-├── alembic/
-├── pyproject.toml  uv.lock  .python-version
+├── build.gradle.kts  settings.gradle.kts  gradlew  gradle/wrapper/
 ```
 
 ### 2.3 API 설계 원칙
 - 접두사 `/api/v1`. 버전은 경로에 둔다. 앱 출시 후 호환성 깨는 변경은 v2로.
-- OpenAPI 스키마가 프론트·앱의 계약이다. 프론트는 스키마에서 타입을 생성한다.
+- springdoc이 만드는 OpenAPI 스키마가 프론트·앱의 계약이다. 프론트는 스키마에서 타입을 생성한다. 엔티티를 그대로 응답하지 않고 DTO를 거친다.
 - 인증은 `Authorization: Bearer <access>`. access 30분, refresh 30일. refresh는 DB에 저장해 폐기 가능.
 - 비로그인 허용 엔드포인트(지도·조건·이벤트·공개 감자 열람)는 인증을 선택적으로 받는다.
 - 목록은 커서 페이지네이션. 지리 검색은 `bbox` 또는 `lat,lng,radius`.
@@ -104,7 +105,7 @@ backend/
 
 **관측 조건 응답.**
 1. `weather_snapshots`에서 명소·날짜 구름량을 읽는다.
-2. astropy로 달 조도·출몰·천문박명을 계산한다 (요청 시 계산, 명소 좌표 기준. 비용이 낮아 캐시 불필요).
+2. 달 조도·출몰·천문박명은 서버가 계산한다 — KASI 출몰시각·월령 API 응답을 Redis에 캐시하고 조도는 월령에서 계산. 명소 좌표 기준 계산이 필요해지면 JVM 천문 라이브러리로 보강(검토 중).
 3. 판정 규칙(구름 ≤30% AND (달 ≤50% OR 자정 전 월몰))으로 `good | fair | bad` 산출.
 
 **감자 방치 배치 (스케줄, 매일 새벽).**
@@ -185,10 +186,10 @@ gear_reviews       id, gear_id, user_id, rating, body                           
 |---|---|---|
 | 기상청 단기예보 API | 구름량·하늘상태 | 격자 좌표. 3일 예보. 공공데이터포털 키 |
 | 한국천문연구원 API *(Phase 2)* | 천체 이벤트·출몰 시각 | 수동 등록으로 대체 가능 |
-| astropy | 달 위상·조도·출몰·박명 | 서버 계산 |
+| 달 위상·조도·출몰·박명 | 관측 조건·캘린더 | 서버 계산 (KASI API + 자체 계산, JVM 천문 라이브러리 검토 중) |
 | NASA/NOAA VIIRS 야간광 | 보틀 등급·오버레이 | 연 1회 갱신. 오프라인 처리 |
 | 카카오맵 JS SDK | 지도 표시 | 프론트 |
-| 카카오 OAuth | 로그인 | Authlib |
+| 카카오 OAuth | 로그인 | Spring Security OAuth2 Client |
 | 카카오 모빌리티 길찾기 *(Phase 2)* | 앱 내 경로 | 서버 프록시 |
 | FCM *(Phase 3)* | 웹·iOS·Android 푸시 | 단일 발송 백엔드 |
 
@@ -206,9 +207,9 @@ gear_reviews       id, gear_id, user_id, rating, body                           
 ## 7. 배포·운영
 
 - PaaS(Fly.io / Railway / Render 중 택1)에 백엔드 컨테이너 + 관리형 PostgreSQL(PostGIS). 프론트는 정적 호스팅(같은 PaaS 또는 Cloudflare Pages). 사진·타일은 Cloudflare R2. ([ADR-0005](./ADR/0005-paas-deploy.md))
-- 로컬: `docker-compose.yml`로 PostGIS만 띄운다. Redis 없음.
+- 로컬: `docker-compose.yml`로 PostGIS와 Redis를 띄운다. `./gradlew bootRun`이 꺼져 있으면 자동으로 띄우고 접속 정보를 연결한다.
 - 환경 변수: `.env.example`에 전체 키 목록 유지. 시크릿은 PaaS 대시보드.
-- CI: PR마다 백엔드 `pytest`, 프론트 `lint` + `tsc`. CD: `main` 머지 시 배포 (베타 직전 세팅).
+- CI: PR마다 백엔드 `./gradlew test`, 프론트 `lint` + `tsc`. CD: `main` 머지 시 배포 (베타 직전 세팅).
 - 브랜치: `main`(릴리즈) ← `develop` ← `feat/*`. ([ADR-0008](./ADR/0008-branching-and-commits.md))
 
 ---
@@ -217,5 +218,5 @@ gear_reviews       id, gear_id, user_id, rating, body                           
 
 - `device_tokens` 테이블과 FCM 발송 서비스 추가. 알림 생성 로직은 그대로 두고 발송 채널만 추가된다.
 - 애플 로그인 추가 (iOS 소셜 로그인 필수 조건).
-- Celery + Redis 도입 (푸시 발송량과 재시도 관리).
+- 별도 워커 + 큐 도입 (푸시 발송량과 재시도 관리).
 - API v1 동결. 앱이 참조하는 스키마는 깨지 않는다.
