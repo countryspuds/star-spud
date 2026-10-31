@@ -8,9 +8,10 @@ import tonightJson from "./tonight.json";
 import index10dJson from "./index10d.json";
 import eventsJson from "./events.json";
 import spotsJson from "./spots.json";
+import fieldJson from "./field.json";
 import photoPlaceholder from "../assets/photo-of-month-placeholder.png";
 import { buildIndexDays } from "./starIndex";
-import type { AstroEvent, Index10d, PhotoOfMonth, Spot, Tonight } from "./types";
+import type { AstroEvent, Field, Index10d, PhotoOfMonth, Spot, Tonight } from "./types";
 
 export type * from "./types";
 
@@ -64,4 +65,9 @@ export function getSpots(sido?: string, sigungu?: string): Promise<Spot[]> {
       )
       .sort((a, b) => a.distanceKm - b.distanceKm),
   );
+}
+
+/** 내 감자밭 — 심은 셀 목록. TODO(Phase 2): GET /api/me/field */
+export function getField(): Promise<Field> {
+  return cached("field", () => fieldJson as Field);
 }

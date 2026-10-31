@@ -72,6 +72,17 @@ export interface AstroEvent {
   waxing: boolean;
 }
 
+/** 내 감자밭 — 심은 5 km 셀 (격자 인덱스). stage 1~4 = 심은 뒤 경과(오래될수록 진한 감자색) */
+export interface FieldCell {
+  x: number;
+  y: number;
+  stage: 1 | 2 | 3 | 4;
+}
+
+export interface Field {
+  cells: FieldCell[];
+}
+
 /** 광공해 5단계 0~4 */
 export type LpLevel = 0 | 1 | 2 | 3 | 4;
 

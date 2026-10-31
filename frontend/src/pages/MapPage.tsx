@@ -1,9 +1,11 @@
 import { Suspense, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Breadcrumb, type Crumb } from "../components/map/Breadcrumb";
+import { FieldSummary } from "../components/map/FieldSummary";
 import { MapCanvas } from "../components/map/MapCanvas";
 import { MapLegend } from "../components/map/MapLegend";
 import { MapTabs } from "../components/map/MapTabs";
+import { NaverMap } from "../components/map/NaverMap";
 import { SidoPuzzle, SigunguPuzzle } from "../components/map/RegionPuzzle";
 import { SpotList } from "../components/map/SpotList";
 import { ZoomControls } from "../components/map/ZoomControls";
@@ -79,6 +81,8 @@ export function MapPage() {
     );
   } else if (puzzle) {
     content = <SidoPuzzle onPick={goSido} />;
+  } else if (tab === "weather" || tab === "terrain") {
+    content = <NaverMap mapType={tab} scale={view.scale} />;
   } else {
     content = (
       <img
@@ -100,6 +104,7 @@ export function MapPage() {
         <Breadcrumb items={crumbs} />
         <MapLegend tab={tab} />
         <Suspense fallback={null}>
+          {tab === "field" && <FieldSummary />}
           <SpotList sido={sido ?? undefined} sigungu={sigungu ?? undefined} />
         </Suspense>
       </Card>

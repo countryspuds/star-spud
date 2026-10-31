@@ -332,3 +332,25 @@
 .emptyState button {
   margin-top: 6px;
 }
+
+.fieldTotal {
+  font-size: 13px;
+  color: var(--fg-2);
+}
+
+.fieldTotal strong {
+  margin-right: 2px;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--fg);
+}
+
+.fieldBar {
+  display: flex;
+  gap: 2px;
+  height: 10px;
+}
+
+.fieldBar span {
+  flex-basis: 0;
+}
