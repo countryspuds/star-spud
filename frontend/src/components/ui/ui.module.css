@@ -1,0 +1,114 @@
+/* ── Card ───────────────────────── */
+.card {
+  position: relative;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--edge);
+  background: var(--card);
+  min-width: 0;
+}
+
+.glass {
+  background: var(--glass-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.light {
+  background: var(--light-card);
+  color: var(--light-fg);
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+/* ── Pill(Button) ───────────────── */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 18px;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  font-size: 14px;
+  white-space: nowrap;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.sm {
+  height: 32px;
+  padding: 0 14px;
+  font-size: 13px;
+}
+
+.lg {
+  height: 40px;
+  padding: 0 20px;
+}
+
+.primary {
+  background: var(--blue);
+  color: #fff;
+}
+
+.secondary {
+  background: var(--glass);
+  border-color: var(--edge);
+  color: var(--fg);
+}
+
+.pill:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 2px;
+}
+
+/* ── Label ─────────────────────── */
+.label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-2);
+  line-height: 1.4;
+}
+
+.example {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--fg-3);
+  white-space: nowrap;
+}
+
+/* ── Tile ──────────────────────── */
+.tile {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.tileLabel {
+  font-size: 11px;
+  color: #5b6474;
+}
+
+.tileValue {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+.tileSub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #5b6474;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -1,0 +1,81 @@
+.page {
+  min-height: calc(100vh - 48px - 14px - 48px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 16px;
+  overflow: hidden;
+}
+
+.stars span {
+  position: absolute;
+  background: #fff;
+}
+
+.stack {
+  position: relative;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  text-align: center;
+}
+
+.stack img {
+  width: 192px;
+  height: 192px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.body {
+  font-size: 15px;
+  color: var(--fg-2);
+}
+
+.progressWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.progress {
+  display: flex;
+  gap: 3px;
+}
+
+.progress span {
+  width: 20px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.progress span.filled {
+  background: var(--sprout);
+}
+
+.progressCaption {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--fg-2);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+@media (max-width: 860px) {
+  .title {
+    font-size: 26px;
+  }
+}

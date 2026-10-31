@@ -1,2 +1,4 @@
 dist
 node_modules
+# 디자인 핸드오프 에셋은 원본 그대로 유지
+src/assets
