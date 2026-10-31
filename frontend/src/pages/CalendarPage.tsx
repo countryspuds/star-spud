@@ -1,8 +1,9 @@
 import { Suspense, use } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { getCalendar, type CalendarDay, type CalendarMonth } from "../data";
+import { getCalendar, invalidateCalendar, type CalendarDay, type CalendarMonth } from "../data";
 import { MoonIcon } from "../components/gauge/MoonIcon";
 import { Card } from "../components/ui/Card";
+import { ErrorBoundary } from "../components/ui/ErrorBoundary";
 import { ExampleCaption, Label } from "../components/ui/Label";
 import { PillButton } from "../components/ui/Pill";
 import styles from "./CalendarPage.module.css";
@@ -275,9 +276,23 @@ export function CalendarPage() {
         </ul>
       </header>
 
-      <Suspense fallback={<p className={styles.caption}>불러오는 중…</p>}>
-        <CalendarBody year={year} month={month} />
-      </Suspense>
+      {/* key: 달이 바뀌면 오류 상태도 초기화. 실패한 요청은 캐시에서 비워 '다시 시도'가 실제로 재요청하게 */}
+      <ErrorBoundary
+        key={`${year}-${month}`}
+        onError={() => invalidateCalendar(year, month)}
+        fallback={(_, retry) => (
+          <p className={styles.error} role="alert">
+            {year}년 {month}월 캘린더를 불러오지 못했어요.
+            <PillButton size="sm" onClick={retry}>
+              다시 시도
+            </PillButton>
+          </p>
+        )}
+      >
+        <Suspense fallback={<p className={styles.caption}>불러오는 중…</p>}>
+          <CalendarBody year={year} month={month} />
+        </Suspense>
+      </ErrorBoundary>
     </Card>
   );
 }
