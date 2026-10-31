@@ -25,7 +25,7 @@ notifications  id, user_id, type, payload(json), link(앱 내 경로), read_at, 
 ### 생성 규칙 (서비스 함수 `notify(user_id, type, payload, link, dedupe_key)`)
 - 모든 도메인 코드는 이 함수만 호출한다. 채널 분기는 이 함수 안에서 한다.
 - MVP: DB에 행 삽입만.
-- Phase 3: 삽입 후 `device_tokens`가 있으면 FCM 발송을 큐에 넣는다(Celery). 발송 실패는 알림함에 영향 없음.
+- Phase 3: 삽입 후 `device_tokens`가 있으면 FCM 발송을 큐에 넣는다(별도 워커, ADR-0004). 발송 실패는 알림함에 영향 없음.
 
 ### 유형별 규칙
 | 유형 | 트리거 | dedupe | 링크 |

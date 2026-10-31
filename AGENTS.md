@@ -15,29 +15,31 @@
 - 문서와 코드가 어긋나면 코드가 아니라 문서를 먼저 확인하고, 어느 쪽이 맞는지 사람에게 묻는다.
 
 ## 스택
-- 백엔드: Python 3.13, FastAPI, SQLAlchemy 2 + GeoAlchemy2, Alembic, Authlib, astropy, APScheduler. 패키지 관리는 **uv**.
+- 백엔드: Java 25, Spring Boot 4.1 (Web MVC, Validation, Actuator), Spring Data JPA + Hibernate Spatial, Flyway, Spring Security OAuth2 Client + JWT, Spring Data Redis, `@Scheduled`, springdoc-openapi. 빌드는 **Gradle**(Kotlin DSL, Wrapper 커밋). 천문 계산은 한국천문연구원(KASI) API 우선, JVM 천문 라이브러리는 검토 중.
 - 프론트: React 19 + TypeScript(strict) + Vite, TanStack Query, 카카오맵 JS SDK.
-- DB: PostgreSQL + PostGIS. MVP에는 Redis·Celery 없음 (ADR-0004).
+- DB: PostgreSQL + PostGIS. 캐시는 Redis. 별도 워커·큐는 MVP에 없음 (ADR-0004).
 - 스토리지: Cloudflare R2 (S3 호환).
 
 ## 명령어
 ```bash
-docker compose up -d                      # PostGIS
-cd backend && uv sync && uv run uvicorn app.main:app --reload
-cd backend && uv run pytest               # 백엔드 테스트 (PR 필수)
-cd backend && uv run alembic upgrade head  # 마이그레이션
+docker compose up -d                      # PostGIS + Redis (bootRun이 자동으로 띄우기도 함)
+cd backend && ./gradlew bootRun           # http://localhost:8080 (JDK 25는 Gradle이 자동 설치)
+cd backend && ./gradlew test              # 백엔드 테스트 (PR 필수, Testcontainers → Docker 필요)
+cd backend && ./gradlew build             # 컴파일 + 테스트 + JAR
 cd frontend && npm install && npm run dev
 cd frontend && npm run lint && npx tsc --noEmit   # 프론트 검사 (PR 필수)
 ```
+- 마이그레이션은 Flyway가 앱 시작 시 `src/main/resources/db/migration/V*.sql`을 자동 적용한다. 별도 명령 없음.
 
 ## 코드 규칙
 **백엔드**
-- 라우터(`app/api/v1`)는 얇게. 로직은 `app/services`, 스케줄 작업은 `app/tasks`에 순수 함수로.
-- 새 엔드포인트는 Pydantic 스키마(`app/schemas`)를 반드시 정의한다. OpenAPI가 프론트·앱의 계약이다.
-- API 경로는 `/api/v1/...`. 에러 응답은 `{code, message}`.
-- 외부 API 호출은 `app/services`에서만, httpx async 사용, 타임아웃 명시.
-- 로직이 있는 서비스 함수에는 pytest를 쓴다. 특히 좋은 날 판정, 먹이 결정, 등급·방치 상태 전이, 기상청 격자 변환.
-- 의존성 추가는 `uv add`. `pip` 직접 사용 금지.
+- 패키지는 도메인별 `com.starspud.<도메인>.{controller,service,repository,domain,dto}`. 컨트롤러는 얇게. 로직은 `service`, 스케줄 작업은 `scheduler`에 두고 실제 로직은 서비스의 순수 메서드로 분리한다.
+- 새 엔드포인트는 요청·응답 DTO(`record` + Bean Validation)를 반드시 정의한다. JPA 엔티티를 그대로 응답하지 않는다. springdoc이 만드는 OpenAPI 문서가 프론트·앱의 계약이다.
+- API 경로는 `/api/v1/...`. 에러 응답은 `{code, message}` (`@RestControllerAdvice`에서 통일).
+- 외부 API 호출은 `service`에서만, `RestClient` 사용, 연결·읽기 타임아웃 명시.
+- 스키마 변경은 Flyway 마이그레이션 파일로만. `ddl-auto`로 운영 스키마를 바꾸지 않는다.
+- 로직이 있는 서비스 메서드에는 JUnit 5 테스트를 쓴다(DB가 필요하면 Testcontainers). 특히 좋은 날 판정, 먹이 결정, 등급·방치 상태 전이, 기상청 격자 변환.
+- 의존성 추가는 `build.gradle.kts`의 `dependencies`에만. 버전은 Spring Boot BOM을 따르고, BOM 밖 라이브러리만 버전을 명시한다.
 
 **프론트**
 - 파일은 `.ts`/`.tsx`만. `any` 금지.

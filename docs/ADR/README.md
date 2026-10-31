@@ -9,10 +9,10 @@
 | [0001](./0001-kakao-map-sdk.md) | 지도 SDK는 카카오맵 단일 | 채택 |
 | [0002](./0002-light-pollution-viirs.md) | 광공해는 VIIRS 좌표 샘플링 + 정적 타일 | 채택 |
 | [0003](./0003-notifications-in-app-first.md) | MVP 알림은 앱 내 알림함, 푸시는 FCM으로 앱 단계에 | 채택 |
-| [0004](./0004-no-celery-in-mvp.md) | MVP에서 Celery·Redis 제외, APScheduler 사용 | 채택 |
+| [0004](./0004-no-celery-in-mvp.md) | MVP에서 별도 워커·큐 제외, Spring `@Scheduled` 사용 (캐시는 Redis) | 채택 (2026-11-01 갱신) |
 | [0005](./0005-paas-deploy.md) | 배포는 PaaS + Cloudflare R2 | 채택 |
 | [0006](./0006-native-mobile-app.md) | 모바일 앱은 네이티브(Swift/Kotlin), 웹 베타 후 착수 | 채택 (재검토 조건 있음) |
 | [0007](./0007-frontend-typescript.md) | 프론트엔드 TypeScript 전환 | 채택 |
 | [0008](./0008-branching-and-commits.md) | 브랜치 전략과 커밋 규칙 | 채택 |
 | [0009](./0009-auth-oauth-jwt.md) | 인증은 소셜 OAuth + JWT, MVP는 카카오만 | 채택 |
-| [0010](./0010-admin-sqladmin.md) | 관리자 도구는 sqladmin | 채택 |
+| [0010](./0010-admin-sqladmin.md) | 관리자 도구는 최소 관리자 REST API + 프론트 관리 화면 | 채택 (2026-11-01 갱신) |

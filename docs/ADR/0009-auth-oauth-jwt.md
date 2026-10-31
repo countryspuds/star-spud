@@ -7,7 +7,7 @@
 
 ## 결정
 - 소셜 로그인만 제공한다. 제공자: 카카오(MVP) → 네이버, 구글(Phase 2) → 애플(Phase 3, iOS 앱과 함께).
-- 서버는 Authlib으로 OAuth 코드 교환 후 자체 JWT를 발급한다. access 30분, refresh 30일. refresh는 해시로 DB에 저장해 폐기 가능.
+- 서버는 Spring Security OAuth2 Client로 OAuth 코드 교환 후 자체 JWT를 발급한다. access 30분, refresh 30일. refresh는 해시로 DB에 저장해 폐기 가능.
 - `users`는 `(provider, provider_uid)` 유니크. 같은 사람이 다른 제공자로 들어오면 별개 계정이다(계정 연결은 미정).
 - 지도·조건·이벤트·공개 콘텐츠 열람은 비로그인 허용. 쓰기 행위만 로그인 요구.
 
