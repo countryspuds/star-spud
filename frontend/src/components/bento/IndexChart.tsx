@@ -103,7 +103,7 @@ export function IndexChart({ className }: { className?: string }) {
                   cx={x(i)}
                   cy={y(d.score)}
                   r={3.2}
-                  fill={i === last ? "var(--lime)" : "#cfd6e2"}
+                  fill={i === 0 ? "var(--lime)" : "#cfd6e2"}
                 >
                   <title>{`${d.date} · ${d.score}`}</title>
                 </circle>

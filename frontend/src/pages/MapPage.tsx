@@ -1,4 +1,11 @@
-import { Suspense, useState } from "react";
+import {
+  Suspense,
+  useCallback,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type SetStateAction,
+} from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Breadcrumb, type Crumb } from "../components/map/Breadcrumb";
 import { FieldSummary } from "../components/map/FieldSummary";
@@ -17,14 +24,20 @@ import { getLayerSrc, isPixelLayer } from "../lib/lod";
 import { MAP_BG, parseMapRoute, type MapTab } from "../lib/mapRoute";
 import { getSidoCells, getSigunguPieces } from "../lib/puzzle";
 import { useElementSize } from "../lib/useElementSize";
-import { HOME_VIEW, type View } from "../lib/view";
+import { MAP_BOX, MIN_SCALE, PUZZLE_BOX, fitView, type View } from "../lib/view";
 import styles from "../components/map/map.module.css";
 
+// 마우스는 휠 버튼 드래그로 이동, 터치는 손가락 드래그
+const MOVE_HINT =
+  typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches
+    ? "드래그로 이동"
+    : "휠 버튼 드래그로 이동 · 휠로 확대";
+
 function hintFor(tab: MapTab, sido: string | null, puzzle: boolean, hasSigungu: boolean): string {
-  if (tab !== "lp") return "드래그로 이동 · 휠로 확대";
+  if (tab !== "lp") return MOVE_HINT;
   if (puzzle) return "조각을 눌러 시·도로 들어가요";
-  if (sido) return hasSigungu ? "시·군을 눌러 명소를 걸러요" : "드래그로 이동 · 휠로 확대";
-  return "지도를 클릭하면 시·도로 나뉘어요 · 드래그 이동 · 휠 확대";
+  if (sido) return hasSigungu ? "시·군을 눌러 명소를 걸러요" : MOVE_HINT;
+  return `지도를 클릭하면 시·도로 나뉘어요 · ${MOVE_HINT}`;
 }
 
 export function MapPage() {
@@ -33,12 +46,25 @@ export function MapPage() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // 탭·시도 전환은 같은 MapPage 안의 라우트 변경 → view 상태가 그대로 유지된다
-  const [view, setView] = useState<View>(HOME_VIEW);
   const [areaRef, areaSize] = useElementSize<HTMLElement>();
   // 17 시·도 퍼즐은 그것을 연 위치(location.key)에서만 유지 — 다른 곳으로 이동하면 자동으로 닫힘
   const [puzzleKey, setPuzzleKey] = useState<string | null>(null);
   const puzzle = tab === "lp" && sido == null && puzzleKey === location.key;
+
+  // view: 사용자가 움직이기 전(null)엔 지도 전체가 들어가는 fit 배율을 따른다.
+  // 탭·시도 전환은 같은 MapPage 안의 라우트 변경 → 사용자가 맞춘 view는 그대로 유지된다
+  const [userView, setUserView] = useState<View | null>(null);
+  const fit = fitView(areaSize, puzzle ? PUZZLE_BOX : MAP_BOX);
+  const view = userView ?? fit;
+  const minScale = Math.min(MIN_SCALE, fitView(areaSize, PUZZLE_BOX).scale);
+  const fitRef = useRef(fit);
+  useLayoutEffect(() => {
+    fitRef.current = fit;
+  });
+  const updateView = useCallback((u: SetStateAction<View>) => {
+    setUserView((prev) => (typeof u === "function" ? u(prev ?? fitRef.current) : u));
+  }, []);
+  const resetView = () => setUserView(null);
   // 선택한 시·군·구 — 시·도가 바뀌면 무효
   const [pick, setPick] = useState<{ sido: string; id: string } | null>(null);
   const sigungu = sido != null && pick?.sido === sido ? pick.id : null;
@@ -54,11 +80,11 @@ export function MapPage() {
   if (sigungu) crumbs.push({ label: sigungu });
 
   const goSido = (code: string) => {
-    setView(HOME_VIEW);
+    resetView();
     navigate(`/map/${code}`);
   };
   const goNational = () => {
-    setView(HOME_VIEW);
+    resetView();
     setPuzzleKey(null);
     if (sido) navigate("/map");
   };
@@ -76,7 +102,7 @@ export function MapPage() {
         pieces={pieces}
         selected={sigungu}
         onSelect={sigunguPieces ? toggleSigungu : undefined}
-        viewport={areaSize}
+        viewport={{ width: areaSize.width / fit.scale, height: areaSize.height / fit.scale }}
       />
     );
   } else if (puzzle) {
@@ -118,7 +144,9 @@ export function MapPage() {
         >
           <MapCanvas
             view={view}
-            onViewChange={setView}
+            onViewChange={updateView}
+            minScale={minScale}
+            smooth={userView == null}
             onMapClick={canOpenPuzzle ? () => setPuzzleKey(location.key) : undefined}
           >
             {content}
@@ -126,7 +154,12 @@ export function MapPage() {
 
           <div className={styles.overlayTop}>
             <MapTabs active={tab} />
-            <ZoomControls view={view} onViewChange={setView} />
+            <ZoomControls
+              view={view}
+              onViewChange={updateView}
+              onReset={resetView}
+              minScale={minScale}
+            />
           </div>
 
           {(puzzle || sido) && (
