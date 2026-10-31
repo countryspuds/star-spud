@@ -1,0 +1,302 @@
+/* ── 페이지 레이아웃 ─────────────── */
+.page {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: var(--gap);
+  align-items: start;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  min-width: 0;
+}
+
+@media (max-width: 860px) {
+  .page {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ── 좌 패널 ──────────────────── */
+.panel {
+  display: flex;
+  flex-direction: column;
+  padding: 18px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 0;
+}
+
+.section:first-child {
+  padding-top: 0;
+}
+
+.section + .section {
+  border-top: 1px solid var(--edge);
+}
+
+.crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 6px;
+  font-size: 15px;
+  color: var(--fg-2);
+}
+
+.crumbSep {
+  color: var(--fg-3);
+}
+
+.crumbLink:hover {
+  color: var(--fg);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.crumbCurrent {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+.legendTitle {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.legendList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.legendList li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legendSub {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--fg-3);
+}
+
+.legendNote {
+  font-size: 12px;
+  color: var(--fg-3);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 8px;
+}
+
+.legendExample {
+  align-self: center;
+}
+
+.swatch,
+.swatchCircle,
+.swatchHatch {
+  flex: none;
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+}
+
+.swatchCircle {
+  border-radius: 50%;
+  border: 1.5px solid #fff;
+}
+
+.swatchHatch {
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  background: repeating-linear-gradient(135deg, currentColor 0 1.5px, transparent 1.5px 4px);
+}
+
+.spotSection {
+  min-height: 0;
+}
+
+.spotHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.spots {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.spot {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 9px 0;
+}
+
+.spot + .spot {
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.spot .swatch {
+  margin-top: 5px;
+}
+
+.spotText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.spotName {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.spotSub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--fg-2);
+}
+
+.spotDist {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--fg-2);
+  white-space: nowrap;
+}
+
+.empty {
+  font-size: 13px;
+  color: var(--fg-3);
+}
+
+/* ── 지도 영역 ─────────────────── */
+.mapArea {
+  height: 640px;
+  overflow: hidden;
+  transition: background-color 0.25s;
+}
+
+.overlayTop {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.overlayTop > * {
+  pointer-events: auto;
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tab,
+.tabActive {
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 14px;
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.tab {
+  background: rgba(22, 27, 36, 0.75);
+  color: #c9d1dd;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.tab:hover {
+  color: #fff;
+}
+
+.tabActive {
+  background: #eaeef5;
+  color: #141414;
+}
+
+.zoom {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.zoom button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--edge);
+  background: rgba(22, 27, 36, 0.75);
+  color: #eaeef5;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.zoom button:hover {
+  background: rgba(22, 27, 36, 0.92);
+}
+
+.zoom button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.backBtn {
+  position: absolute;
+  left: 14px;
+  top: 56px;
+  z-index: 2;
+}
+
+.hint {
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  transform: translateX(-50%);
+  z-index: 2;
+  max-width: calc(100% - 28px);
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  background: rgba(22, 27, 36, 0.8);
+  color: #c9d1dd;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+}

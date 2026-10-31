@@ -18,8 +18,8 @@ const partsFmt = new Intl.DateTimeFormat("ko-KR", {
 export const toMs = (iso: string) => Date.parse(iso);
 
 /** "21:12" */
-export function fmtHM(iso: string): string {
-  return hmFmt.format(toMs(iso));
+export function fmtHM(t: string | number): string {
+  return hmFmt.format(typeof t === "string" ? toMs(t) : t);
 }
 
 function dateParts(iso: string) {
