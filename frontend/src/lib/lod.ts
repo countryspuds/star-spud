@@ -1,3 +1,4 @@
+import star5km from "../assets/maps/starscore-5km.svg";
 import lp5km from "../assets/maps/lightpollution-5km.svg";
 import weather from "../assets/maps/weather-placeholder.png";
 import terrain from "../assets/maps/terrain-placeholder.png";
@@ -14,6 +15,8 @@ export const LOD_1KM_SCALE = 2.5;
 export function getLayerSrc(tab: MapTab, scale: number): string {
   void scale; // Phase 1은 5 km 한 단계뿐
   switch (tab) {
+    case "star":
+      return star5km;
     case "lp":
       return lp5km;
     case "weather":
@@ -26,4 +29,4 @@ export function getLayerSrc(tab: MapTab, scale: number): string {
 }
 
 /** 픽셀(도트) 지도인지 — pixelated 렌더링 여부 */
-export const isPixelLayer = (tab: MapTab) => tab === "lp" || tab === "field";
+export const isPixelLayer = (tab: MapTab) => tab === "star" || tab === "lp" || tab === "field";
