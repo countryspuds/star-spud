@@ -69,9 +69,10 @@
 | `/map/weather` | 지도 · 날씨 | 구현 (placeholder 이미지) |
 | `/map/terrain` | 지도 · 지형고도 | 구현 (placeholder 이미지) |
 | `/map/field` | 지도 · 내 감자밭 | 구현 (mock) |
-| `/events`, `/field`, `/community`, `/login` | 준비 중 | ComingSoon 페이지 공용 |
+| `/calendar` | 천문 캘린더 (월별) | 구현 (§11) |
+| `/field`, `/community`, `/login` | 준비 중 | ComingSoon 페이지 공용 |
 
-**공통 네비 (48px)** — 좌: 감자 로고(26px, `assets/potato/potato.svg`) + "별보러감자" 700 15px · 중: 홈 / 지도 / 이벤트 / 감자밭 / 커뮤니티 (활성 = `--fg`, 나머지 `--fg-2`) · 우: 로그인 pill 버튼(32px).
+**공통 네비 (48px)** — 좌: 감자 로고(26px, `assets/potato/potato.svg`) + "별보러감자" 700 15px · 중: 홈 / 지도 / **캘린더** / 감자밭 / 커뮤니티 (활성 = `--fg`, 나머지 `--fg-2`) — 메뉴명은 '이벤트'가 아니라 '캘린더'로 확정 (11/1) · 우: 로그인 pill 버튼(32px).
 페이지 패딩 `14px 16px 48px`, 카드 사이 `gap:16px`. **가로 max-width 없음** — 화면 폭을 다 쓴다.
 모바일(≤860px): 네비 링크 숨김(햄버거 대신 하단 탭바는 Phase 2), 그리드는 1열로 스택.
 
@@ -222,3 +223,79 @@ src/
 - 게이지 바: `tonight.json`을 바꾸면 눈금·달 세그먼트·'지금' 위치가 따라 움직인다
 - `npm run lint`, `npm run format:check`, `tsc -b` 통과
 - 폰트 외 외부 네트워크 호출 없음 (API 자리는 `src/data`의 함수 시그니처로만)
+
+---
+
+## 10. 추가 결정 (11/1) — 별보기 지도 (Star Score)
+
+홈 위젯과 지도 페이지의 **첫 탭은 광공해가 아니라 '별보기 지도'**다. 광공해에 명소·접근성·고도를 합친 **정적 종합 점수**(0~100)이며, 오늘 밤 날씨·달은 여기 넣지 않는다(그건 §3의 10일 지수와 세부값이 맡음).
+
+**셀 점수 공식 (백엔드가 계산, 프론트는 그리기만)**
+| 요소 | 비중 | 셀 값 |
+|---|---|---|
+| 광공해 | 50% | 등급 0→100, 1→70, 2→35, 3→10, 4→0 |
+| 명소·천문대 근접 | 20% | 셀 안 100 · 5 km 내 75 · 10 km 내 45 · 20 km 내 15 · 그 외 0 |
+| 접근성 (포장도로까지 거리) | 15% | 2 km 내 100 … 10 km+ 0 (도로망은 OSM) |
+| 해발고도 | 10% | 0 m=0 … 1,000 m+=100 |
+| 편의 (주차·화장실·차박) | 5% | 명소 속성 가산 |
+
+API: `GET /api/grid/starscore?res=5km` → `{ cells: [[x, y, score, regionCode], …] }`. 연 1회 + 명소 추가 시 재계산.
+
+**팔레트 (한 색 단계, 밝을수록 좋음)** — 8단계: `#1a2030 #232c44 #2f4668 #3f6a86 #5f9a85 #8fc46c #b9e258 #d9fc46`. 5~97 퍼센타일로 스트레치해서 칠한다(그래야 도시는 가라앉고 산간·명소가 뜬다).
+
+지도 탭 순서: **[별보기] [광공해] [날씨] [지형고도] [내 감자밭]**. 홈 위젯 라벨: `STAR SCORE · 5 KM GRID / 별보기 지도`, 위젯 좌하단에 5칸 범례 + "나쁨 → 좋음 · 광공해 50 · 명소 20 · 접근 15 · 고도 10 · 편의 5".
+
+mock 이미지: `assets/maps/starscore-5km.svg` (광공해 + 명소 앵커 20개 + 산맥 근사치로 만든 **예시**. 접근성은 도로 데이터가 없어 광공해 등급으로 대신함).
+
+---
+
+## 11. 천문 캘린더 `/calendar` (11/1 추가)
+
+참조: 엑소스카이 천문달력의 구성(일별 출몰시각·월령·현상, 달 없는 촬영 적기 띠, 중요 현상 강조, 하단 용어 설명)을 우리 디자인으로 옮긴 것. 캔버스 아트보드 "천문 캘린더 · 11월".
+
+### 11.1 레이아웃
+```
+카드(--card) 패딩 22px
+헤더: 월 숫자 56px 700 (letter-spacing -.04em) · 라벨 "2026 · NOVEMBER" + "천문 캘린더" 18px · ‹ › 원형 버튼 30px
+      우측 범례(mono 11px): [파란 띠] 딥스카이·은하수 촬영 적기 / [라임 테두리] 중요 천문현상 / [달 아이콘] 달 조도 % / "일출·일몰 / 월출·월몰 · 서울 기준"
+요일 헤더: SUN #ff8a8a · MON~FRI #98a2b3 · SAT #7fb0ff, mono 11px letter-spacing .12em, 아래 2px 선
+그리드: 7열, gap 6px, 셀 min-height 148px, radius 12px, border 1px --edge, padding 10px
+  셀 내부 (세로 스택 gap 6px):
+   1행  날짜 26px 700 (일=빨강, 토=파랑, 평일 --fg)  ·····  우측: 픽셀 달 20px + 조도 % (mono 10px --fg-2)
+   2행  현상 제목 11px 600 (#c9d1dd, 중요 현상은 --lime) + 한 줄 설명 10px --fg-2  (없으면 생략)
+   3행  (margin-top:auto) 2×2 mono 9.5px --fg-3: 일출 / 월출 / 일몰 / 월몰
+  촬영 적기 셀: background rgba(79,124,255,.10). 첫 셀 좌상단에 파란 pill "딥스카이 · 은하수 촬영 적기 (하현 → 상현)"
+  중요 현상 셀: border 1px --lime
+  그리드 아래 mono 11px --fg-3 캡션: 데이터 출처/예시 표기
+하단 2단 (grid 2열, gap 16px, 반투명 카드):
+  좌 "이번 달 천문현상" — 행: 날짜(mono 12px --lime, 90px) | 제목 14px 600 + 설명 12px --fg-2. 헤더 우측 "N EVENTS · 알림 설정"
+  우 "캘린더 읽는 법" — 행: 용어(13px 600 #7fb0ff, 110px) | 설명 12px #c9d1dd. 용어 8개: 월령, 달 조도 %, 상현·하현, 천문박명, 극대기, ZHR, 합·충, 근지점·원지점
+모바일(≤860px): 그리드 2열, 요일 헤더 숨김, 하단 1열
+```
+
+### 11.2 규칙
+- **촬영 적기 띠** = 하현일 ~ 상현일 (달이 자정 전후에 떠서 초저녁 밤이 어두운 구간). 월령 API로 하현(≈22.1)·상현(≈7.4) 날짜를 찾아 그 사이를 칠한다.
+- **중요 천문현상** = 신월, 유성우 극대기 중 ZHR ≥ 10, 일식·월식, 슈퍼문. 그 외(절기·행성 합 등)는 보통 표기.
+- 달 아이콘: `moonIllum`(%)을 10% 단위로 반올림 → `assets/moon/moon-{waxing|waning}-0XX.svg`. 조도는 월령에서 계산: `illum = (1 − cos(2π · lunAge / 29.53)) / 2`, waxing = lunAge < 14.77.
+- 셀 클릭 → 그 날 "오늘 밤" 상세(게이지 바 + 추천 명소) 모달 또는 `/map?date=` 이동 (Phase 2).
+- 알림 설정은 Phase 2 (서비스워커 푸시). 버튼 자리만.
+
+### 11.3 데이터 — 한국천문연구원(KASI) OpenAPI 매핑 (공공데이터포털, 무료, XML)
+| 캘린더 요소 | API | 엔드포인트 / 파라미터 | 응답 필드 |
+|---|---|---|---|
+| 일출·일몰, 월출·월몰, **천문박명** | 출몰시각 정보 | `B090041/openapi/service/RiseSetInfoService/getAreaRiseSetInfo` · `locdate=YYYYMMDD`, `location=서울` (위경도 버전 `getLCRiseSetInfo`도 있음) | `sunrise sunset suntransit moonrise moonset moontransit civilm civile nautm naute astm aste` (HHMM) |
+| 월령 → 달 조도·상현/하현 | 월령 정보 | `.../LunPhInfoService/getLunPhInfo` · `solYear solMonth [solDay]` | `lunAge` |
+| 유성우 극대·행성 현상·근일점 등 | **천문현상 정보** | `.../AstroEventInfoService/getAstroEventInfo` · `solYear solMonth` | `locdate seq astroTitle astroTime astroEvent remarks` |
+| 24절기(입동·소설), 공휴일 | 특일 정보 | `.../SpcdeInfoService/get24DivisionsInfo`, `getHoliDeInfo` · `solYear solMonth` | `locdate dateName dateKind isHoliday kst` |
+
+- 천문현상 API는 **월 단위 한 번 호출**로 그 달의 현상 목록(유성우·행성 합·근지점 등)을 준다. 캘린더 셀의 현상 줄과 하단 리스트는 이 응답을 그대로 쓰면 된다. 어떤 현상을 '중요'로 올릴지는 `astroTitle` 키워드(신월·보름·유성우·식)로 서버에서 분류.
+- 출몰시각은 **하루 1회 호출 × 30일**이라 월별 캘린더 한 장에 30회. 서버가 월 단위로 미리 받아 Redis에 캐시(월 바뀔 때 갱신).
+- **KASI API에 없는 것**: 은하수 출몰시각(알비레오 기준), 달 조도 %. 둘 다 계산으로 대체 — 조도는 위 공식, 은하수 출몰은 알비레오(RA 19h31m, Dec +28°)의 출몰을 항성시로 계산(Phase 2, `astronomy-engine` 같은 라이브러리 서버 측 사용). ZHR·유성우 설명도 API에 없으면 우리 DB의 유성우 테이블(연중 고정 10여 개)에서 보강.
+- 서비스 키는 서버에만 둔다. 프론트는 `GET /api/calendar?year=2026&month=11` 한 번으로 아래 모양을 받는다:
+```json
+{ "days": [ { "date": "2026-11-05", "sunrise": "07:02", "sunset": "17:28", "moonrise": "01:12", "moonset": "14:40",
+             "astmEnd": "19:00", "astmStart": "05:33", "lunAge": 24.3, "moonIllum": 23, "waxing": false,
+             "events": [ { "title": "남타우리드 유성우 극대", "time": "", "desc": "ZHR 5~10", "important": false } ],
+             "shootingWindow": true } ],
+  "events": [ … 월 전체 목록 … ] }
+```
