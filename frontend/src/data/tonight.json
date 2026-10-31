@@ -1,0 +1,18 @@
+{
+  "location": "서울 노원구",
+  "basis": "내 위치 · 21:00 기준",
+  "sunset": "2026-10-31T17:32+09:00",
+  "astroEnd": "2026-10-31T19:04+09:00",
+  "astroStart": "2026-11-01T05:26+09:00",
+  "sunrise": "2026-11-01T06:57+09:00",
+  "moonrise": "2026-10-31T21:12+09:00",
+  "moonset": "2026-11-01T10:48+09:00",
+  "moonIllum": 71,
+  "waxing": false,
+  "now": "2026-10-31T22:57+09:00",
+  "cloudPct": 40,
+  "humidityPct": 62,
+  "windMs": 2.1,
+  "visibilityKm": 15,
+  "tempC": 9
+}

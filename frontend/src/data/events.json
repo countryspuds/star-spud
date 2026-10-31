@@ -1,0 +1,23 @@
+[
+  {
+    "dday": 5,
+    "title": "남타우리드 유성우 극대기",
+    "sub": "11.5 (목) · 자정 전후 남동쪽 하늘",
+    "moonIllum": 22,
+    "waxing": false
+  },
+  {
+    "dday": 17,
+    "title": "사자자리 유성우 극대기",
+    "sub": "11.17 (화) · 새벽 3시 이후 동쪽 하늘",
+    "moonIllum": 52,
+    "waxing": true
+  },
+  {
+    "dday": 44,
+    "title": "쌍둥이자리 유성우 극대기",
+    "sub": "12.14 (월) · 밤새 관측 가능",
+    "moonIllum": 24,
+    "waxing": true
+  }
+]

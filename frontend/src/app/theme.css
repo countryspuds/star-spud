@@ -1,0 +1,115 @@
+/* 디자인 토큰 — docs/FRONTEND_SPEC.md §1 */
+:root {
+  /* ground */
+  --bg: #161b24;
+  --card: #1f2530;
+  --card-2: #242b38;
+  --glass: rgba(255, 255, 255, 0.06);
+  --edge: rgba(255, 255, 255, 0.09);
+  --glass-card: rgba(31, 37, 48, 0.45);
+  --light-card: #f3f5f8;
+  --light-fg: #141414;
+
+  /* text */
+  --fg: #eaeef5;
+  --fg-2: #98a2b3;
+  --fg-3: #6b7382;
+
+  /* accent */
+  --lime: #d9fc46;
+  --blue: #4f7cff;
+  --sprout: #5ea85c;
+
+  /* 광공해 5단계 (어두운 바탕용) */
+  --lp-0: #2d3650;
+  --lp-1: #4a5ad6;
+  --lp-2: #e5c33d;
+  --lp-3: #c8503a;
+  --lp-4: #d9fc46;
+
+  /* 감자색 4톤 (내 감자밭) */
+  --potato-1: #f0d08a;
+  --potato-2: #d9a95e;
+  --potato-3: #b98545;
+  --potato-4: #8a5a2e;
+
+  /* 날씨(미세먼지) 상태색 */
+  --aq-good: #3b82f6;
+  --aq-ok: #22c55e;
+  --aq-bad: #f59e0b;
+  --aq-worst: #ef4444;
+
+  --radius-card: 22px;
+  --radius-pill: 999px;
+  --gap: 16px;
+
+  --font-sans: "IBM Plex Sans KR", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", "IBM Plex Sans KR", ui-monospace, monospace;
+
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+}
+
+body {
+  min-width: 320px;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  word-break: keep-all;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+img {
+  display: block;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+/* 픽셀 요소(지도·달·감자) */
+.pixelated {
+  image-rendering: pixelated;
+}
+
+/* 숫자 줄맞춤 */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}

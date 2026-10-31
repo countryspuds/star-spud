@@ -1,0 +1,142 @@
+[
+  {
+    "id": "anbandegi",
+    "name": "안반데기",
+    "sido": "gangwon",
+    "sigungu": "강릉시",
+    "bortle": 3,
+    "lpLevel": 0,
+    "distanceKm": 190,
+    "elevationM": 1100
+  },
+  {
+    "id": "gwangdeoksan",
+    "name": "광덕산",
+    "sido": "gangwon",
+    "sigungu": "화천군",
+    "bortle": 3,
+    "lpLevel": 0,
+    "distanceKm": 75,
+    "elevationM": 1046
+  },
+  {
+    "id": "byeolmaro",
+    "name": "별마로천문대",
+    "sido": "gangwon",
+    "sigungu": "영월군",
+    "bortle": 3,
+    "lpLevel": 1,
+    "distanceKm": 150,
+    "elevationM": 799
+  },
+  {
+    "id": "yumyeongsan",
+    "name": "유명산",
+    "sido": "gyeonggi",
+    "sigungu": "가평군",
+    "bortle": 5,
+    "lpLevel": 2,
+    "distanceKm": 50,
+    "elevationM": 862
+  },
+  {
+    "id": "sobaeksan",
+    "name": "소백산 연화봉",
+    "sido": "chungbuk",
+    "sigungu": "단양군",
+    "bortle": 3,
+    "lpLevel": 0,
+    "distanceKm": 165,
+    "elevationM": 1383
+  },
+  {
+    "id": "yeongyang",
+    "name": "영양 반딧불이천문대",
+    "sido": "gyeongbuk",
+    "sigungu": "영양군",
+    "bortle": 2,
+    "lpLevel": 0,
+    "distanceKm": 260,
+    "elevationM": 410
+  },
+  {
+    "id": "bohyeonsan",
+    "name": "보현산천문대",
+    "sido": "gyeongbuk",
+    "sigungu": "영천시",
+    "bortle": 3,
+    "lpLevel": 0,
+    "distanceKm": 270,
+    "elevationM": 1124
+  },
+  {
+    "id": "goheung",
+    "name": "나로도 해변",
+    "sido": "jeonnam",
+    "sigungu": "고흥군",
+    "bortle": 3,
+    "lpLevel": 0,
+    "distanceKm": 380,
+    "elevationM": 20
+  },
+  {
+    "id": "jeju1100",
+    "name": "1100고지 습지",
+    "sido": "jeju",
+    "sigungu": "서귀포시",
+    "bortle": 3,
+    "lpLevel": 1,
+    "distanceKm": 460,
+    "elevationM": 1100
+  },
+  {
+    "id": "gamaksan",
+    "name": "감악산 풍력단지",
+    "sido": "gyeongnam",
+    "sigungu": "거창군",
+    "bortle": 3,
+    "lpLevel": 0,
+    "distanceKm": 260,
+    "elevationM": 951
+  },
+  {
+    "id": "hwangmaesan",
+    "name": "황매산 오토캠핑장",
+    "sido": "gyeongnam",
+    "sigungu": "합천군",
+    "bortle": 3,
+    "lpLevel": 0,
+    "distanceKm": 290,
+    "elevationM": 850
+  },
+  {
+    "id": "eoreumgol",
+    "name": "천황산 얼음골",
+    "sido": "gyeongnam",
+    "sigungu": "밀양시",
+    "bortle": 4,
+    "lpLevel": 1,
+    "distanceKm": 330,
+    "elevationM": 700
+  },
+  {
+    "id": "yeocha",
+    "name": "여차·홍포 전망대",
+    "sido": "gyeongnam",
+    "sigungu": "거제시",
+    "bortle": 4,
+    "lpLevel": 1,
+    "distanceKm": 390,
+    "elevationM": 200
+  },
+  {
+    "id": "mangsan",
+    "name": "망산 정상",
+    "sido": "gyeongnam",
+    "sigungu": "거제시",
+    "bortle": 4,
+    "lpLevel": 1,
+    "distanceKm": 395,
+    "elevationM": 397
+  }
+]
