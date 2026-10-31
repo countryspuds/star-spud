@@ -1,0 +1,554 @@
+{
+  "year": 2026,
+  "month": 11,
+  "source": "예시 데이터 · 서울 기준 근사값",
+  "days": [
+    {
+      "date": "2026-11-01",
+      "sunrise": "06:57",
+      "sunset": "17:32",
+      "moonrise": "00:27",
+      "moonset": "12:52",
+      "astmEnd": "19:04",
+      "astmStart": "05:25",
+      "lunAge": 21.5,
+      "moonIllum": 57,
+      "waxing": false,
+      "events": [],
+      "shootingWindow": false
+    },
+    {
+      "date": "2026-11-02",
+      "sunrise": "06:58",
+      "sunset": "17:31",
+      "moonrise": "01:17",
+      "moonset": "13:42",
+      "astmEnd": "19:03",
+      "astmStart": "05:26",
+      "lunAge": 22.5,
+      "moonIllum": 46,
+      "waxing": false,
+      "events": [
+        {
+          "title": "하현",
+          "time": "",
+          "desc": "자정쯤 뜨는 반달 · 초저녁 하늘이 어두워지는 촬영 적기 시작",
+          "important": false
+        }
+      ],
+      "shootingWindow": true
+    },
+    {
+      "date": "2026-11-03",
+      "sunrise": "06:59",
+      "sunset": "17:31",
+      "moonrise": "02:06",
+      "moonset": "14:31",
+      "astmEnd": "19:03",
+      "astmStart": "05:27",
+      "lunAge": 23.5,
+      "moonIllum": 36,
+      "waxing": false,
+      "events": [],
+      "shootingWindow": true
+    },
+    {
+      "date": "2026-11-04",
+      "sunrise": "07:00",
+      "sunset": "17:30",
+      "moonrise": "02:56",
+      "moonset": "15:21",
+      "astmEnd": "19:02",
+      "astmStart": "05:28",
+      "lunAge": 24.5,
+      "moonIllum": 26,
+      "waxing": false,
+      "events": [],
+      "shootingWindow": true
+    },
+    {
+      "date": "2026-11-05",
+      "sunrise": "07:01",
+      "sunset": "17:30",
+      "moonrise": "03:46",
+      "moonset": "16:11",
+      "astmEnd": "19:02",
+      "astmStart": "05:29",
+      "lunAge": 25.5,
+      "moonIllum": 17,
+      "waxing": false,
+      "events": [
+        {
+          "title": "남타우리드 유성우 극대",
+          "time": "",
+          "desc": "ZHR 5~10 · 느리고 밝은 화구가 특징",
+          "important": false
+        }
+      ],
+      "shootingWindow": true
+    },
+    {
+      "date": "2026-11-06",
+      "sunrise": "07:02",
+      "sunset": "17:29",
+      "moonrise": "04:36",
+      "moonset": "17:01",
+      "astmEnd": "19:01",
+      "astmStart": "05:30",
+      "lunAge": 26.5,
+      "moonIllum": 10,
+      "waxing": false,
+      "events": [],
+      "shootingWindow": true
+    },
+    {
+      "date": "2026-11-07",
+      "sunrise": "07:03",
+      "sunset": "17:28",
+      "moonrise": "05:25",
+      "moonset": "17:50",
+      "astmEnd": "19:00",
+      "astmStart": "05:31",
+      "lunAge": 27.5,
+      "moonIllum": 4,
+      "waxing": false,
+      "events": [
+        {
+          "title": "입동",
+          "time": "",
+          "desc": "24절기 · 겨울의 시작",
+          "important": false
+        }
+      ],
+      "shootingWindow": true
+    },
+    {
+      "date": "2026-11-08",
+      "sunrise": "07:04",
+      "sunset": "17:28",
+      "moonrise": "06:15",
+      "moonset": "18:40",
+      "astmEnd": "18:60",
+      "astmStart": "05:32",
+      "lunAge": 28.5,
+      "moonIllum": 1,
+      "waxing": false,
+      "events": [],
+      "shootingWindow": true
+    },
+    {
+      "date": "2026-11-09",
+      "sunrise": "07:05",
+      "sunset": "17:27",
+      "moonrise": "07:05",
+      "moonset": "19:30",
+      "astmEnd": "18:59",
+      "astmStart": "05:33",
+      "lunAge": 0,
+      "moonIllum": 0,
+      "waxing": true,
+      "events": [
+        {
+          "title": "신월",
+          "time": "",
+          "desc": "달 없는 밤 · 딥스카이·은하수 촬영 최적",
+          "important": true
+        }
+      ],
+      "shootingWindow": true
+    },
+    {
+      "date": "2026-11-10",
+      "sunrise": "07:06",
+      "sunset": "17:27",
+      "moonrise": "07:55",
+      "moonset": "20:20",
+      "astmEnd": "18:59",
+      "astmStart": "05:34",
+      "lunAge": 1,
+      "moonIllum": 1,
+      "waxing": true,
+      "events": [],
+      "shootingWindow": true
+    },
+    {
+      "date": "2026-11-11",
+      "sunrise": "07:07",
+      "sunset": "17:26",
+      "moonrise": "08:45",
+      "moonset": "21:10",
+      "astmEnd": "18:58",
+      "astmStart": "05:35",
+      "lunAge": 2,
+      "moonIllum": 4,
+      "waxing": true,
+      "events": [],
+      "shootingWindow": true
+    },
+    {
+      "date": "2026-11-12",
+      "sunrise": "07:08",
+      "sunset": "17:26",
+      "moonrise": "09:34",
+      "moonset": "21:59",
+      "astmEnd": "18:58",
+      "astmStart": "05:36",
+      "lunAge": 3,
+      "moonIllum": 10,
+      "waxing": true,
+      "events": [
+        {
+          "title": "북타우리드 유성우 극대",
+          "time": "",
+          "desc": "ZHR 5 · 남타우리드와 함께 화구 기대",
+          "important": false
+        }
+      ],
+      "shootingWindow": true
+    },
+    {
+      "date": "2026-11-13",
+      "sunrise": "07:09",
+      "sunset": "17:25",
+      "moonrise": "10:24",
+      "moonset": "22:49",
+      "astmEnd": "18:57",
+      "astmStart": "05:37",
+      "lunAge": 4,
+      "moonIllum": 17,
+      "waxing": true,
+      "events": [],
+      "shootingWindow": true
+    },
+    {
+      "date": "2026-11-14",
+      "sunrise": "07:10",
+      "sunset": "17:24",
+      "moonrise": "11:14",
+      "moonset": "23:39",
+      "astmEnd": "18:56",
+      "astmStart": "05:38",
+      "lunAge": 5,
+      "moonIllum": 26,
+      "waxing": true,
+      "events": [],
+      "shootingWindow": true
+    },
+    {
+      "date": "2026-11-15",
+      "sunrise": "07:11",
+      "sunset": "17:24",
+      "moonrise": "12:04",
+      "moonset": "00:29",
+      "astmEnd": "18:56",
+      "astmStart": "05:39",
+      "lunAge": 6,
+      "moonIllum": 36,
+      "waxing": true,
+      "events": [],
+      "shootingWindow": true
+    },
+    {
+      "date": "2026-11-16",
+      "sunrise": "07:12",
+      "sunset": "17:23",
+      "moonrise": "12:53",
+      "moonset": "01:18",
+      "astmEnd": "18:55",
+      "astmStart": "05:40",
+      "lunAge": 7,
+      "moonIllum": 46,
+      "waxing": true,
+      "events": [],
+      "shootingWindow": true
+    },
+    {
+      "date": "2026-11-17",
+      "sunrise": "07:13",
+      "sunset": "17:23",
+      "moonrise": "13:43",
+      "moonset": "02:08",
+      "astmEnd": "18:55",
+      "astmStart": "05:41",
+      "lunAge": 8,
+      "moonIllum": 57,
+      "waxing": true,
+      "events": [
+        {
+          "title": "상현",
+          "time": "",
+          "desc": "초저녁 남쪽 하늘의 반달 · 자정 전 월몰",
+          "important": false
+        },
+        {
+          "title": "사자자리 유성우 극대",
+          "time": "",
+          "desc": "ZHR 15 · 새벽 동쪽 하늘 · 월몰 후 관측",
+          "important": true
+        }
+      ],
+      "shootingWindow": true
+    },
+    {
+      "date": "2026-11-18",
+      "sunrise": "07:14",
+      "sunset": "17:22",
+      "moonrise": "14:33",
+      "moonset": "02:58",
+      "astmEnd": "18:54",
+      "astmStart": "05:42",
+      "lunAge": 9,
+      "moonIllum": 67,
+      "waxing": true,
+      "events": [],
+      "shootingWindow": false
+    },
+    {
+      "date": "2026-11-19",
+      "sunrise": "07:15",
+      "sunset": "17:21",
+      "moonrise": "15:23",
+      "moonset": "03:48",
+      "astmEnd": "18:53",
+      "astmStart": "05:43",
+      "lunAge": 10,
+      "moonIllum": 76,
+      "waxing": true,
+      "events": [],
+      "shootingWindow": false
+    },
+    {
+      "date": "2026-11-20",
+      "sunrise": "07:16",
+      "sunset": "17:21",
+      "moonrise": "16:12",
+      "moonset": "04:37",
+      "astmEnd": "18:53",
+      "astmStart": "05:44",
+      "lunAge": 11,
+      "moonIllum": 85,
+      "waxing": true,
+      "events": [],
+      "shootingWindow": false
+    },
+    {
+      "date": "2026-11-21",
+      "sunrise": "07:17",
+      "sunset": "17:20",
+      "moonrise": "17:02",
+      "moonset": "05:27",
+      "astmEnd": "18:52",
+      "astmStart": "05:45",
+      "lunAge": 12,
+      "moonIllum": 92,
+      "waxing": true,
+      "events": [],
+      "shootingWindow": false
+    },
+    {
+      "date": "2026-11-22",
+      "sunrise": "07:18",
+      "sunset": "17:20",
+      "moonrise": "17:52",
+      "moonset": "06:17",
+      "astmEnd": "18:52",
+      "astmStart": "05:46",
+      "lunAge": 13,
+      "moonIllum": 97,
+      "waxing": true,
+      "events": [
+        {
+          "title": "소설",
+          "time": "",
+          "desc": "24절기 · 첫눈이 내린다는 때",
+          "important": false
+        }
+      ],
+      "shootingWindow": false
+    },
+    {
+      "date": "2026-11-23",
+      "sunrise": "07:19",
+      "sunset": "17:19",
+      "moonrise": "18:42",
+      "moonset": "07:07",
+      "astmEnd": "18:51",
+      "astmStart": "05:47",
+      "lunAge": 14,
+      "moonIllum": 99,
+      "waxing": true,
+      "events": [],
+      "shootingWindow": false
+    },
+    {
+      "date": "2026-11-24",
+      "sunrise": "07:20",
+      "sunset": "17:19",
+      "moonrise": "19:31",
+      "moonset": "07:56",
+      "astmEnd": "18:51",
+      "astmStart": "05:48",
+      "lunAge": 15,
+      "moonIllum": 100,
+      "waxing": false,
+      "events": [
+        {
+          "title": "보름",
+          "time": "",
+          "desc": "밤새 밝은 달 · 달 사진·크레이터 관측에 적합",
+          "important": false
+        }
+      ],
+      "shootingWindow": false
+    },
+    {
+      "date": "2026-11-25",
+      "sunrise": "07:21",
+      "sunset": "17:18",
+      "moonrise": "20:21",
+      "moonset": "08:46",
+      "astmEnd": "18:50",
+      "astmStart": "05:49",
+      "lunAge": 16,
+      "moonIllum": 98,
+      "waxing": false,
+      "events": [],
+      "shootingWindow": false
+    },
+    {
+      "date": "2026-11-26",
+      "sunrise": "07:22",
+      "sunset": "17:17",
+      "moonrise": "21:11",
+      "moonset": "09:36",
+      "astmEnd": "18:49",
+      "astmStart": "05:50",
+      "lunAge": 17,
+      "moonIllum": 94,
+      "waxing": false,
+      "events": [],
+      "shootingWindow": false
+    },
+    {
+      "date": "2026-11-27",
+      "sunrise": "07:23",
+      "sunset": "17:17",
+      "moonrise": "22:01",
+      "moonset": "10:26",
+      "astmEnd": "18:49",
+      "astmStart": "05:51",
+      "lunAge": 18,
+      "moonIllum": 89,
+      "waxing": false,
+      "events": [],
+      "shootingWindow": false
+    },
+    {
+      "date": "2026-11-28",
+      "sunrise": "07:24",
+      "sunset": "17:16",
+      "moonrise": "22:51",
+      "moonset": "11:16",
+      "astmEnd": "18:48",
+      "astmStart": "05:52",
+      "lunAge": 19,
+      "moonIllum": 81,
+      "waxing": false,
+      "events": [],
+      "shootingWindow": false
+    },
+    {
+      "date": "2026-11-29",
+      "sunrise": "07:25",
+      "sunset": "17:16",
+      "moonrise": "23:40",
+      "moonset": "12:05",
+      "astmEnd": "18:48",
+      "astmStart": "05:53",
+      "lunAge": 20,
+      "moonIllum": 72,
+      "waxing": false,
+      "events": [],
+      "shootingWindow": false
+    },
+    {
+      "date": "2026-11-30",
+      "sunrise": "07:26",
+      "sunset": "17:15",
+      "moonrise": "00:30",
+      "moonset": "12:55",
+      "astmEnd": "18:47",
+      "astmStart": "05:54",
+      "lunAge": 21,
+      "moonIllum": 62,
+      "waxing": false,
+      "events": [],
+      "shootingWindow": false
+    }
+  ],
+  "events": [
+    {
+      "date": "2026-11-02",
+      "title": "하현",
+      "time": "",
+      "desc": "자정쯤 뜨는 반달 · 초저녁 하늘이 어두워지는 촬영 적기 시작",
+      "important": false
+    },
+    {
+      "date": "2026-11-05",
+      "title": "남타우리드 유성우 극대",
+      "time": "",
+      "desc": "ZHR 5~10 · 느리고 밝은 화구가 특징",
+      "important": false
+    },
+    {
+      "date": "2026-11-07",
+      "title": "입동",
+      "time": "",
+      "desc": "24절기 · 겨울의 시작",
+      "important": false
+    },
+    {
+      "date": "2026-11-09",
+      "title": "신월",
+      "time": "",
+      "desc": "달 없는 밤 · 딥스카이·은하수 촬영 최적",
+      "important": true
+    },
+    {
+      "date": "2026-11-12",
+      "title": "북타우리드 유성우 극대",
+      "time": "",
+      "desc": "ZHR 5 · 남타우리드와 함께 화구 기대",
+      "important": false
+    },
+    {
+      "date": "2026-11-17",
+      "title": "상현",
+      "time": "",
+      "desc": "초저녁 남쪽 하늘의 반달 · 자정 전 월몰",
+      "important": false
+    },
+    {
+      "date": "2026-11-17",
+      "title": "사자자리 유성우 극대",
+      "time": "",
+      "desc": "ZHR 15 · 새벽 동쪽 하늘 · 월몰 후 관측",
+      "important": true
+    },
+    {
+      "date": "2026-11-22",
+      "title": "소설",
+      "time": "",
+      "desc": "24절기 · 첫눈이 내린다는 때",
+      "important": false
+    },
+    {
+      "date": "2026-11-24",
+      "title": "보름",
+      "time": "",
+      "desc": "밤새 밝은 달 · 달 사진·크레이터 관측에 적합",
+      "important": false
+    }
+  ]
+}

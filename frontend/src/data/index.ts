@@ -9,10 +9,12 @@ import index10dJson from "./index10d.json";
 import eventsJson from "./events.json";
 import spotsJson from "./spots.json";
 import fieldJson from "./field.json";
+import calendar202611Json from "./calendar-2026-11.json";
 import photoPlaceholder from "../assets/photo-of-month-placeholder.png";
 import { buildIndexDays } from "./starIndex";
 import type {
   AstroEvent,
+  CalendarMonth,
   Field,
   Index10d,
   PhotoOfMonth,
@@ -26,7 +28,7 @@ export type * from "./types";
 
 const cache = new Map<string, Promise<unknown>>();
 
-function cached<T>(key: string, load: () => T): Promise<T> {
+function cached<T>(key: string, load: () => T | Promise<T>): Promise<T> {
   let p = cache.get(key) as Promise<T> | undefined;
   if (!p) {
     p = Promise.resolve().then(load);
@@ -87,4 +89,29 @@ export function getField(): Promise<Field> {
  */
 export function getStarScoreGrid(res: StarScoreRes): Promise<StarScoreGrid> {
   return cached(`starscore:${res}`, () => ({ cells: [] }));
+}
+
+/** 로컬에 있는 mock 월 데이터 — "YYYY-MM" → JSON */
+const CALENDAR_MOCKS: Record<string, CalendarMonth> = {
+  "2026-11": calendar202611Json as CalendarMonth,
+};
+
+/** 백엔드 주소. 비어 있으면 mock JSON만 쓴다 (Phase 1 기본) */
+const API_BASE: string = (import.meta.env.VITE_API_BASE as string | undefined) ?? "";
+
+/**
+ * 천문 캘린더 한 달 — VITE_API_BASE가 있으면 GET /api/calendar?year&month, 없으면 mock JSON.
+ * 데이터가 없는 달은 null (빈 그리드 + "데이터 없음").
+ */
+export function getCalendar(year: number, month: number): Promise<CalendarMonth | null> {
+  const key = `${year}-${String(month).padStart(2, "0")}`;
+  return cached(`calendar:${key}`, async () => {
+    if (API_BASE) {
+      const res = await fetch(`${API_BASE}/api/calendar?year=${year}&month=${month}`);
+      if (res.status === 404) return null;
+      if (!res.ok) throw new Error(`calendar ${res.status}`);
+      return (await res.json()) as CalendarMonth;
+    }
+    return CALENDAR_MOCKS[key] ?? null;
+  });
 }
