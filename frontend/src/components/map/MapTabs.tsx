@@ -2,8 +2,10 @@ import { Link } from "react-router-dom";
 import type { MapTab } from "../../lib/mapRoute";
 import styles from "./map.module.css";
 
+/** 탭 순서는 명세 §10: [별보기][광공해][날씨][지형고도][내 감자밭] */
 const TABS: { tab: MapTab; label: string; to: string }[] = [
-  { tab: "lp", label: "광공해", to: "/map" },
+  { tab: "star", label: "별보기", to: "/map" },
+  { tab: "lp", label: "광공해", to: "/map/lp" },
   { tab: "weather", label: "날씨", to: "/map/weather" },
   { tab: "terrain", label: "지형고도", to: "/map/terrain" },
   { tab: "field", label: "내 감자밭", to: "/map/field" },

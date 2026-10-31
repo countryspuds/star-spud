@@ -21,7 +21,7 @@ import { Card } from "../components/ui/Card";
 import { PillButton } from "../components/ui/Pill";
 import { SIDO, isSidoCode } from "../data/regions";
 import { getLayerSrc, isPixelLayer } from "../lib/lod";
-import { MAP_BG, parseMapRoute, type MapTab } from "../lib/mapRoute";
+import { lpPath, MAP_BG, parseMapRoute, type MapTab } from "../lib/mapRoute";
 import { getSidoCells, getSigunguPieces } from "../lib/puzzle";
 import { useElementSize } from "../lib/useElementSize";
 import { MAP_BOX, MIN_SCALE, PUZZLE_BOX, fitView, type View } from "../lib/view";
@@ -73,20 +73,20 @@ export function MapPage() {
   const sigunguPieces = sido ? getSigunguPieces(sido) : null;
   const sidoPiece = knownSido ? getSidoCells(sido) : null;
 
-  const crumbs: Crumb[] = [{ label: "전국", to: "/map" }];
+  const crumbs: Crumb[] = [{ label: "전국", to: lpPath() }];
   if (sido) {
-    crumbs.push({ label: knownSido ? SIDO[sido].name : "알 수 없는 지역", to: `/map/${sido}` });
+    crumbs.push({ label: knownSido ? SIDO[sido].name : "알 수 없는 지역", to: lpPath(sido) });
   }
   if (sigungu) crumbs.push({ label: sigungu });
 
   const goSido = (code: string) => {
     resetView();
-    navigate(`/map/${code}`);
+    navigate(lpPath(code));
   };
   const goNational = () => {
     resetView();
     setPuzzleKey(null);
-    if (sido) navigate("/map");
+    if (sido) navigate(lpPath());
   };
   const toggleSigungu = (id: string) => {
     if (!sido) return;

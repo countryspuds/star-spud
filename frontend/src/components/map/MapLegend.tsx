@@ -11,6 +11,19 @@ interface Item {
 
 const LEGENDS: Record<MapTab, { title: string; items: Item[]; note?: string; example?: boolean }> =
   {
+    // 명세 §10 — 8단계 팔레트 중 5칸, 밝을수록 좋음. 점수는 백엔드가 계산한 정적 값 (오늘 밤 날씨·달 미포함)
+    star: {
+      title: "별보기 점수 · 0~100",
+      items: [
+        { color: "#1a2030", label: "나쁨", sub: "대도시" },
+        { color: "#2f4668", label: "아쉬움", sub: "도시 주변" },
+        { color: "#5f9a85", label: "보통", sub: "교외" },
+        { color: "#b9e258", label: "좋음", sub: "농어촌·산간" },
+        { color: "#d9fc46", label: "매우 좋음", sub: "명소 근처" },
+      ],
+      note: "광공해 50 · 명소 20 · 접근 15 · 고도 10 · 편의 5 — 오늘 밤 날씨·달은 홈의 10일 지수에서",
+      example: true,
+    },
     lp: {
       title: "광공해 · 5단계",
       items: [
