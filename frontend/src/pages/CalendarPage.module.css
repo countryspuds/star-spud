@@ -262,6 +262,16 @@
   color: var(--fg-3);
 }
 
+.error {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  padding: 18px 0;
+  font-size: 13px;
+  color: var(--fg-2);
+}
+
 /* ── 하단 2단 ─────────────────── */
 .bottom {
   display: grid;

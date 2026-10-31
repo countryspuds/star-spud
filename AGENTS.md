@@ -27,7 +27,7 @@ cd backend && ./gradlew bootRun           # http://localhost:8080 (JDK 25는 Gra
 cd backend && ./gradlew test              # 백엔드 테스트 (PR 필수, Testcontainers → Docker 필요)
 cd backend && ./gradlew build             # 컴파일 + 테스트 + JAR
 cd frontend && npm install && npm run dev
-cd frontend && npm run lint && npx tsc --noEmit   # 프론트 검사 (PR 필수)
+cd frontend && npm run lint && npx tsc -b   # 프론트 검사 (PR 필수; 루트 tsconfig은 참조 전용이라 `tsc --noEmit`은 아무것도 검사하지 않음)
 ```
 - 마이그레이션은 Flyway가 앱 시작 시 `src/main/resources/db/migration/V*.sql`을 자동 적용한다. 별도 명령 없음.
 

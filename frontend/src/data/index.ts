@@ -99,13 +99,25 @@ const CALENDAR_MOCKS: Record<string, CalendarMonth> = {
 /** 백엔드 주소. 비어 있으면 mock JSON만 쓴다 (Phase 1 기본) */
 const API_BASE: string = (import.meta.env.VITE_API_BASE as string | undefined) ?? "";
 
+const calendarKey = (year: number, month: number) =>
+  `calendar:${year}-${String(month).padStart(2, "0")}`;
+
+/**
+ * 실패한 달을 캐시에서 비운다 — 다음 getCalendar()가 다시 요청한다.
+ * 거부된 Promise를 바로 지우면 React `use()`가 같은 Promise를 다시 못 받아 무한 suspend하므로,
+ * 오류 경계가 오류를 받은 뒤(componentDidCatch)에 호출한다.
+ */
+export function invalidateCalendar(year: number, month: number): void {
+  cache.delete(calendarKey(year, month));
+}
+
 /**
  * 천문 캘린더 한 달 — VITE_API_BASE가 있으면 GET /api/calendar?year&month, 없으면 mock JSON.
  * 데이터가 없는 달은 null (빈 그리드 + "데이터 없음").
  */
 export function getCalendar(year: number, month: number): Promise<CalendarMonth | null> {
-  const key = `${year}-${String(month).padStart(2, "0")}`;
-  return cached(`calendar:${key}`, async () => {
+  return cached(calendarKey(year, month), async () => {
+    const key = `${year}-${String(month).padStart(2, "0")}`;
     if (API_BASE) {
       const res = await fetch(`${API_BASE}/api/calendar?year=${year}&month=${month}`);
       if (res.status === 404) return null;

@@ -16,8 +16,8 @@ const TAB_SEGMENTS: Record<string, MapTab> = {
 export function parseMapRoute(splat: string | undefined): MapRoute {
   const seg = (splat ?? "").split("/").filter(Boolean)[0];
   if (!seg) return { tab: "lp", sido: null };
-  const tab = TAB_SEGMENTS[seg];
-  if (tab) return { tab, sido: null };
+  // 자체 키만 인정 — "constructor"·"__proto__" 같은 프로토타입 키가 탭으로 해석되지 않게
+  if (Object.hasOwn(TAB_SEGMENTS, seg)) return { tab: TAB_SEGMENTS[seg], sido: null };
   return { tab: "lp", sido: seg };
 }
 
