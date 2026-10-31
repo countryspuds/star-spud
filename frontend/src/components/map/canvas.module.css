@@ -7,6 +7,10 @@
   -webkit-user-select: none;
 }
 
+.grab {
+  cursor: grab;
+}
+
 .dragging {
   cursor: grabbing;
 }

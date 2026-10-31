@@ -31,7 +31,7 @@ import styles from "../components/map/map.module.css";
 const MOVE_HINT =
   typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches
     ? "드래그로 이동"
-    : "휠 버튼 드래그로 이동 · 휠로 확대";
+    : "휠 버튼 또는 Space+드래그로 이동 · 휠로 확대";
 
 function hintFor(tab: MapTab, sido: string | null, puzzle: boolean, hasSigungu: boolean): string {
   if (tab !== "lp") return MOVE_HINT;
