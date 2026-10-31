@@ -1,0 +1,15 @@
+{
+  "days": [
+    { "date": "10.31", "cloud": 0.55, "moonIllum": 71, "visibility": 0.75 },
+    { "date": "11.1", "cloud": 0.3, "moonIllum": 61, "visibility": 0.8 },
+    { "date": "11.2", "cloud": 0.7, "moonIllum": 51, "visibility": 0.5 },
+    { "date": "11.3", "cloud": 0.2, "moonIllum": 41, "visibility": 0.9 },
+    { "date": "11.4", "cloud": 0.45, "moonIllum": 31, "visibility": 0.7 },
+    { "date": "11.5", "cloud": 0.25, "moonIllum": 22, "visibility": 0.85 },
+    { "date": "11.6", "cloud": 0.6, "moonIllum": 14, "visibility": 0.6 },
+    { "date": "11.7", "cloud": 0.15, "moonIllum": 7, "visibility": 0.9 },
+    { "date": "11.8", "cloud": 0.35, "moonIllum": 2, "visibility": 0.8 },
+    { "date": "11.9", "cloud": 0.2, "moonIllum": 0, "visibility": 0.85 }
+  ],
+  "events": [{ "date": "11.5", "label": "남타우리드 극대기" }]
+}

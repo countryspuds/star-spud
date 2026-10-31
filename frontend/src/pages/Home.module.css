@@ -1,0 +1,45 @@
+.bento {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  grid-template-rows: clamp(480px, 62vh, 760px) 230px;
+  gap: var(--gap);
+}
+
+.bento > * {
+  min-width: 0;
+  min-height: 0;
+}
+
+.events {
+  margin-top: var(--gap);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gap);
+}
+
+.footnote {
+  margin-top: 12px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--fg-3);
+}
+
+/* 모바일: 1열 스택, 사진 4:3 · 지도 1:1 · 나머지는 내용 높이 */
+@media (max-width: 860px) {
+  .bento {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+  }
+
+  .photo {
+    aspect-ratio: 4 / 3;
+  }
+
+  .map {
+    aspect-ratio: 1 / 1;
+  }
+
+  .events {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -1,16 +1,9 @@
 # ─────────────────────────────
-# Backend (Python / uv)
+# Backend (Java / Gradle) — 세부 규칙은 backend/.gitignore
 # ─────────────────────────────
-backend/.venv/
-**/__pycache__/
-*.py[cod]
-*.egg-info/
-.pytest_cache/
-.ruff_cache/
-.mypy_cache/
-
-# uv 캐시 (uv.lock, .python-version은 커밋해야 하므로 무시하지 않음)
-.uv/
+backend/.gradle/
+backend/build/
+# gradle-wrapper.jar은 커밋해야 하므로 무시하지 않음
 
 # ─────────────────────────────
 # Frontend (Node / Vite)

@@ -1,0 +1,327 @@
+.cardTitle {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.bigNum {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+/* ── 이달의 사진 ───────────────── */
+.photo {
+  overflow: hidden;
+}
+
+.photoImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photoCaption {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+  right: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.onPhoto {
+  color: #c9d1dd;
+}
+
+.photoMeta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #c9d1dd;
+}
+
+.likeChip {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: var(--radius-pill);
+  background: rgba(22, 27, 36, 0.6);
+  border: 1px solid var(--edge);
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+
+.heart {
+  color: #ff6b8a;
+  font-size: 10px;
+}
+
+.photoExample {
+  position: absolute;
+  left: 20px;
+  bottom: 14px;
+  color: #c9d1dd;
+  opacity: 0.8;
+}
+
+/* ── 광공해 지도 위젯 ──────────── */
+.teaser {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 20px 16px;
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+
+.teaser:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.teaserHead {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-right: 40px;
+}
+
+.teaserTitle {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.teaserMap {
+  flex: 1 1 0;
+  min-height: 0;
+  width: min(84%, 560px);
+  align-self: center;
+  object-fit: contain;
+}
+
+/* 별보기 위젯 범례 (좌하단) */
+.scoreLegend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+}
+
+.scoreSwatches {
+  display: flex;
+  gap: 2px;
+}
+
+.scoreSwatches span {
+  width: 10px;
+  height: 10px;
+}
+
+.scoreLegendText {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--fg-2);
+  white-space: nowrap;
+}
+
+.arrow,
+.arrowDark {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.arrow {
+  background: var(--glass);
+  border: 1px solid var(--edge);
+}
+
+.cover {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.cover:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: -2px;
+}
+
+/* ── 별보기 지수 ──────────────── */
+.index {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 18px 10px;
+}
+
+.indexHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.indexTitles {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.indexToday {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  text-align: right;
+}
+
+.indexDesc {
+  font-size: 12px;
+  color: var(--fg-2);
+}
+
+.chart {
+  flex: 1;
+  min-height: 150px;
+  min-width: 0;
+}
+
+.chart svg {
+  display: block;
+  overflow: visible;
+}
+
+.axis {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  fill: var(--fg-3);
+}
+
+.eventLabel {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  fill: var(--lime);
+}
+
+/* ── 오늘 밤 세부값 (밝은 카드) ── */
+.tonight {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px 16px;
+}
+
+.tonightHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-right: 36px;
+}
+
+.avatar {
+  flex: none;
+  border-radius: 50%;
+  background: #e2e6ec;
+}
+
+.tonightWhere {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+  min-width: 0;
+}
+
+.tonightWhere strong {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.tonightWhere span {
+  font-size: 11px;
+  color: #5b6474;
+}
+
+.arrowDark {
+  top: 14px;
+  right: 14px;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.moonValue {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tonightMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #3d4554;
+}
+
+.exampleDark {
+  margin-left: auto;
+  color: #8a93a3;
+  font-size: 10px;
+}
+
+/* ── 이벤트 카드 ──────────────── */
+.event {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 18px;
+}
+
+.eventText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.dday {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--lime);
+}
+
+.eventTitle {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.eventSub {
+  font-size: 12px;
+  color: var(--fg-2);
+}

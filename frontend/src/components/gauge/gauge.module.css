@@ -1,0 +1,185 @@
+.gauge {
+  padding: 16px 20px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 6px 16px;
+}
+
+.headLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.title {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.answer {
+  color: var(--lime);
+  font-size: 14px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.scroller {
+  overflow-x: auto;
+  margin: 0 -4px;
+  padding: 0 4px;
+}
+
+.track {
+  position: relative;
+  min-width: 600px;
+  padding: 0 4px;
+}
+
+.ticks {
+  position: relative;
+  height: 26px;
+  margin-bottom: -2px;
+}
+
+.tick {
+  position: absolute;
+  top: 25px;
+  bottom: -28px; /* 라벨 아래부터 아이콘 줄을 지나 바까지 세로선 */
+  border-left: 1px dashed rgba(255, 255, 255, 0.16);
+}
+
+.tickLabel {
+  position: absolute;
+  top: -25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 4px;
+  line-height: 1.2;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--fg-2);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.above {
+  position: relative;
+  height: 28px;
+}
+
+.moonIcon {
+  position: absolute;
+  bottom: 2px;
+  transform: translateX(-50%);
+  line-height: 0;
+}
+
+.nowCaret {
+  position: absolute;
+  bottom: -2px;
+  transform: translateX(-50%);
+  color: var(--lime);
+  font-size: 10px;
+  line-height: 1;
+}
+
+.bar {
+  position: relative;
+  height: 14px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--edge);
+}
+
+.moonSeg {
+  position: absolute;
+  top: 50%;
+  height: 6px;
+  margin-top: -3px;
+  background: #e9edf5;
+  border-radius: 3px;
+}
+
+.nowLine {
+  position: absolute;
+  top: -6px;
+  bottom: -6px;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--lime);
+}
+
+.below {
+  position: relative;
+  height: 18px;
+  margin-top: 4px;
+}
+
+.moonLabel,
+.nowLabel {
+  position: absolute;
+  top: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.moonLabel {
+  color: #e9edf5;
+}
+
+.nowLabel {
+  color: var(--lime);
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 18px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--fg-2);
+}
+
+.legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend i {
+  display: inline-block;
+}
+
+.legendSky {
+  width: 28px;
+  height: 8px;
+  border-radius: 4px;
+}
+
+.legendMoon {
+  width: 20px;
+  height: 4px;
+  border-radius: 2px;
+  background: #e9edf5;
+}
+
+.legendNow {
+  width: 2px;
+  height: 12px;
+  background: var(--lime);
+}
+
+.legendExample {
+  margin-left: auto;
+}
