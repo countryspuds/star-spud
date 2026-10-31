@@ -1,6 +1,6 @@
 # 03. 천체 이벤트
 
-- Phase: **MVP는 데이터 + 읽기 전용 목록**. 캘린더 뷰·API 연동·알림 설정은 Phase 2.
+- Phase: **MVP는 데이터 + 캘린더 뷰 + KASI 연동**([ADR-0013](../docs/ADR/0013-calendar-in-mvp.md), [12 캘린더](./12-calendar.md)). 사용자 알림 설정은 Phase 2. 별도 `/events` 목록 화면은 만들지 않고 캘린더 하단 리스트가 대신한다.
 - 관련: [04 감자](./04-potato.md)(방치 판정에 사용) · [10 알림](./10-notifications.md) · [02 관측 조건](./02-observing-conditions.md)
 
 ## 목적
@@ -26,8 +26,8 @@ events
 ```
 
 - **is_major 기준(초기)**: 3대 유성우(사분의자리·페르세우스·쌍둥이자리) 극대기, 한국에서 보이는 일식·월식, 슈퍼문. 그 외(소규모 유성우, 행성 접근, 혜성)는 minor. 관리자가 개별 조정 가능.
-- MVP 데이터는 운영자가 관리자 웹에서 등록한다. 2026년 12월 ~ 2027년 12월 분량을 베타 전에 입력한다.
-- Phase 2: 한국천문연구원 API에서 받아 `source = kasi`로 upsert. 수동 항목과 `external_id`로 매칭, 수동 값이 우선.
+- MVP: 한국천문연구원 천문현상 API에서 월 단위로 받아 `source = kasi`로 upsert([12 캘린더](./12-calendar.md)). `is_major`는 위 기준으로 서버가 제목 키워드로 정하고 관리자가 개별 조정. 수동 항목(`source = manual`)은 `external_id`로 매칭하며 수동 값이 우선.
+- 캘린더 강조(`important`)는 `is_major`와 다른 값이다. 신월·보름·ZHR ≥ 10 유성우도 강조하지만 감자 방치 판정에는 쓰지 않는다.
 
 ## 기능 상세
 

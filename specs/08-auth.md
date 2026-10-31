@@ -25,16 +25,19 @@
 
 ### 사용자
 ```
-users  id, provider, provider_uid, nickname(2~12자, 유니크), avatar_url, role(user|admin),
-       created_at, deleted_at
+users            id, nickname(2~12자, 유니크, 30일 1회 변경), avatar_url?, potato_avatar(basic|happy|sad), home_sido?, email?, role(user|admin),
+                 created_at, deleted_at
+auth_identities  id, user_id, provider(kakao|naver|email), provider_uid|email, password_hash?(email만), created_at
+                 (유니크: provider + provider_uid) — [ADR-0014](../docs/ADR/0014-auth-methods.md). MVP는 kakao 행만 생성
 refresh_tokens  id, user_id, token_hash, family_id, expires_at, revoked_at, user_agent
 ```
-- 첫 로그인 시 닉네임은 제공자 닉네임에서 가져오되 중복이면 뒤에 숫자를 붙인다. 온보딩에서 변경 가능.
+- 소셜 로그인: `auth_identities(provider, provider_uid)`로 사용자를 찾고, 없으면 `users` + `auth_identities`를 함께 만든다. 한 사용자에 여러 identity가 붙을 수 있다(Phase 2 계정 연결).
+- 첫 로그인 시 `nickname IS NULL`이면 온보딩(닉네임·감자 아바타·주로 보는 지역·약관)으로 보낸다. 닉네임 초안은 제공자 닉네임, 중복이면 뒤에 숫자. 온보딩 전엔 감자 심기·후기 불가(둘러보기 가능).
 - 닉네임 규칙: 한글·영문·숫자, 2~12자, 금칙어 목록.
 - 이메일은 제공자가 주면 저장하되 필수가 아니다. 알림 채널로 쓰지 않는다(MVP).
 
 ### 탈퇴
-- `DELETE /api/v1/me` → 즉시 처리: 감자·기록·사진·알림·refresh 삭제, `users`는 `deleted_at` 기록 후 개인정보 컬럼(nickname, avatar, email, provider_uid) 익명화. 공개 게시글(Phase 2)은 "탈퇴한 사용자"로 유지.
+- `DELETE /api/v1/me` → 즉시 처리: 감자·기록·사진·알림·refresh 삭제, **`auth_identities` 행 전부 삭제**, `users`는 `deleted_at` 기록 후 개인정보 컬럼(nickname, avatar_url, email, home_sido) 익명화. 공개 게시글(Phase 2)은 "탈퇴한 사용자"로 유지. 30일 유예·복구는 Phase 2(디자인 있음).
 - 같은 카카오 계정으로 재가입하면 새 사용자다.
 
 ### 권한
