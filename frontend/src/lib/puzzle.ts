@@ -152,7 +152,8 @@ const SIGUNGU_DATA: Partial<Record<string, Record<string, number[][]>>> = {
 const sigunguCache = new Map<string, Piece[]>();
 
 export function getSigunguPieces(sido: string): Piece[] | null {
-  const data = SIGUNGU_DATA[sido];
+  // 자체 키만 — "__proto__" 같은 상속 속성이 지역 데이터로 읽히지 않게
+  const data = Object.hasOwn(SIGUNGU_DATA, sido) ? SIGUNGU_DATA[sido] : undefined;
   if (!data) return null;
   let pieces = sigunguCache.get(sido);
   if (!pieces) {
