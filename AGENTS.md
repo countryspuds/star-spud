@@ -8,7 +8,7 @@
 - 언어: 문서·커밋·코드 주석·UI 문구는 한글. 코드 식별자는 영문.
 
 ## 범위 규칙
-- `docs/PRD.md`의 MVP 표에서 "제외"인 기능은 만들지 않는다. 요청받으면 MVP 밖임을 알리고 확인을 받는다.
+- `docs/PRD.md`의 MVP 표에서 "제외"인 기능은 만들지 않는다. 요청받으면 MVP 밖임을 알리고 확인을 받는다. 제외 기능이라도 **메뉴 자리와 준비 중 페이지**는 둔다(ADR-0012).
 - 기능을 구현할 때는 `specs/NN-*.md`의 규칙과 엣지 케이스를 따르고, 완료 기준 체크리스트의 테스트를 함께 작성한다. 명세와 다르게 만들어야 하면 명세를 먼저 고친다.
 - 표시 규칙(핀 색상, 감자 등급·상태, 좋은 날 판정)은 **서버가 결정**한다. 프론트에 판정 로직을 넣지 않는다.
 - 구조적 결정(라이브러리 교체, 인프라, 데이터 모델의 큰 변경)을 바꾸려면 `docs/ADR/`에 새 ADR을 추가한다. 기존 ADR을 수정하지 않는다.
@@ -16,7 +16,7 @@
 
 ## 스택
 - 백엔드: Java 25, Spring Boot 4.1 (Web MVC, Validation, Actuator), Spring Data JPA + Hibernate Spatial, Flyway, Spring Security OAuth2 Client + JWT, Spring Data Redis, `@Scheduled`, springdoc-openapi. 빌드는 **Gradle**(Kotlin DSL, Wrapper 커밋). 천문 계산은 한국천문연구원(KASI) API 우선, JVM 천문 라이브러리는 검토 중.
-- 프론트: React 19 + TypeScript(strict) + Vite, TanStack Query, 카카오맵 JS SDK.
+- 프론트: React 19 + TypeScript(strict) + Vite + react-router. 서버 상태는 백엔드 API가 생기면 TanStack Query로(현재는 `src/data` mock 함수). 지도는 도트 격자(`MapCanvas`) + 지도 SDK(카카오/네이버 미정, ADR-0011). 디자인 치수·토큰은 `docs/FRONTEND_SPEC.md`.
 - DB: PostgreSQL + PostGIS. 캐시는 Redis. 별도 워커·큐는 MVP에 없음 (ADR-0004).
 - 스토리지: Cloudflare R2 (S3 호환).
 

@@ -280,11 +280,22 @@
   cursor: default;
 }
 
+.overlayLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+  /* 열 자체는 지도 조작을 막지 않고, 탭·버튼만 받는다 */
+  pointer-events: none;
+}
+
+.overlayLeft > * {
+  pointer-events: auto;
+}
+
 .backBtn {
-  position: absolute;
-  left: 14px;
-  top: 56px;
-  z-index: 2;
+  align-self: flex-start;
 }
 
 .hint {

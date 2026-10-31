@@ -73,7 +73,7 @@
 | `/calendar` | 천문 캘린더 (월별) | 구현 (§11) |
 | `/field`, `/community`, `/login` | 준비 중 | ComingSoon 페이지 공용 |
 
-**공통 네비 (48px)** — 좌: 감자 로고(26px, `assets/potato/potato.svg`) + "별보러감자" 700 15px · 중: 홈 / 지도 / **캘린더** / 감자밭 / 커뮤니티 (활성 = `--fg`, 나머지 `--fg-2`) — 메뉴명은 '이벤트'가 아니라 '캘린더'로 확정 (11/1) · 우: 로그인 pill 버튼(32px).
+**공통 네비 (48px)** — 좌: 감자 로고(26px, `assets/potato/potato.svg`) + "별보러감자" 700 15px · 중: 홈 / 지도 / **캘린더** / **프로필** / 커뮤니티 / **장터** 6개 (활성 = `--fg`, 나머지 `--fg-2`, ADR-0012) — '이벤트'→'캘린더', '감자밭'→'프로필'(11/1). 커뮤니티·장터는 MVP에서 준비 중 페이지 · 우: 로그인 pill 버튼(32px).
 페이지 패딩 `14px 16px 48px`, 카드 사이 `gap:16px`. **가로 max-width 없음** — 화면 폭을 다 쓴다.
 모바일(≤860px): 네비 링크 숨김(햄버거 대신 하단 탭바는 Phase 2), 그리드는 1열로 스택.
 
@@ -160,7 +160,7 @@ grid-template-columns: 300px minmax(0,1fr); gap:16px
    - `cells-by-region-approx.json`의 지역 경계는 도시 앵커 기준 **근사치**다. 실제 구현 시 행정구역 GeoJSON(시도·시군구)으로 셀마다 코드를 다시 매긴다.
 
 ### 4.4 게이지 바 (`<NightGauge>`)
-입력: `{ sunset, astroEnd, astroStart, sunrise, moonrise, moonset, moonIllum, waxing, now }` (모두 ISO 시각). 가로축 = `sunset−30min` ~ `sunrise+30min`, 위치 % = (t − start)/(end − start). 달 아이콘: `waxing ? moon-waxing-0XX : moon-waning-0XX` (XX = 10% 반올림, 0 → `moon-000`, 100 → `moon-100`). 한 줄 답 = 천문박명 끝 ~ (월출 또는 박명 시작 중 빠른 것) 구간 길이.
+입력: `{ sunset, astroEnd, astroStart, sunrise, moonrise, moonset, moonIllum, waxing, now }` (모두 ISO 시각). 가로축 = `sunset−30min` ~ `sunrise+30min`, 위치 % = (t − start)/(end − start). 달 아이콘: `waxing ? moon-waxing-0XX : moon-waning-0XX` (XX = 조도 %를 10 단위 반올림, 0 → `moon-000`, 100 → `moon-100`). 한 줄 답("달 없는 완전한 밤")은 **`specs/12` 규칙**(관측 창에서 달이 떠 있는 구간을 뺀 가장 긴 구간, 없으면 "밤새 달이 떠 있어요")을 따르고 서버가 `darkWindow`로 내려준 값을 그린다. 프론트 `src/lib/night.ts`는 같은 규칙의 mock용 구현.
 
 ---
 
@@ -218,7 +218,7 @@ src/
 ```
 
 ## 9. 완료 기준
-- `npm run dev`로 `/`, `/map`, `/map/lp`, `/map/lp/48`, `/map/weather`, `/map/terrain`, `/map/field`, `/calendar`가 뜬다
+- `npm run dev`로 `/`, `/map`, `/map/lp`, `/map/lp/gyeongnam`, `/map/weather`, `/map/terrain`, `/map/field`, `/calendar`가 뜬다
 - 홈: 4칸 벤토가 화면 폭을 채우고 1440px·390px에서 깨지지 않는다
 - 지도: 드래그/휠/버튼 줌이 동작하고 탭 전환 시 pan/zoom이 유지된다. 전국 클릭 → 17조각 분리 애니메이션 → 경남 클릭 → 시·군 퍼즐 → ← 전국
 - 게이지 바: `tonight.json`을 바꾸면 눈금·달 세그먼트·'지금' 위치가 따라 움직인다
@@ -240,7 +240,7 @@ src/
 | 해발고도 | 10% | 0 m=0 … 1,000 m+=100 |
 | 편의 (주차·화장실·차박) | 5% | 명소 속성 가산 |
 
-API: `GET /api/grid/starscore?res=5km` → `{ cells: [[x, y, score, regionCode], …] }`. 연 1회 + 명소 추가 시 재계산.
+API: `GET /api/v1/grid/starscore?res=5km` → `{ res, updatedAt, cells: [[nx, ny, score, sidoCode, sigunguCode], …] }` (`specs/11`과 동일). 연 1회 + 명소 추가 시 재계산.
 
 **팔레트 (한 색 단계, 밝을수록 좋음)** — 8단계: `#1a2030 #232c44 #2f4668 #3f6a86 #5f9a85 #8fc46c #b9e258 #d9fc46`. 5~97 퍼센타일로 스트레치해서 칠한다(그래야 도시는 가라앉고 산간·명소가 뜬다).
 
@@ -276,8 +276,8 @@ mock 이미지: `assets/maps/starscore-5km.svg` (광공해 + 명소 앵커 20개
 
 ### 11.2 규칙
 - **촬영 적기 띠** = 하현일 ~ 상현일 (달이 자정 전후에 떠서 초저녁 밤이 어두운 구간). 월령 API로 하현(≈22.1)·상현(≈7.4) 날짜를 찾아 그 사이를 칠한다.
-- **중요 천문현상** = 신월, 유성우 극대기 중 ZHR ≥ 10, 일식·월식, 슈퍼문. 그 외(절기·행성 합 등)는 보통 표기.
-- 달 아이콘: `moonIllum`(%)을 10% 단위로 반올림 → `assets/moon/moon-{waxing|waning}-0XX.svg`. 조도는 월령에서 계산: `illum = (1 − cos(2π · lunAge / 29.53)) / 2`, waxing = lunAge < 14.77.
+- **중요 천문현상**(라임 테두리) = 서버가 준 `important`(신월 · 보름 · ZHR ≥ 10 유성우 극대 · 일식·월식 · 슈퍼문, `specs/12`). 감자 판정용 `isMajor`와는 다른 값이며 프론트는 둘 다 계산하지 않는다. 그 외(절기·행성 합 등)는 보통 표기.
+- 달 아이콘: 서버가 준 `moonIllum`(정수 0~100)을 10 단위로 반올림 → `assets/moon/moon-{waxing|waning}-0XX.svg`. 조도·방향 계산 공식은 `specs/12`가 기준(`src/lib/moon.ts`는 mock용 동일 구현).
 - 셀 클릭 → 그 날 "오늘 밤" 상세(게이지 바 + 추천 명소) 모달 또는 `/map?date=` 이동 (Phase 2).
 - 알림 설정은 Phase 2 (서비스워커 푸시). 버튼 자리만.
 
@@ -292,7 +292,7 @@ mock 이미지: `assets/maps/starscore-5km.svg` (광공해 + 명소 앵커 20개
 - 천문현상 API는 **월 단위 한 번 호출**로 그 달의 현상 목록(유성우·행성 합·근지점 등)을 준다. 캘린더 셀의 현상 줄과 하단 리스트는 이 응답을 그대로 쓰면 된다. 어떤 현상을 '중요'로 올릴지는 `astroTitle` 키워드(신월·보름·유성우·식)로 서버에서 분류.
 - 출몰시각은 **하루 1회 호출 × 30일**이라 월별 캘린더 한 장에 30회. 서버가 월 단위로 미리 받아 Redis에 캐시(월 바뀔 때 갱신).
 - **KASI API에 없는 것**: 은하수 출몰시각(알비레오 기준), 달 조도 %. 둘 다 계산으로 대체 — 조도는 위 공식, 은하수 출몰은 알비레오(RA 19h31m, Dec +28°)의 출몰을 항성시로 계산(Phase 2, `astronomy-engine` 같은 라이브러리 서버 측 사용). ZHR·유성우 설명도 API에 없으면 우리 DB의 유성우 테이블(연중 고정 10여 개)에서 보강.
-- 서비스 키는 서버에만 둔다. 프론트는 `GET /api/calendar?year=2026&month=11` 한 번으로 아래 모양을 받는다:
+- 서비스 키는 서버에만 둔다. 프론트는 `GET /api/v1/calendar?year=2026&month=11&location=서울` 한 번으로 아래 모양을 받는다 (`specs/12`가 기준, 아래는 요약):
 ```json
 { "days": [ { "date": "2026-11-05", "sunrise": "07:02", "sunset": "17:28", "moonrise": "01:12", "moonset": "14:40",
              "astmEnd": "19:00", "astmStart": "05:33", "lunAge": 24.3, "moonIllum": 23, "waxing": false,
@@ -300,3 +300,14 @@ mock 이미지: `assets/maps/starscore-5km.svg` (광공해 + 명소 앵커 20개
              "shootingWindow": true } ],
   "events": [ … 월 전체 목록 … ] }
 ```
+
+---
+
+## 12. 팀 기획 문서와의 정합 (11/1)
+
+`docs/PRD.md` 1.1 · `docs/ADR/0011~0014` · `specs/11,12`로 이 문서의 결정이 팀 문서에 반영됐다. 이 문서가 **덮어쓰지 않고 따르는** 팀 규칙:
+- **감자 시스템은 `specs/04`를 따른다.** 감자는 (사용자, 명소)당 하나, 기록마다 먹이 +1, 등급 Lv1~4, 상태 normal/hungry/sprouted. 이 문서 §프로필의 "60일 + 지수 80 → 싹" 규칙은 **폐기**. '싹(sprouted)'은 방치 상태를 뜻하므로 UI 문구는 "싹이 났어요 · 오래 안 갔어요"로, 긍정 의미(재방문 보상)는 "등급 올라감"으로 바꾼다. 감자밭 타임라인의 한 줄 = 먹이 1개.
+- 표시 규칙(핀 색·점수 구간·등급·상태·좋은 날)은 서버가 준 값만 그린다(AGENTS.md).
+- 커뮤니티·장터·네이버·이메일 로그인·프로필 활동 탭·사진 업로드는 Phase 2. MVP에서는 메뉴 + 준비 중 페이지.
+- 명소 유형 4개(자연·천문대·캠핑장·도심 근교)와 플래그(차박·주차·화장실·포장도로·시야 개방 방향)는 `specs/01`의 데이터 모델을 쓴다. 명소 리스트·상세·후기 정보 체크박스는 이 필드에 맞춘다.
+- 브랜치·커밋은 ADR-0008 (develop에서 분기, Conventional Commits 한글).

@@ -153,7 +153,15 @@ export function MapPage() {
           </MapCanvas>
 
           <div className={styles.overlayTop}>
-            <MapTabs active={tab} />
+            {/* 탭과 같은 열에 두어 탭이 줄바꿈돼도 ← 전국 버튼이 탭을 가리지 않는다 */}
+            <div className={styles.overlayLeft}>
+              <MapTabs active={tab} />
+              {(puzzle || sido) && (
+                <PillButton size="sm" className={styles.backBtn} onClick={goNational}>
+                  ← 전국
+                </PillButton>
+              )}
+            </div>
             <ZoomControls
               view={view}
               onViewChange={updateView}
@@ -161,12 +169,6 @@ export function MapPage() {
               minScale={minScale}
             />
           </div>
-
-          {(puzzle || sido) && (
-            <PillButton size="sm" className={styles.backBtn} onClick={goNational}>
-              ← 전국
-            </PillButton>
-          )}
 
           {sido && !sigunguPieces && (
             <div className={styles.emptyState} role="status">

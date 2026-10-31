@@ -31,24 +31,25 @@ flowchart LR
   subgraph ext [외부]
     KMA[기상청 단기예보]
     KASI[한국천문연구원 *Phase 2*]
-    Kakao[카카오 지도 · OAuth · 길찾기]
+    MapSDK[지도 SDK 카카오|네이버 *ADR-0011* · OAuth · 길찾기]
     FCM[FCM 푸시 *Phase 3*]
   end
 
   Web --> API
   iOS --> API
   Android --> API
-  Web -. 지도 SDK .-> Kakao
+  Web -. 지도 SDK .-> MapSDK
   API --> PG
   API --> Redis
   API --> R2
   Sched --> PG
   Sched --> KMA
   Sched --> KASI
-  API --> Kakao
+  API --> MapSDK
   API --> FCM
   Admin --> PG
   R2 -. 광공해 정적 타일 .-> Web
+  Redis -. 격자 JSON · 캘린더 캐시 .-> API
 ```
 
 - 클라이언트는 모두 같은 REST API를 쓴다. 웹·앱 공용 계약이므로 API에 웹 전용 가정을 넣지 않는다.
@@ -126,7 +127,8 @@ backend/
 핵심 테이블. *(Phase 2+)* 표시는 MVP에서 만들지 않는다.
 
 ```
-users              id, provider, provider_uid, nickname(유니크), avatar_url, email?, role(user|admin), created_at, deleted_at
+users              id, nickname(유니크, 2~12자, 30일 1회 변경), avatar_url?, potato_avatar(basic|happy|sad), home_sido?, email?, role(user|admin), created_at, deleted_at
+auth_identities    id, user_id, provider(kakao|naver|email), provider_uid|email, password_hash?, created_at   (유니크: provider+uid) — ADR-0014
 refresh_tokens     id, user_id, token_hash, family_id, expires_at, revoked_at, user_agent
 
 spots              id, name, type(nature|observatory|camping|suburban), geom(Point 4326),
@@ -137,6 +139,11 @@ spot_photos        id, spot_id, url, uploaded_by
 spot_reports       id, spot_id, user_id, reason, created_at, resolved_at   (유니크: spot_id+user_id)
 spot_notes         id, spot_id, user_id, category(road|parking|gate|safety|other), body, helpful_count, status  (Phase 2)
 weather_snapshots  spot_id, target_date, cloud_pct, sky_code, fetched_at   (PK: spot_id+target_date)
+
+grid_cells         nx, ny, res(5km|1km|500m), lp_level(0..4), elevation_m, sido_code, sigungu_code, star_score(0..100), updated_at   (PK: res+nx+ny) — specs/11
+calendar_days      location, date, sunrise, sunset, moonrise?, moonset?, astm_start, astm_end, lun_age, fetched_at   (PK: location+date) — specs/12, Redis 캐시 우선
+photo_of_month     id, month, feed_id, likes_snapshot, selected_at
+feedback           id, user_id?, type(bug|feature|spot_fix|other), title, body, screenshots[], diagnostics(json), status(received|reviewing|done|held), created_at
 
 events             id, type(meteor|solar_eclipse|lunar_eclipse|supermoon|planet|comet|other), name, peak_at(UTC),
                    starts_at, ends_at, is_major, visible_in_kr, description, tips, zhr, radiant, direction,
@@ -172,11 +179,11 @@ gear_reviews       id, gear_id, user_id, rating, body                           
 ## 4. 프론트엔드 (웹)
 
 - React 19 + TypeScript + Vite. 상태는 TanStack Query(서버 상태) + 최소한의 로컬 상태.
-- 라우팅: `/` 지도, `/spots/:id` 명소 상세, `/events` 이벤트 목록, `/me/potatoes` 내 감자밭, `/notifications`.
-- 지도: 카카오맵 JS SDK. 핀 색상은 API가 준 `good|fair|bad`로만 결정한다. 판정 로직을 프론트에 두지 않는다.
-- 광공해 오버레이: 카카오맵 커스텀 타일셋으로 `https://<storage>/lp/{z}/{x}/{y}.png` 로드.
-- API 타입은 OpenAPI 스키마에서 생성(`openapi-typescript`).
-- 디렉토리: `src/api`(생성 타입·클라이언트) · `src/features/<도메인>` · `src/components`(공용) · `src/pages`.
+- 라우팅([ADR-0012](./ADR/0012-home-and-ia.md)): `/` 홈(벤토) · `/map` 별보기 · `/map/lp[/:sido]` 광공해·퍼즐 · `/map/weather` · `/map/terrain` · `/map/field` · `/calendar` · `/spots/:id` · `/me`(프로필: 감자밭·활동·설정) · `/community`·`/market`(MVP는 준비 중) · `/login` · `/feedback` · `/notifications`.
+- 지도는 두 렌더러([ADR-0011](./ADR/0011-map-rendering-hybrid.md)): 도트 격자 `<MapCanvas>`(전국 개요·퍼즐·감자밭)와 지도 SDK `<NaverMap>`/`<KakaoMap>`(내 위치·핀·날씨·지형·상세). 핀 색과 점수 구간은 API 값으로만 결정한다. 판정 로직을 프론트에 두지 않는다.
+- 광공해 오버레이(SDK 쪽): 커스텀 타일셋 `https://<storage>/lp/{z}/{x}/{y}.png`. 도트 지도는 `GET /api/v1/grid/starscore` JSON을 canvas에 그린다.
+- 데이터 계층: 현재 `src/data/index.ts`의 함수(`getTonight()`, `getCalendar()` …)가 `VITE_API_BASE` 유무로 API/mock JSON을 고른다. 백엔드 API가 생기면 TanStack Query + `openapi-typescript` 생성 타입으로 교체한다(함수 시그니처 유지).
+- 디렉토리(구현 기준): `src/app`(라우터·레이아웃·theme.css) · `src/pages` · `src/components/{bento,map,gauge,ui}` · `src/data`(mock·API 함수·타입) · `src/lib`(격자·달·시간·퍼즐 계산). 디자인 토큰·치수는 `docs/FRONTEND_SPEC.md`.
 
 ---
 
@@ -185,11 +192,14 @@ gear_reviews       id, gear_id, user_id, rating, body                           
 | 연동 | 용도 | 비고 |
 |---|---|---|
 | 기상청 단기예보 API | 구름량·하늘상태 | 격자 좌표. 3일 예보. 공공데이터포털 키 |
-| 한국천문연구원 API *(Phase 2)* | 천체 이벤트·출몰 시각 | 수동 등록으로 대체 가능 |
+| 한국천문연구원 API (MVP, [ADR-0013](./ADR/0013-calendar-in-mvp.md)) | 출몰시각·월령·천문현상·특일 4종 → 캘린더·이벤트 자동 적재 | 월 단위 캐시. 서비스 키는 서버만 |
 | 달 위상·조도·출몰·박명 | 관측 조건·캘린더 | 서버 계산 (KASI API + 자체 계산, JVM 천문 라이브러리 검토 중) |
 | NASA/NOAA VIIRS 야간광 | 보틀 등급·오버레이 | 연 1회 갱신. 오프라인 처리 |
-| 카카오맵 JS SDK | 지도 표시 | 프론트 |
-| 카카오 OAuth | 로그인 | Spring Security OAuth2 Client |
+| 지도 SDK (카카오 또는 네이버, 미정) | 내 위치 기준 명소 지도·날씨·지형 | 프론트. [ADR-0011](./ADR/0011-map-rendering-hybrid.md) |
+| 행정구역 GeoJSON(시도·시군구) | 격자 셀에 지역 코드 부여 | 공공데이터포털, 연 1회 오프라인 |
+| Copernicus DEM / 국내 DEM | 격자 해발고도 | 연 1회 오프라인 |
+| 에어코리아 API *(Phase 2)* | 미세먼지(날씨 탭) | 측정소 단위 |
+| 카카오 OAuth (MVP) · 네이버 OAuth *(Phase 2)* | 로그인 | Spring Security OAuth2 Client, [ADR-0014](./ADR/0014-auth-methods.md) |
 | 카카오 모빌리티 길찾기 *(Phase 2)* | 앱 내 경로 | 서버 프록시 |
 | FCM *(Phase 3)* | 웹·iOS·Android 푸시 | 단일 발송 백엔드 |
 
