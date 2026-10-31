@@ -90,7 +90,7 @@ star-spud/
 
 ### 1. 저장소 클론
 ```bash
-git clone https://github.com/kuyhxl/star-spud.git
+git clone https://github.com/countryspuds/star-spud.git
 cd star-spud
 ```
 
