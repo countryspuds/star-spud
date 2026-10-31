@@ -111,3 +111,41 @@ export type StarScoreCell = [x: number, y: number, score: number, regionCode: st
 export interface StarScoreGrid {
   cells: StarScoreCell[];
 }
+
+/** 천문 캘린더 — `GET /api/calendar?year&month` 응답 (명세 §11.3) */
+export interface CalendarEvent {
+  title: string;
+  /** "HH:MM" 또는 빈 문자열 */
+  time: string;
+  desc: string;
+  /** 신월·ZHR ≥ 10 유성우·식·슈퍼문 — 서버가 분류 */
+  important: boolean;
+}
+
+export interface CalendarDay {
+  /** YYYY-MM-DD */
+  date: string;
+  sunrise: string;
+  sunset: string;
+  moonrise: string;
+  moonset: string;
+  /** 천문박명 끝·시작 (HH:MM) */
+  astmEnd: string;
+  astmStart: string;
+  lunAge: number;
+  moonIllum: number;
+  waxing: boolean;
+  events: CalendarEvent[];
+  /** 딥스카이·은하수 촬영 적기 띠(하현일~상현일) — 서버가 판정 */
+  shootingWindow: boolean;
+}
+
+export interface CalendarMonth {
+  year: number;
+  month: number;
+  /** 데이터 출처 표기 (캡션) */
+  source: string;
+  days: CalendarDay[];
+  /** 월 전체 현상 목록 (날짜 포함) */
+  events: (CalendarEvent & { date: string })[];
+}
