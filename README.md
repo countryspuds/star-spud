@@ -130,6 +130,7 @@ npm run dev          # http://localhost:5173
 **프론트 개발 스크립트**
 ```bash
 npm run lint         # ESLint 검사
+npx tsc -b           # 타입 검사 (루트 tsconfig은 참조 전용이라 `tsc --noEmit`은 검사하지 않음)
 npm run format       # Prettier 자동 정렬
 ```
 > VS Code에 Prettier 확장(`esbenp.prettier-vscode`)을 설치하면 저장 시 자동 포맷됩니다.

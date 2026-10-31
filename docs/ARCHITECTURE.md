@@ -209,7 +209,7 @@ gear_reviews       id, gear_id, user_id, rating, body                           
 - PaaS(Fly.io / Railway / Render 중 택1)에 백엔드 컨테이너 + 관리형 PostgreSQL(PostGIS). 프론트는 정적 호스팅(같은 PaaS 또는 Cloudflare Pages). 사진·타일은 Cloudflare R2. ([ADR-0005](./ADR/0005-paas-deploy.md))
 - 로컬: `docker-compose.yml`로 PostGIS와 Redis를 띄운다. `./gradlew bootRun`이 꺼져 있으면 자동으로 띄우고 접속 정보를 연결한다.
 - 환경 변수: `.env.example`에 전체 키 목록 유지. 시크릿은 PaaS 대시보드.
-- CI: PR마다 백엔드 `./gradlew test`, 프론트 `lint` + `tsc`. CD: `main` 머지 시 배포 (베타 직전 세팅).
+- CI: PR마다 백엔드 `./gradlew test`, 프론트 `lint` + `tsc -b`. CD: `main` 머지 시 배포 (베타 직전 세팅).
 - 브랜치: `main`(릴리즈) ← `develop` ← `feat/*`. ([ADR-0008](./ADR/0008-branching-and-commits.md))
 
 ---
