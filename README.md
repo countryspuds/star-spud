@@ -29,16 +29,17 @@
 - 서비스워커 (웹 푸시 알림)
 
 **Backend**
-- FastAPI (Python 3.13, async)
-- 의존성·가상환경 관리: **uv**
-- SQLAlchemy + GeoAlchemy2 (PostGIS 공간 쿼리)
-- Authlib (카카오/네이버 OAuth) + JWT
-- Celery + Redis (알림 푸시·외부 데이터 주기 갱신)
-- astropy / ephem (달 위상·이벤트 계산)
+- Spring Boot 4.1 (Java 25)
+- 빌드: **Gradle** (Kotlin DSL, Wrapper 포함)
+- Spring Data JPA + Hibernate Spatial (PostGIS 공간 쿼리)
+- Spring Security OAuth2 Client (카카오/네이버 로그인) + JWT
+- Spring Data Redis (캐시) + `@Scheduled` (알림 푸시·외부 데이터 주기 갱신)
+- 천문 계산(달 위상·이벤트): 한국천문연구원 API 우선, JVM 천문 라이브러리 병행 검토
+- Testcontainers (통합 테스트)
 
 **Data / Infra**
 - PostgreSQL + PostGIS
-- Redis (캐시 + Celery 브로커)
+- Redis (캐시)
 - 오브젝트 스토리지 (S3 호환, 후기 사진)
 
 **외부 데이터** — 기상청(날씨) · 한국천문연구원(천문) · 광공해 지도 · 카카오/네이버(지도·길찾기)
@@ -53,19 +54,24 @@ star-spud/
 │   ├── src/
 │   ├── eslint.config.js
 │   ├── .prettierrc
+│   ├── tsconfig*.json
 │   ├── package.json
 │   └── package-lock.json    # 커밋 (frontend 안에 위치)
-├── backend/                 # FastAPI (Python 3.13)
-│   ├── app/
-│   │   ├── main.py
-│   │   ├── api/             # 라우터
-│   │   ├── models/          # SQLAlchemy 모델
-│   │   ├── services/        # 외부 데이터 연동·비즈니스 로직
-│   │   └── tasks/           # Celery 작업
-│   ├── pyproject.toml       # 의존성 정의 (uv)
-│   ├── uv.lock              # 잠금 파일 (커밋)
-│   └── .python-version      # 3.13 고정 (커밋)
+├── backend/                 # Spring Boot (Java 25, Gradle)
+│   ├── src/main/java/com/starspud/
+│   │   ├── StarSpudApplication.java
+│   │   └── <도메인>/        # spot, event, potato, community … 기능별 패키지
+│   │       ├── controller/  # REST API
+│   │       ├── service/     # 비즈니스 로직·외부 데이터 연동
+│   │       ├── repository/  # Spring Data JPA
+│   │       └── domain/      # JPA 엔티티
+│   ├── src/main/resources/application.yml
+│   ├── src/test/java/       # Testcontainers 통합 테스트
+│   ├── build.gradle.kts     # 의존성 정의
+│   ├── settings.gradle.kts  # JDK 25 자동 설치 설정 (foojay)
+│   └── gradlew              # Gradle Wrapper (커밋)
 ├── docker-compose.yml       # postgres+postgis, redis
+├── .env.example
 ├── .gitignore
 └── README.md
 ```
@@ -75,7 +81,7 @@ star-spud/
 ## 시작하기
 
 ### 사전 요구사항
-- **[uv](https://docs.astral.sh/uv/)** — 백엔드 의존성·파이썬 버전 관리 (Python은 uv가 알아서 설치하므로 별도 설치 불필요)
+- **JDK 17+** — Gradle 실행용. 빌드에 쓰는 JDK 25는 Gradle이 자동으로 내려받으므로 별도 설치 불필요
 - **Node.js** 18+
 - **Docker** & Docker Compose
 
@@ -96,15 +102,20 @@ cp .env.example .env
 docker compose up -d
 ```
 
-### 4. 백엔드 실행 (uv)
+### 4. 백엔드 실행 (Gradle)
 ```bash
 cd backend
-uv sync                              # .python-version(3.13) + uv.lock 기준으로 환경 자동 구성
-uv run uvicorn app.main:app --reload
-# API 문서: http://localhost:8000/docs
+./gradlew bootRun    # http://localhost:8080
+# 상태 확인: http://localhost:8080/actuator/health
 ```
-> `uv sync` 한 번이면 파이썬 3.13 설치·가상환경 생성·의존성 설치가 모두 끝납니다. `activate` 불필요.
-> 의존성 추가는 `uv add <패키지>`, 실행은 `uv run <명령>`.
+> `bootRun`은 루트의 `docker-compose.yml`을 감지해 DB·Redis가 꺼져 있으면 자동으로 띄우고 접속 정보도 자동 연결합니다. 3단계를 건너뛰어도 됩니다.
+> 의존성 추가는 `build.gradle.kts`의 `dependencies`에 적고 다시 빌드하면 됩니다.
+
+**백엔드 개발 스크립트**
+```bash
+./gradlew build      # 컴파일 + 테스트 + JAR 생성
+./gradlew test       # 테스트 (Testcontainers 사용, Docker 꺼져 있으면 건너뜀)
+```
 
 ### 5. 프론트엔드 실행
 ```bash

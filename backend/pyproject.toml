@@ -1,7 +1,0 @@
-[project]
-name = "backend"
-version = "0.1.0"
-description = "Star-Spud (별보러감자) backend API"
-readme = "README.md"
-requires-python = ">=3.13"
-dependencies = []

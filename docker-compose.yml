@@ -1,0 +1,23 @@
+services:
+  postgres:
+    # postgis/postgis는 amd64 전용이라, 같은 메인테이너의 멀티 아키텍처(amd64/arm64) 빌드를 사용합니다.
+    image: imresamu/postgis:17-3.5
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-starspud}
+      POSTGRES_USER: ${POSTGRES_USER:-starspud}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-starspud}
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    labels:
+      # postgis 이미지를 Spring Boot docker compose 연동이 postgres로 인식하게 합니다.
+      org.springframework.boot.service-connection: postgres
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "127.0.0.1:${REDIS_PORT:-6379}:6379"
+
+volumes:
+  postgres-data:

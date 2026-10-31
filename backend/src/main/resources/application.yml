@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: star-spud
+  docker:
+    compose:
+      # 루트의 docker-compose.yml을 사용하고, 앱이 종료돼도 DB·Redis는 계속 띄워 둡니다.
+      file: ../docker-compose.yml
+      lifecycle-management: start-only
+  datasource:
+    # docker compose 연동(bootRun) 시에는 Spring이 접속 정보를 자동으로 덮어씁니다.
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:starspud}
+    username: ${POSTGRES_USER:starspud}
+    password: ${POSTGRES_PASSWORD:starspud}
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+  jpa:
+    open-in-view: false
