@@ -1,6 +1,6 @@
-import { Suspense, use } from "react";
+import { Suspense } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { getMe } from "../data/auth";
+import { useMe } from "../features/auth/useMe";
 import { Avatar } from "../components/ui/Avatar";
 import { PillLink } from "../components/ui/Pill";
 import potatoLogo from "../assets/potato/potato.svg";
@@ -18,7 +18,7 @@ const LINKS = [
 
 /** 우측: 비로그인 = 로그인 pill → /login · 로그인 = 아바타 칩 → /me */
 function AuthChip() {
-  const me = use(getMe());
+  const me = useMe();
   if (!me) {
     return (
       <PillLink to="/login" size="sm" tone="secondary">
@@ -34,7 +34,22 @@ function AuthChip() {
   );
 }
 
-export function Nav() {
+export type NavVariant = "default" | "auth";
+
+export function Nav({ variant = "default" }: { variant?: NavVariant }) {
+  if (variant === "auth") {
+    return (
+      <header className={styles.navAuth}>
+        <Link to="/" className={styles.brand}>
+          <img src={potatoLogo} alt="" width={26} height={26} className="pixelated" />
+          <span>별보러감자</span>
+        </Link>
+        <Link to="/" className={styles.browse}>
+          둘러보기 →
+        </Link>
+      </header>
+    );
+  }
   return (
     <header className={styles.nav}>
       <Link to="/" className={styles.brand}>

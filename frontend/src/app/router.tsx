@@ -4,6 +4,9 @@ import { Home } from "../pages/Home";
 import { MapPage } from "../pages/MapPage";
 import { CalendarPage } from "../pages/CalendarPage";
 import { ComingSoon } from "../pages/ComingSoon";
+import { LoginPage } from "../features/auth/LoginPage";
+import { OnboardingPage } from "../features/auth/OnboardingPage";
+import { WelcomePage } from "../features/auth/WelcomePage";
 
 export const router = createBrowserRouter([
   {
@@ -16,10 +19,9 @@ export const router = createBrowserRouter([
       // 옛 주소 — 메뉴명이 '캘린더'로 바뀌면서 /calendar로, '감자밭'이 '프로필'로 바뀌면서 /me로 통합 (§2·§13)
       { path: "events", element: <Navigate to="/calendar" replace /> },
       { path: "field", element: <Navigate to="/me" replace /> },
-      // 프로필·로그인·문의는 다음 PR에서 구현 — 그때까지 준비 중 페이지
+      // 프로필·문의는 다음 PR에서 구현 — 그때까지 준비 중 페이지
       { path: "me", element: <ComingSoon section="프로필" /> },
       { path: "me/settings", element: <ComingSoon section="설정" /> },
-      { path: "login", element: <ComingSoon section="로그인" /> },
       { path: "feedback", element: <ComingSoon section="문의" /> },
       // MVP 제외 — 메뉴 자리와 준비 중 페이지만 둔다 (ADR-0012 · 명세 §17)
       { path: "community", element: <ComingSoon section="커뮤니티" /> },
@@ -31,6 +33,15 @@ export const router = createBrowserRouter([
       { path: "privacy", element: <ComingSoon section="개인정보 처리방침" /> },
       { path: "guide", element: <ComingSoon section="커뮤니티·장터 가이드" /> },
       { path: "sources", element: <ComingSoon section="데이터 출처" /> },
+    ],
+  },
+  {
+    // 로그인·온보딩 — 네비 링크 숨김 레이아웃 (명세 §14)
+    element: <Layout variant="auth" />,
+    children: [
+      { path: "login", element: <LoginPage /> },
+      { path: "onboarding", element: <OnboardingPage /> },
+      { path: "welcome", element: <WelcomePage /> },
     ],
   },
 ]);
