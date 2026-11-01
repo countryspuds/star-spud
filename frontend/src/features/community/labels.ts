@@ -49,6 +49,8 @@ export const POST_ERROR_TEXT: Record<string, string> = {
   MEETUP_REQUIRED: "모임 글은 날짜와 집결 장소가 필요해요",
   MEETUP_CAPACITY: "정원은 2~20명이에요",
   MEETUP_SPOT_REQUIRED: "모임 글은 명소를 태그해 주세요",
+  MEETUP_PAST: "모임 시각은 지금보다 뒤여야 해요",
+  CONTEST_LIMIT: "이달의 사진 응모는 한 달에 2장까지예요",
   POLL_OPTIONS: "투표 선택지는 2~4개예요",
   PHOTO_CONTEST_TYPE: "이달의 사진 응모는 '사진 응모' 글만 할 수 있어요",
   LOGIN_REQUIRED: "로그인이 필요해요",

@@ -222,6 +222,7 @@
       "reviewInfo": { "visitedOn": "2026-10-19" },
       "night": { "index": 79, "moonIllum": 55, "waxing": true, "cloudPct": 20 },
       "photoContest": true,
+      "contestEnteredAt": "2026-10-20T08:30:00+09:00",
       "comments": [
         {
           "id": "c_104_1",
