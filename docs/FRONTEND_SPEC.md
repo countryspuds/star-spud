@@ -408,6 +408,9 @@ mock 이미지: `assets/maps/starscore-5km.svg` (광공해 + 명소 앵커 20개
 - `/community/:id` 상세 — 그날 밤 지수·달·구름 메타, 주차·화장실·차박·편의점 4타일, 댓글 인기순/최신순 + 작성, 내 글이면 수정·삭제.
 - `/community/write` · `/community/:id/edit` — 글 종류 세그먼트, 명소 태그 검색, 본문 2,000자, 사진 ≤10(미리보기만, presign TODO), 모임 필드(날짜·집결·정원) · 투표 선택지 2~4, 후기 정보 체크(방문일), 이달의 사진 응모 체크(사진 응모 글만), 임시저장(localStorage). 수정은 "저장하면 (수정됨)" 안내 + 삭제 확인 모달(댓글·좋아요 사라짐 · 감자·응모 유지 · 30일 복구).
 - mock: `src/data/community.json`(글 5건 — 종류별 1건, 1건 `editedAt`), `src/data/community.ts`(세션 저장 · 추천 순서·모임 상태·오늘 밤 지수는 서버 값이라는 전제로 mock 안에서만 만든다).
+- `/market` — 검색 + "판매하기"(판매 등록 화면은 뒤 Phase라 disabled "곧 열려요"), 카테고리 칩 7(specs/07 `gear.category`에서 app 제외) · 필터(지역·가격 밴드·거래 방식·판매중만, `?q&cat&sido&price&trade&selling`) · 3열 카드(제목·가격·상태·지역·직거래/택배·시각·찜, 거래완료는 흐림 + 배지) · 안전 거래 안내 띠.
+- `/market/:id` — 사진 자리(최대 10, 장비 종류별 svg 아이콘 placeholder — 실제 제품 사진은 쓰지 않는다) · 카테고리 태그·조회 · 제목·가격 28px · 상태/거래/구성 3타일 · 설명 · 채팅하기(disabled "Phase 3") + 찜 · 판매자 카드(감자 N·후기 N·거래 N — 공개 프로필은 Phase 3이라 내 상품만 `/me` 링크) · 주의사항 3줄.
+- mock: `src/data/market.json`(12건, 거래완료 2·예약중 1), `src/data/market.ts`(찜만 세션 저장 · 판매 상태·조회 수·판매자 활동 수는 서버 값), 아이콘 `src/assets/gear/gear-*.svg`.
 
 **디자인 목록**
 
