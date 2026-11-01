@@ -103,16 +103,23 @@ export interface Spot {
 export type StarScoreRes = "5km";
 
 /**
- * 별보기 점수 셀 — `GET /api/grid/starscore?res=5km` 응답 (명세 §10).
- * [x, y, score, regionCode]: 격자 인덱스, 0~100 점수, 시·도 코드. 점수는 서버가 계산하고 프론트는 그리기만 한다.
+ * 별보기 점수 셀 — `GET /api/v1/grid/starscore?res=5km` 응답 `{ res, updatedAt, cells }`의 한 칸 (specs/11 · 명세 §10).
+ * [nx, ny, score, sidoCode, sigunguCode]: 기상청 5 km 격자 인덱스, 0~100 점수, 시·도 코드, 시·군·구 코드.
+ * 점수는 서버가 계산하고 프론트는 그리기만 한다.
  */
-export type StarScoreCell = [x: number, y: number, score: number, regionCode: string];
+export type StarScoreCell = [
+  nx: number,
+  ny: number,
+  score: number,
+  sidoCode: string,
+  sigunguCode: string,
+];
 
 export interface StarScoreGrid {
   cells: StarScoreCell[];
 }
 
-/** 천문 캘린더 — `GET /api/calendar?year&month` 응답 (명세 §11.3) */
+/** 천문 캘린더 — `GET /api/v1/calendar?year&month` 응답 (명세 §11.3) */
 export interface CalendarEvent {
   title: string;
   /** "HH:MM" 또는 빈 문자열 */
@@ -148,4 +155,22 @@ export interface CalendarMonth {
   days: CalendarDay[];
   /** 월 전체 현상 목록 (날짜 포함) */
   events: (CalendarEvent & { date: string })[];
+}
+
+/** 감자 아바타 — specs/08 `users.potato_avatar` */
+export type PotatoAvatar = "basic" | "happy" | "sad";
+
+/** 로그인 사용자 — `GET /api/v1/me` (specs/08 `users`). 온보딩 전엔 nickname이 null */
+export interface Me {
+  id: string;
+  nickname: string | null;
+  /** 업로드한 프로필 사진. 없으면 potatoAvatar를 그린다 */
+  avatarUrl: string | null;
+  potatoAvatar: PotatoAvatar;
+  /** 주로 보는 시·도 코드 (선택) */
+  homeSido: string | null;
+  /** 마스킹된 이메일 (제공자가 준 경우) */
+  email: string | null;
+  /** ISO 가입 시각 */
+  createdAt: string;
 }

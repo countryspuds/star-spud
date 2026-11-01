@@ -41,7 +41,7 @@ const ASSET_URLS: Record<string, string> = {
   "photo-of-month-placeholder.png": photoPlaceholder,
 };
 
-/** 이달의 사진 — TODO(Phase 2): GET /api/photos/month */
+/** 이달의 사진 — TODO(Phase 2): GET /api/v1/photos/month */
 export function getPhotoOfMonth(): Promise<PhotoOfMonth> {
   return cached("photo", () => ({
     ...photoJson,
@@ -49,12 +49,12 @@ export function getPhotoOfMonth(): Promise<PhotoOfMonth> {
   }));
 }
 
-/** 오늘 밤 세부값 + 게이지 입력 — TODO(Phase 2): GET /api/tonight?lat&lng */
+/** 오늘 밤 세부값 + 게이지 입력 — TODO(Phase 2): GET /api/v1/tonight?lat&lng */
 export function getTonight(): Promise<Tonight> {
   return cached("tonight", () => tonightJson);
 }
 
-/** 별보기 지수 10일 — TODO(Phase 2): GET /api/index10d?lat&lng */
+/** 별보기 지수 10일 — TODO(Phase 2): GET /api/v1/index?sido=&days=10 */
 export function getIndex10d(): Promise<Index10d> {
   return cached("index10d", () => ({
     days: buildIndexDays(index10dJson.days, index10dJson.events),
@@ -62,12 +62,12 @@ export function getIndex10d(): Promise<Index10d> {
   }));
 }
 
-/** 다가오는 천체 이벤트 — TODO(Phase 2): GET /api/events?upcoming */
+/** 다가오는 천체 이벤트 — TODO(Phase 2): GET /api/v1/events?upcoming */
 export function getEvents(): Promise<AstroEvent[]> {
   return cached("events", () => eventsJson);
 }
 
-/** 관측 명소 — sido(시·도 코드)·sigungu(이름)로 거르고 거리순 정렬. TODO(Phase 2): GET /api/spots */
+/** 관측 명소 — sido(시·도 코드)·sigungu(이름)로 거르고 거리순 정렬. TODO(Phase 2): GET /api/v1/spots */
 export function getSpots(sido?: string, sigungu?: string): Promise<Spot[]> {
   return cached(`spots:${sido ?? "*"}:${sigungu ?? "*"}`, () =>
     (spotsJson as Spot[])
@@ -78,13 +78,13 @@ export function getSpots(sido?: string, sigungu?: string): Promise<Spot[]> {
   );
 }
 
-/** 내 감자밭 — 심은 셀 목록. TODO(Phase 2): GET /api/me/field */
+/** 내 감자밭 — 심은 셀 목록. TODO(Phase 2): GET /api/v1/me/potatoes */
 export function getField(): Promise<Field> {
   return cached("field", () => fieldJson as Field);
 }
 
 /**
- * 별보기 점수 격자 — TODO(Phase 2): GET /api/grid/starscore?res=5km
+ * 별보기 점수 격자 — TODO(Phase 2): GET /api/v1/grid/starscore?res=5km
  * 지금은 셀 데이터 대신 `assets/maps/starscore-5km.svg`(예시 이미지)를 그대로 보여주므로 빈 격자를 돌려준다.
  */
 export function getStarScoreGrid(res: StarScoreRes): Promise<StarScoreGrid> {
@@ -97,7 +97,7 @@ const CALENDAR_MOCKS: Record<string, CalendarMonth> = {
 };
 
 /** 백엔드 주소. 비어 있으면 mock JSON만 쓴다 (Phase 1 기본) */
-const API_BASE: string = (import.meta.env.VITE_API_BASE as string | undefined) ?? "";
+const API_BASE: string = import.meta.env.VITE_API_BASE ?? "";
 
 const calendarKey = (year: number, month: number) =>
   `calendar:${year}-${String(month).padStart(2, "0")}`;
@@ -112,14 +112,14 @@ export function invalidateCalendar(year: number, month: number): void {
 }
 
 /**
- * 천문 캘린더 한 달 — VITE_API_BASE가 있으면 GET /api/calendar?year&month, 없으면 mock JSON.
+ * 천문 캘린더 한 달 — VITE_API_BASE가 있으면 GET /api/v1/calendar?year&month, 없으면 mock JSON.
  * 데이터가 없는 달은 null (빈 그리드 + "데이터 없음").
  */
 export function getCalendar(year: number, month: number): Promise<CalendarMonth | null> {
   return cached(calendarKey(year, month), async () => {
     const key = `${year}-${String(month).padStart(2, "0")}`;
     if (API_BASE) {
-      const res = await fetch(`${API_BASE}/api/calendar?year=${year}&month=${month}`);
+      const res = await fetch(`${API_BASE}/api/v1/calendar?year=${year}&month=${month}`);
       if (res.status === 404) return null;
       if (!res.ok) throw new Error(`calendar ${res.status}`);
       return (await res.json()) as CalendarMonth;
