@@ -14,6 +14,25 @@
   gap: 16px;
 }
 
+/* 로그인·온보딩: 링크 없이 로고 + 둘러보기 (명세 §14) */
+.navAuth {
+  height: 48px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.browse {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg-2);
+}
+
+.browse:hover {
+  color: var(--fg);
+}
+
 .brand {
   display: inline-flex;
   align-items: center;

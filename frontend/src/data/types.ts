@@ -174,3 +174,11 @@ export interface Me {
   /** ISO 가입 시각 */
   createdAt: string;
 }
+
+/** 온보딩 제출 — `POST /api/v1/me/onboarding` (명세 §14) */
+export interface OnboardingInput {
+  nickname: string;
+  potatoAvatar: PotatoAvatar;
+  homeSido: string | null;
+  marketingOptIn: boolean;
+}

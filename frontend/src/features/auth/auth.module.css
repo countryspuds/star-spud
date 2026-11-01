@@ -1,0 +1,426 @@
+/* ── 공통 2열 프레임 (명세 §14) ─────────── */
+.frame {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 440px;
+  gap: var(--gap);
+  align-items: start;
+}
+
+.intro {
+  min-height: 780px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding: 32px;
+}
+
+.stars span {
+  position: absolute;
+  background: #fff;
+}
+
+.introMap {
+  position: absolute;
+  top: -4%;
+  right: -6%;
+  width: 62%;
+  height: auto;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.introCopy {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 520px;
+}
+
+.introTitle {
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+}
+
+.introBody {
+  font-size: 15px;
+  color: var(--fg-2);
+}
+
+.panel {
+  padding: 32px 30px;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+@media (max-width: 900px) {
+  .frame {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .intro {
+    min-height: 260px;
+    padding: 24px;
+  }
+
+  .introTitle {
+    font-size: 28px;
+  }
+
+  .panel {
+    padding: 24px 20px;
+  }
+}
+
+/* ── 공통 텍스트 ───────────────────── */
+.h2 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.lead {
+  font-size: 14px;
+  color: var(--fg-2);
+  margin-top: -6px;
+}
+
+.fine {
+  font-size: 11px;
+  color: var(--fg-3);
+  line-height: 1.5;
+}
+
+/* ── 카카오 버튼 ───────────────────── */
+.kakao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 48px;
+  border: 0;
+  border-radius: 12px;
+  background: #fee500;
+  color: #191919;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 6px;
+}
+
+.kakao:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 2px;
+}
+
+.kakaoIcon {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: #191919;
+}
+
+/* ── 스텝 ──────────────────────────── */
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--fg-3);
+}
+
+.steps li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stepSep {
+  margin-right: 2px;
+}
+
+.stepNum {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid var(--edge);
+  font-size: 10px;
+}
+
+.stepActive {
+  color: var(--fg);
+}
+
+.stepActive .stepNum {
+  background: var(--lime);
+  border-color: var(--lime);
+  color: #141414;
+  font-weight: 500;
+}
+
+/* ── 온보딩 폼 ─────────────────────── */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 4px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.fieldLabel {
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.optional {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--fg-3);
+}
+
+.inputWrap {
+  position: relative;
+}
+
+.input,
+.select {
+  width: 100%;
+  height: 46px;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px solid var(--edge);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--fg);
+  font: inherit;
+  font-size: 14px;
+}
+
+.input {
+  padding-right: 150px;
+}
+
+.input:focus-visible,
+.select:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 1px;
+}
+
+.status {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  font-weight: 500;
+  pointer-events: none;
+}
+
+.statusOk {
+  color: var(--sprout);
+}
+
+.statusBad {
+  color: #ff8a8a;
+}
+
+.statusMuted {
+  color: var(--fg-3);
+}
+
+.help {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--fg-3);
+}
+
+.helpLine {
+  font-size: 12px;
+  color: var(--fg-3);
+}
+
+/* 내 감자 3열 */
+.avatars {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.avatar,
+.avatarSelected {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 8px 10px;
+  border-radius: 14px;
+  border: 1px solid var(--edge);
+  background: rgba(255, 255, 255, 0.03);
+  font-size: 11px;
+  color: var(--fg-2);
+  cursor: pointer;
+}
+
+.avatarSelected {
+  border-color: var(--lime);
+  background: rgba(217, 252, 70, 0.08);
+  color: var(--fg);
+}
+
+.avatar:focus-visible,
+.avatarSelected:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 2px;
+}
+
+/* 약관 박스 */
+.agreeBox {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid var(--edge);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.agreeRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.agreeRow input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--lime);
+  cursor: pointer;
+}
+
+.agreeAll {
+  font-weight: 600;
+}
+
+.agreeSep {
+  height: 1px;
+  background: var(--edge);
+}
+
+.required,
+.optionalTag {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+
+.required {
+  color: var(--lime);
+}
+
+.optionalTag {
+  color: var(--fg-3);
+}
+
+.submit {
+  height: 48px;
+  width: 100%;
+}
+
+.submit:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ── 환영 ──────────────────────────── */
+.welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  padding-top: 8px;
+}
+
+.welcome img {
+  width: 96px;
+  height: 96px;
+}
+
+.todos {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+}
+
+.todos li {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+}
+
+.todos li > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.todos strong {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.todos span:not(.todoNum) {
+  font-size: 12px;
+  color: var(--fg-2);
+}
+
+.todoNum {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--lime);
+  padding-top: 2px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
