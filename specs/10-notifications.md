@@ -10,7 +10,7 @@
 ```
 notifications  id, user_id, type, payload(json), link(앱 내 경로), read_at, created_at, dedupe_key
 ```
-- `type`: `potato_hungry`(MVP) · `event_alert`(MVP, major 이벤트 극대기 전날) · `dark_window`(MVP, 촬영 적기 시작) · `index_high`(MVP, 오늘 밤 지수 80 이상) · `spot_under_review`(P2, 등록자에게) · `post_comment` `post_like`(P2) · `meetup_*`(P3) · `system`.
+- `type`: `potato_hungry`(MVP) · `event_alert`(MVP, **유성우** 극대기 전날 — 설정 화면의 "유성우 극대기"와 같은 범위. 식·슈퍼문·행성은 캘린더에서 보고, 이벤트별 알림은 P2) · `dark_window`(MVP, 촬영 적기 시작) · `index_high`(MVP, 오늘 밤 지수 80 이상) · `spot_under_review`(P2, 등록자에게) · `post_comment` `post_like`(P2) · `meetup_*`(P3) · `system`.
 
 ```
 notification_settings  user_id(PK), meteor_peak(기본 on), new_moon_window(기본 off), potato_hungry(기본 on), post_comment(P2, 기본 off), high_index(기본 on)
@@ -36,7 +36,7 @@ notification_settings  user_id(PK), meteor_peak(기본 on), new_moon_window(기�
 | 유형 | 트리거 | dedupe | 링크 |
 |---|---|---|---|
 | potato_hungry | 감자 배치 normal→hungry | potato_id + 기준 이벤트 id | 감자 상세 |
-| event_alert | `is_major` 이벤트 극대기 **전날 19:00** 일일 배치, `meteor_peak` on인 사용자 전부 (이벤트별 시점 선택은 P2, [03](./03-events.md)) | event_id | 캘린더 해당 월 |
+| event_alert | `type = meteor`이고 `is_major`인 유성우 극대기 **전날 19:00** 일일 배치, `meteor_peak` on인 사용자 전부. 식·슈퍼문·행성은 MVP 대상이 아님(이벤트별 알림·시점 선택은 P2, [03](./03-events.md)) | event_id | 캘린더 해당 월 |
 | dark_window | [12 캘린더](./12-calendar.md) 촬영 적기 띠 **시작일 19:00** 일일 배치, `new_moon_window` on | 시작일 | 캘린더 |
 | index_high | 매일 17:00 10일 지수 계산 뒤 `home_sido` 기준 **오늘** 점수 ≥ 80, `high_index` on ([02](./02-observing-conditions.md)) | sido + date | 홈 |
 | spot_under_review (P2) | 신고 3건 누적 | spot_id | 명소 상세 |
@@ -53,7 +53,7 @@ notification_settings  user_id(PK), meteor_peak(기본 on), new_moon_window(기�
 | 미읽음이 수천 건 | 배지는 "99+", 목록은 페이지네이션 |
 | 사용자가 유형을 끈 뒤 다시 켬 | 꺼진 동안의 알림은 소급 생성하지 않음 |
 | `home_sido`가 없음 | `index_high`는 생성하지 않음. 설정 화면 부제에 "주로 보는 지역 기준" 안내 |
-| 극대기 전날 배치가 돌기 전에 이벤트가 추가됨(극대기까지 1일 미만) | 다음 배치에서 "전날"이 지났으면 건너뜀. 소급 발송 없음 |
+| 극대기 전날 배치가 돌기 전에 유성우가 추가됨(극대기까지 1일 미만) | 다음 배치에서 "전날"이 지났으면 건너뜀. 소급 발송 없음 |
 | FCM 토큰 만료·무효(P3) | 발송 실패 응답에서 토큰 삭제 |
 | 같은 사용자의 여러 기기(P3) | 모든 토큰에 발송, 한 기기에서 읽으면 서버 read_at 갱신, 다른 기기는 다음 조회 때 반영 |
 | 야간 발송(P3) | 22:00~08:00에는 푸시 보류, 알림함에는 즉시. 이벤트 당일 알림은 예외 없음(15시 발송) |
@@ -67,10 +67,10 @@ notification_settings  user_id(PK), meteor_peak(기본 on), new_moon_window(기�
 - [ ] 알림함 목록·읽음·모두 읽음·미읽음 배지가 동작한다.
 - [ ] 90일 정리 배치.
 - [ ] 유형별 설정 GET/PATCH, 꺼진 유형은 `notify()`가 건너뛰는 테스트.
-- [ ] 이벤트 극대기 전날 · 촬영 적기 시작 · 지수 80 이상 배치가 각각 알림 1건을 만들고, 재실행 시 0건(dedupe).
+- [ ] 유성우 극대기 전날 · 촬영 적기 시작 · 지수 80 이상 배치가 각각 알림 1건을 만들고(major 월식은 0건), 재실행 시 0건(dedupe).
 
 **Phase 2~3**
-- [ ] 이벤트별 알림 시점 선택(D-7/D-1/당일), 댓글 알림, FCM 발송·토큰 정리·야간 보류.
+- [ ] 식·슈퍼문·행성 등 유성우 외 이벤트 알림과 이벤트별 시점 선택(D-7/D-1/당일), 댓글 알림, FCM 발송·토큰 정리·야간 보류.
 
 ## 미결
 - 이메일 채널 도입 여부와 시점.
