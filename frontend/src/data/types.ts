@@ -173,6 +173,10 @@ export interface Me {
   email: string | null;
   /** ISO 가입 시각 */
   createdAt: string;
+  /** 닉네임 마지막 변경일·다음 변경 가능일(YYYY-MM-DD)과 지금 바꿀 수 있는지 — 30일 규칙은 서버가 판정 */
+  nicknameChangedAt: string;
+  nicknameChangeableAt: string;
+  canChangeNickname: boolean;
 }
 
 /** 온보딩 제출 — `POST /api/v1/me/onboarding` (명세 §14) */
@@ -181,4 +185,61 @@ export interface OnboardingInput {
   potatoAvatar: PotatoAvatar;
   homeSido: string | null;
   marketingOptIn: boolean;
+}
+
+/** 감자 상태 — specs/04. hungry·sprouted는 방치 상태(서버 배치가 판정) */
+export type PotatoState = "normal" | "hungry" | "sprouted";
+
+/** 내 감자 — `GET /api/v1/me/potatoes` (specs/04). (사용자, 명소)당 하나 */
+export interface Potato {
+  id: string;
+  spot: {
+    id: string;
+    name: string;
+    /** 시·도 코드 */
+    sido: string;
+    /** 명소 좌표를 서버가 5 km 격자 인덱스로 바꾼 값 [x, y] */
+    cell: [x: number, y: number];
+  };
+  /** Lv1~4 = min(4, 먹이 수) — 서버 계산 */
+  level: 1 | 2 | 3 | 4;
+  state: PotatoState;
+  /** 먹이(기록) 수 */
+  foodCount: number;
+  /** 마지막 방문일 YYYY-MM-DD */
+  lastVisitedOn: string;
+  /** 최신 후기 발췌 */
+  latestReview: string;
+  isPublic: boolean;
+}
+
+/** 알림 설정 — `PATCH /api/v1/me/notification-settings` (명세 §15). MVP는 앱 내 알림함 생성 여부 */
+export interface NotificationSettings {
+  meteorPeak: boolean;
+  newMoonWindow: boolean;
+  potatoHungry: boolean;
+  /** Phase 2 (커뮤니티) */
+  postComment: boolean;
+  highIndex: boolean;
+}
+
+/** 프로필 수정 — `PATCH /api/v1/me` */
+export interface UpdateMeInput {
+  nickname?: string;
+  potatoAvatar?: PotatoAvatar;
+  homeSido?: string | null;
+}
+
+export type FeedbackType = "bug" | "feature" | "spot_fix" | "other";
+/** 접수 → 확인 중 → 반영됨 / 보류 (명세 §16) */
+export type FeedbackStatus = "received" | "reviewing" | "applied" | "held";
+
+/** 내가 보낸 요청 — `GET /api/v1/me/feedback` */
+export interface MyFeedback {
+  id: string;
+  type: FeedbackType;
+  title: string;
+  status: FeedbackStatus;
+  /** YYYY-MM-DD */
+  createdAt: string;
 }

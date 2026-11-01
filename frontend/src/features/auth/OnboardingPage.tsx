@@ -1,42 +1,18 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import { checkNickname, completeOnboarding, type PotatoAvatar } from "../../data/auth";
+import { completeOnboarding, type PotatoAvatar } from "../../data/auth";
 import { SIDO, type SidoCode } from "../../data/regions";
 import { PillButton } from "../../components/ui/Pill";
 import { POTATO_AVATARS, POTATO_AVATAR_LABEL, POTATO_AVATAR_SRC } from "../../lib/potatoAvatar";
 import { AuthFrame, Steps } from "./AuthFrame";
+import {
+  NICKNAME_MAX,
+  NICK_STATUS_TEXT,
+  useNicknameCheck,
+  type NickStatus,
+} from "./useNicknameCheck";
 import { useMe } from "./useMe";
 import styles from "./auth.module.css";
-
-/** 닉네임 규칙 — specs/08: 한글·영문·숫자 2~12자 (금칙어는 서버가 본다) */
-const NICKNAME_RE = /^[가-힣A-Za-z0-9]{2,12}$/;
-const NICKNAME_MAX = 12;
-const CHECK_DEBOUNCE_MS = 400;
-
-type NickStatus = "idle" | "invalid" | "checking" | "available" | "taken";
-
-/** 입력이 멈추고 400ms 뒤 중복 확인 (명세 §14). 형식 검사는 렌더에서 바로, 중복 결과만 상태로 둔다 */
-function useNicknameCheck(nickname: string): NickStatus {
-  const [result, setResult] = useState<{ nickname: string; available: boolean } | null>(null);
-  const valid = nickname !== "" && NICKNAME_RE.test(nickname);
-  useEffect(() => {
-    if (!valid) return;
-    let cancelled = false;
-    const t = setTimeout(() => {
-      checkNickname(nickname).then(({ available }) => {
-        if (!cancelled) setResult({ nickname, available });
-      });
-    }, CHECK_DEBOUNCE_MS);
-    return () => {
-      cancelled = true;
-      clearTimeout(t);
-    };
-  }, [nickname, valid]);
-  if (nickname === "") return "idle";
-  if (!valid) return "invalid";
-  if (result?.nickname === nickname) return result.available ? "available" : "taken";
-  return "checking";
-}
 
 const AGREEMENTS = [
   { key: "terms", label: "이용약관", required: true },
@@ -213,13 +189,7 @@ export function OnboardingPage() {
 }
 
 function NickStatusText({ status }: { status: NickStatus }) {
-  const text: Record<NickStatus, string> = {
-    idle: "",
-    invalid: "한글·영문·숫자 2~12자만 돼요",
-    checking: "확인 중…",
-    available: "✓ 사용 가능",
-    taken: "이미 쓰는 닉네임이에요",
-  };
+  const text = NICK_STATUS_TEXT;
   const cls =
     status === "available"
       ? styles.statusOk
