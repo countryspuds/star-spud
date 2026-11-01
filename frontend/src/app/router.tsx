@@ -16,7 +16,7 @@ import { PlantPage } from "../features/potato/PlantPage";
 import { PotatoDetailPage } from "../features/potato/PotatoDetailPage";
 import { NotificationsPage } from "../features/notifications/NotificationsPage";
 import { PHASE2 } from "../lib/phase2";
-import { communityRoutes, marketRoutes } from "./phase2Routes";
+import { activityRoute, authRoutes, communityRoutes, marketRoutes } from "./phase2Routes";
 
 export const router = createBrowserRouter([
   {
@@ -41,6 +41,8 @@ export const router = createBrowserRouter([
           { path: "settings", element: <SettingsPage /> },
           // 감자 상세 (명세 §18.3)
           { path: "potatoes/:id", element: <PotatoDetailPage /> },
+          // 활동 탭 — Phase 2 플래그가 켜졌을 때만 (꺼지면 아래 ComingSoon)
+          ...(PHASE2 ? [activityRoute] : []),
         ],
       },
       { path: "feedback", element: <FeedbackPage /> },
@@ -54,7 +56,7 @@ export const router = createBrowserRouter([
         ? communityRoutes
         : [{ path: "community", element: <ComingSoon section="커뮤니티" /> }]),
       ...(PHASE2 ? marketRoutes : [{ path: "market", element: <ComingSoon section="장터" /> }]),
-      { path: "me/activity", element: <ComingSoon section="활동" /> },
+      ...(PHASE2 ? [] : [{ path: "me/activity", element: <ComingSoon section="활동" /> }]),
       { path: "faq", element: <ComingSoon section="자주 묻는 질문" /> },
       // 정책 문서 — 문안이 정해지면 페이지로 교체 (specs/08 미결)
       { path: "terms", element: <ComingSoon section="이용약관" /> },
@@ -70,6 +72,8 @@ export const router = createBrowserRouter([
       { path: "login", element: <LoginPage /> },
       { path: "onboarding", element: <OnboardingPage /> },
       { path: "welcome", element: <WelcomePage /> },
+      // 이메일 가입 · 비밀번호 재설정 — Phase 2 플래그가 켜졌을 때만 (ADR-0014)
+      ...(PHASE2 ? authRoutes : []),
     ],
   },
 ]);

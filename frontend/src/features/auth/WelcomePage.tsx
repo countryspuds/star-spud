@@ -37,7 +37,10 @@ export function WelcomePage() {
       title="첫 감자가 자리를 잡았어요"
       body="이제 오늘 밤 갈 곳을 고르고, 다녀온 뒤 기록을 남기면 감자가 자라요."
     >
-      <Steps active={[3]} />
+      <Steps
+        active={[3]}
+        labels={me.providers.includes("email") ? (["계정", "닉네임", "완료"] as const) : undefined}
+      />
       <div className={styles.welcome}>
         <img
           src={POTATO_AVATAR_SRC[me.potatoAvatar]}

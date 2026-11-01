@@ -641,3 +641,25 @@
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+
+/* ── 계정 연결 폼 (Phase 2) ───────────── */
+.linkForm {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--edge);
+}
+
+.linkFormActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.linkFormActions button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
