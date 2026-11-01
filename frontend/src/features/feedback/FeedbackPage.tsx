@@ -409,9 +409,11 @@ function SuggestionPotato() {
 /** `/feedback` — 명세 §16. 비로그인도 보낼 수 있다 */
 export function FeedbackPage() {
   const { search } = useLocation();
-  // 접수 화면은 제출한 그 주소(?type=)에서만 — 푸터 등에서 다른 유형 링크로 들어오면 그 유형의 빈 폼이 열린다
+  // 접수 화면은 제출한 그 주소(?type=)에서만. 다른 유형 링크로 들어오면 이전 접수 상태를 버리고 빈 폼을 연다 —
+  // 비교만 하고 남겨 두면 새 폼에서 유형을 되돌렸을 때 옛 접수 화면이 다시 나타나 작성 내용을 잃는다
   const [done, setDone] = useState<{ id: string; search: string } | null>(null);
-  const doneId = done !== null && done.search === search ? done.id : null;
+  if (done !== null && done.search !== search) setDone(null);
+  const doneId = done?.id ?? null;
   const onDone = (id: string) => setDone({ id, search });
   // 다시 보내기 때 폼을 새로 만들기 위한 키
   const [formKey, setFormKey] = useState(0);
