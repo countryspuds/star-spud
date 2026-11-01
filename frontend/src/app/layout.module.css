@@ -63,7 +63,40 @@
   justify-self: end;
   display: flex;
   align-items: center;
+  gap: 8px;
   min-height: 32px;
+}
+
+/* 종 아이콘 (명세 §18.4) — 아바타 칩 왼쪽, 미읽음이면 --lime 점 */
+.bell {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: var(--fg-2);
+  transition: color 0.15s;
+}
+
+.bell:hover {
+  color: var(--fg);
+}
+
+.bell:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 2px;
+}
+
+.bellDot {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--lime);
 }
 
 .authSkeleton {

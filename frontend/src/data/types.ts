@@ -333,6 +333,30 @@ export interface FeedPatch {
   review?: string;
 }
 
+/** 알림 유형 — specs/10 (MVP 4종 + system) */
+export type NotificationType =
+  "potato_hungry" | "event_alert" | "dark_window" | "index_high" | "system";
+
+/** 알림 한 건 — `GET /api/v1/me/notifications?cursor=` (specs/10). 문구는 생성 시점 스냅샷 */
+export interface AppNotification {
+  id: string;
+  type: NotificationType;
+  title: string;
+  body: string;
+  /** 앱 내 경로 */
+  link: string;
+  /** ISO 생성 시각 */
+  createdAt: string;
+  /** ISO 읽은 시각. 안 읽었으면 null */
+  readAt: string | null;
+}
+
+export interface NotificationPage {
+  items: AppNotification[];
+  nextCursor: string | null;
+  unreadCount: number;
+}
+
 /** 알림 설정 — `PATCH /api/v1/me/notification-settings` (명세 §15). MVP는 앱 내 알림함 생성 여부 */
 export interface NotificationSettings {
   meteorPeak: boolean;
