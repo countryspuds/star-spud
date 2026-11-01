@@ -12,7 +12,9 @@ const REQUIRES_ONBOARDING_RE = [/^\/spots\/[^/]+\/plant$/];
  */
 export function OnboardingGuard({ children }: { children: ReactNode }) {
   const me = useMe();
-  const { pathname } = useLocation();
+  const { pathname: rawPath } = useLocation();
+  // 라우터는 끝의 "/"를 허용하므로(`/spots/x/plant/`) 가드도 같은 주소로 보고 떼어낸 뒤 비교한다
+  const pathname = rawPath.length > 1 ? rawPath.replace(/\/+$/, "") : rawPath;
   const needsOnboarding =
     REQUIRES_ONBOARDING.some((p) => pathname === p || pathname.startsWith(`${p}/`)) ||
     REQUIRES_ONBOARDING_RE.some((re) => re.test(pathname));

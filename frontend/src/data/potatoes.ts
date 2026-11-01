@@ -309,7 +309,8 @@ export async function updateFeed(feedId: string, patch: FeedPatch): Promise<void
     owner,
     owner.feeds.map((f) => (f.id === feedId ? next : f)),
   );
-  updated.state = evaluateState(updated.lastVisitedOn, today);
+  // 방치 상태 재평가는 방문일이 바뀐 경우에만 (specs/04). 후기만 고치면 상태는 그대로
+  if (decided) updated.state = evaluateState(updated.lastVisitedOn, today);
   potatoes = potatoes.map((p) => (p.id === owner.id ? updated : p));
   changed();
 }

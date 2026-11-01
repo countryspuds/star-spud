@@ -366,8 +366,9 @@ function PlantBody({ spotId }: { spotId: string }) {
   const mine = useMyPotatoes().find((p) => p.spot.id === spotId);
   const [result, setResult] = useState<PlantResult | null>(null);
 
-  // 비로그인은 로그인으로(돌아올 곳 포함). 온보딩 전은 OnboardingGuard가 /onboarding으로 보낸다
+  // 비로그인은 로그인으로(돌아올 곳 포함). 온보딩 전은 OnboardingGuard가 막지만, 폼 진입부에서도 한 번 더 확인한다
   if (!me) return <Navigate to={`/login?next=${encodeURIComponent(pathname)}`} replace />;
+  if (me.nickname === null) return <Navigate to="/onboarding" replace />;
   if (!spot) {
     return (
       <Card className={`${styles.plant} ${styles.success}`}>
