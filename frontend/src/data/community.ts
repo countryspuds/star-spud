@@ -46,6 +46,8 @@ export const COMMENT_MAX = 500;
 export const POLL_OPTIONS_MIN = 2;
 export const POLL_OPTIONS_MAX = 4;
 export const MEETUP_CAPACITY = { min: 2, max: 20 } as const;
+/** 이달의 사진 응모 — 한 달 2장 (삭제한 글의 응모도 센다: 응모는 글과 독립) */
+export const CONTEST_MONTHLY_LIMIT = 2;
 
 const ASSET_URLS: Record<string, string> = {
   "photo-of-month-placeholder.png": photoPlaceholder,
@@ -267,7 +269,44 @@ async function requireMe(): Promise<PostAuthor> {
   };
 }
 
-function validate(input: PostInput): void {
+/** 응모 기록 한 줄 — 글이 삭제돼도 남는다 (specs/06 삭제 모달 안내와 같은 규칙) */
+export interface ContestEntry {
+  postId: string;
+  createdAt: string;
+  /** YYYY-MM */
+  month: string;
+  title: string;
+  src: string;
+  likeCount: number;
+  commentCount: number;
+  /** 글이 삭제됐으면 true — 상세 링크 대신 "글 삭제됨" */
+  postDeleted: boolean;
+}
+
+const monthOf = (iso: string) => iso.slice(0, 7);
+
+/** 내 응모 기록 — 삭제된 글 포함, 최신순. TODO: GET /api/v1/me/contest-entries */
+export function getContestEntries(authorId: string): ContestEntry[] {
+  return posts
+    .filter((p) => p.photoContest && p.author.id === authorId)
+    .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt))
+    .map((p) => ({
+      postId: p.id,
+      createdAt: p.createdAt,
+      month: monthOf(p.createdAt),
+      title: p.body.length > 30 ? `${p.body.slice(0, 30)}…` : p.body,
+      src: p.photos.map(assetUrl)[0] ?? "",
+      likeCount: p.likeCount,
+      commentCount: p.comments.length,
+      postDeleted: !!p.deletedAt,
+    }));
+}
+
+/**
+ * 작성·수정 공통 검증. `existing`은 수정 중인 글 — 이미 등록된 모임 시각·응모는 그대로 두면 다시 검사하지 않는다
+ * (지난 모임의 후기를 고칠 수 있어야 하므로).
+ */
+function validate(input: PostInput, authorId: string, existing?: PostRow): void {
   const body = input.body.trim();
   if (body.length === 0 || body.length > BODY_MAX) throw new Error("BODY_LENGTH");
   if (input.spotId && !SPOTS.some((s) => s.id === input.spotId)) throw new Error("SPOT_NOT_FOUND");
@@ -281,6 +320,10 @@ function validate(input: PostInput): void {
     )
       throw new Error("MEETUP_CAPACITY");
     if (!input.spotId) throw new Error("MEETUP_SPOT_REQUIRED");
+    // 날짜가 깨졌거나 이미 지난 시각이면 거절 — 폼이 noValidate라 여기서 본다
+    const at = Date.parse(m.at);
+    if (Number.isNaN(at)) throw new Error("MEETUP_REQUIRED");
+    if (at <= Date.now() && existing?.meetup?.at !== m.at) throw new Error("MEETUP_PAST");
   }
   if (input.poll) {
     const opts = input.poll.options.map((o) => o.trim()).filter(Boolean);
@@ -288,6 +331,12 @@ function validate(input: PostInput): void {
       throw new Error("POLL_OPTIONS");
   }
   if (input.photoContest && input.type !== "photo") throw new Error("PHOTO_CONTEST_TYPE");
+  // 월 2장 제한 — 새로 응모할 때만 (이미 응모된 글을 고치는 건 그대로)
+  if (input.photoContest && !existing?.photoContest) {
+    const month = monthOf(existing?.createdAt ?? new Date().toISOString());
+    const used = getContestEntries(authorId).filter((e) => e.month === month).length;
+    if (used >= CONTEST_MONTHLY_LIMIT) throw new Error("CONTEST_LIMIT");
+  }
 }
 
 const newId = (prefix: string) =>
@@ -296,7 +345,7 @@ const newId = (prefix: string) =>
 /** 글 작성 — TODO: POST /api/v1/posts. 사진 업로드(presign)는 TODO라 photos는 비어 있다 */
 export async function createPost(input: PostInput): Promise<Post> {
   const author = await requireMe();
-  validate(input);
+  validate(input, author.id);
   const row: PostRow = {
     id: newId("p"),
     type: input.type,
@@ -352,8 +401,8 @@ function ownRow(id: string, meId: string): PostRow {
 /** 글 수정 — TODO: PATCH /api/v1/posts/{id}. 저장하면 editedAt이 찍혀 "(수정됨)" */
 export async function updatePost(id: string, input: PostInput): Promise<Post> {
   const me = await requireMe();
-  validate(input);
   const row = ownRow(id, me.id);
+  validate(input, me.id, row);
   const next: PostRow = {
     ...row,
     type: input.type,

@@ -98,6 +98,8 @@ const listeners = new Set<() => void>();
 
 function setMe(me: Me | null): void {
   writeSession(me);
+  // 온보딩·프로필·계정 연결로 바뀐 사용자 정보를 이메일 계정 저장소에도 반영 — 재로그인해도 그대로
+  if (me) syncAccount(me);
   mePromise = Promise.resolve(me);
   listeners.forEach((l) => l());
 }
@@ -194,6 +196,9 @@ export async function logout(): Promise<void> {
 /** 회원 탈퇴 — specs/08: 즉시 삭제. TODO(Phase 2): DELETE /api/v1/me */
 export async function deleteMe(): Promise<void> {
   notificationSettings = { ...MOCK_NOTIFICATION_SETTINGS };
+  // 탈퇴한 사용자의 로그인 수단도 지운다 — 같은 이메일·비밀번호로 다시 들어올 수 없다 (specs/08 즉시 삭제)
+  const me = await getMe();
+  if (me) removeAccounts(me.id);
   setMe(null);
 }
 
@@ -273,6 +278,18 @@ function writeAccounts(list: EmailAccount[]): void {
   }
 }
 
+/** 같은 id의 계정 항목에 최신 사용자 정보를 덮어쓴다 (이메일 수단이 있는 사용자만 저장돼 있다) */
+function syncAccount(me: Me): void {
+  const list = readAccounts();
+  if (!list.some((a) => a.me.id === me.id)) return;
+  writeAccounts(list.map((a) => (a.me.id === me.id ? { ...a, me } : a)));
+}
+
+function removeAccounts(userId: string): void {
+  const list = readAccounts();
+  if (list.some((a) => a.me.id === userId)) writeAccounts(list.filter((a) => a.me.id !== userId));
+}
+
 async function sha256(text: string): Promise<string> {
   const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
   return Array.from(new Uint8Array(buf), (b) => b.toString(16).padStart(2, "0")).join("");
@@ -347,12 +364,9 @@ export async function loginWithEmail(
   if (e === SEED_EMAIL && password === SEED_PASSWORD) me = SEED_ME;
   else {
     const hash = await sha256(password);
+    // 계정 저장소의 me는 setMe가 늘 최신으로 맞춰 둔다 (온보딩 완료·프로필·연결 상태 포함)
     const acc = readAccounts().find((a) => a.email === e && a.hash === hash);
-    // 가입 뒤 온보딩을 마쳤다면 그 상태로 — 세션에 남은 최신 me가 같은 id면 그걸 쓴다
-    if (acc) {
-      const current = readSession();
-      me = current && current.id === acc.me.id ? current : acc.me;
-    }
+    if (acc) me = acc.me;
   }
   if (!me) throw new Error("INVALID_CREDENTIALS");
   setMe(me);

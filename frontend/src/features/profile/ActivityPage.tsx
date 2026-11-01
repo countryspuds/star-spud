@@ -77,11 +77,19 @@ function Body({ tab }: { tab: ActivityTab }) {
               const e = a.contest.entries[i];
               return (
                 <li key={i} className={e ? styles.slotOn : styles.slot}>
-                  {e ? (
+                  {e && e.postId ? (
                     <Link to={`/community/${e.postId}`} className={styles.slotLink}>
                       {e.src && <img src={e.src} alt="" />}
                       <span>{e.title}</span>
                     </Link>
+                  ) : e ? (
+                    <div
+                      className={styles.slotLink}
+                      aria-label="글은 삭제됐지만 응모는 남아 있어요"
+                    >
+                      {e.src && <img src={e.src} alt="" />}
+                      <span>{e.title} · 글 삭제됨</span>
+                    </div>
                   ) : (
                     <Link to="/community/write" className={styles.slotEmpty}>
                       <span className={styles.plus} aria-hidden="true">

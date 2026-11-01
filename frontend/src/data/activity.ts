@@ -3,7 +3,7 @@
  * TODO(Phase 2 백엔드): GET /api/v1/me/activity — 서버가 한 번에 내려준다.
  */
 import { getMe, subscribeMe } from "./auth";
-import { getFeed, getPost, subscribeCommunity, type Post } from "./community";
+import { getContestEntries, getFeed, getPost, subscribeCommunity, type Post } from "./community";
 import { getListing, getListings, subscribeMarket } from "./market";
 import { getMyPotatoes, getPotato, subscribeMyPotatoes } from "./potatoes";
 import type { ActivityItem, MyActivity } from "./types";
@@ -94,14 +94,17 @@ async function build(): Promise<MyActivity> {
       at: p.createdAt,
       tag: POST_TYPE[p.type],
     }));
-  const entryPosts = mine.filter((p) => p.photoContest);
-  const entries: ActivityItem[] = entryPosts.map((p) => ({
-    id: p.id,
-    link: `/community/${p.id}`,
-    title: excerpt(p.body, 50),
-    body: `좋아요 ${p.likeCount} · 댓글 ${p.commentCount}`,
-    at: p.createdAt,
-    tag: p.createdAt.slice(0, 7).replace("-", ".") + " 응모",
+  // 응모는 글을 삭제해도 남는다 (삭제 모달 안내와 같은 규칙) — 삭제된 글은 응모 목록으로 보낸다
+  const contestEntries = getContestEntries(me.id);
+  const entries: ActivityItem[] = contestEntries.map((e) => ({
+    id: e.postId,
+    link: e.postDeleted ? "/community?tab=photo" : `/community/${e.postId}`,
+    title: e.title,
+    body: e.postDeleted
+      ? "글은 삭제됨 · 응모는 유지"
+      : `좋아요 ${e.likeCount} · 댓글 ${e.commentCount}`,
+    at: e.createdAt,
+    tag: e.month.replace("-", ".") + " 응모",
   }));
 
   const month = new Date().toISOString().slice(0, 7);
@@ -126,10 +129,10 @@ async function build(): Promise<MyActivity> {
     contest: {
       month,
       slots: 2,
-      entries: entryPosts
-        .filter((p) => p.createdAt.slice(0, 7) === month)
-        .slice(0, 2)
-        .map((p) => ({ postId: p.id, src: p.photos[0] ?? "", title: excerpt(p.body, 30) })),
+      // 월 2장 제한은 community.ts가 저장 단계에서 막으므로 여기 수는 실제 응모 수와 같다
+      entries: contestEntries
+        .filter((e) => e.month === month)
+        .map((e) => ({ postId: e.postDeleted ? null : e.postId, src: e.src, title: e.title })),
     },
     reactions: {
       likes: mine.reduce((n, p) => n + p.likeCount, 0),

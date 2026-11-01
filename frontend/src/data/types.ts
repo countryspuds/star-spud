@@ -672,7 +672,12 @@ export interface MyActivity {
   likes: ActivityItem[];
   entries: ActivityItem[];
   /** 이달의 사진 응모 — 이번 달 (YYYY-MM), 응모 칸 2개 */
-  contest: { month: string; slots: 2; entries: { postId: string; src: string; title: string }[] };
+  contest: {
+    month: string;
+    slots: 2;
+    /** postId가 null이면 글은 삭제됐지만 응모는 남은 칸 */
+    entries: { postId: string | null; src: string; title: string }[];
+  };
   /** 받은 반응 — 내 글의 좋아요·댓글, 내 상품의 찜 */
   reactions: { likes: number; comments: number; saves: number };
 }
