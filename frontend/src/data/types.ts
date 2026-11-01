@@ -86,6 +86,16 @@ export interface Field {
 /** 광공해 5단계 0~4 */
 export type LpLevel = 0 | 1 | 2 | 3 | 4;
 
+/** 명소 유형 — specs/01: 자연 / 천문대 / 캠핑장 / 도심 근교 */
+export type SpotType = "nature" | "observatory" | "camping" | "suburb";
+/** 접근 수단 */
+export type SpotAccess = "car" | "walk" | "transit";
+/** 시야가 열린 방향 */
+export type Direction = "N" | "E" | "S" | "W";
+/** 관측 조건 판정 — specs/02. 서버가 판정해 내려주고 프론트는 색·문구만 매핑한다 */
+export type Condition = "good" | "fair" | "bad" | "unknown";
+
+/** 관측 명소 — `GET /api/v1/spots/{id}` (specs/01 모델, 명세 §18.5) */
 export interface Spot {
   id: string;
   name: string;
@@ -97,7 +107,71 @@ export interface Spot {
   lpLevel: LpLevel;
   distanceKm: number;
   elevationM: number;
+  type: SpotType;
+  lat: number;
+  lng: number;
+  description: string;
+  access: SpotAccess[];
+  /** 마지막 구간까지 포장도로인지 */
+  paved: boolean;
+  horizonDirs: Direction[];
+  /** 열린 방향의 지평선 고도(°) — 지형이 가리는 높이 */
+  horizonAlt: number;
+  /** 공개 감자 기록 사진 — 서버가 최대 6장 모아 준다. mock은 에셋 파일명 */
+  photos: string[];
+  /** curated = 운영자 큐레이션 · ugc = 사용자 등록 */
+  source: "curated" | "ugc";
+  /** ugc 등록자 닉네임 (탈퇴하면 null) */
+  createdBy: string | null;
+  status: "active" | "under_review";
+  flags: {
+    carCamping: boolean;
+    /** 주차 가능 대수. 모르면 null */
+    parking: number | null;
+    toilet: boolean;
+  };
 }
+
+/** 명소의 어느 날 밤 조건 — `GET /api/v1/spots/{id}?date=`의 조건 부분 (specs/02). 판정·이유는 서버 값 */
+export interface SpotNight {
+  /** YYYY-MM-DD (그날 저녁부터 다음 날 새벽까지의 "밤") */
+  date: string;
+  condition: Condition;
+  /** 이유 한 줄 (예: "구름은 적지만 달이 밤새 떠 있어요") */
+  reason: string;
+  /** 관측 창 평균 구름량 %. 스냅샷이 없으면 null */
+  cloudPct: number | null;
+  times: NightTimes;
+}
+
+export interface SpotDetail extends Spot {
+  night: SpotNight;
+}
+
+/** 명소의 공개 감자 한 줄 — `GET /api/v1/spots/{id}/potatoes?cursor=` (specs/04) */
+export interface SpotPotato {
+  id: string;
+  nickname: string;
+  level: 1 | 2 | 3 | 4;
+  state: PotatoState;
+  foodCount: number;
+  /** 마지막 방문일 YYYY-MM-DD */
+  lastVisitedOn: string;
+  latestReview: string;
+  /** 최신 기록 사진 URL (최대 3장 표시) */
+  photos: string[];
+}
+
+export interface SpotPotatoPage {
+  items: SpotPotato[];
+  /** 다음 페이지 커서. 없으면 null */
+  nextCursor: string | null;
+  /** 공개 감자 전체 수 */
+  total: number;
+}
+
+/** 명소 신고 사유 — `POST /api/v1/spots/{id}/reports` */
+export type SpotReportReason = "wrong_location" | "no_access" | "duplicate" | "other";
 
 /** 별보기 점수 격자 해상도 — Phase 1은 5 km만 */
 export type StarScoreRes = "5km";

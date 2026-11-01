@@ -149,14 +149,28 @@
 }
 
 .spot {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
   padding: 9px 0;
 }
 
 .spot + .spot {
   border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.spotLink {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.spotLink:hover .spotName {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.spotLink:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 2px;
+  border-radius: 6px;
 }
 
 .spot .swatch {

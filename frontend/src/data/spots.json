@@ -7,7 +7,30 @@
     "bortle": 3,
     "lpLevel": 0,
     "distanceKm": 190,
-    "elevationM": 1100
+    "elevationM": 1100,
+    "type": "nature",
+    "lat": 37.6165,
+    "lng": 128.7386,
+    "description": "해발 1,100 m 고랭지 배추밭. 전국에서 손꼽는 은하수 명소로, 능선 위라 사방이 트여 있어요. 8~9월 새벽에 은하수가 남쪽 하늘에 걸려요.",
+    "access": ["car"],
+    "paved": true,
+    "horizonDirs": ["N", "E", "S", "W"],
+    "horizonAlt": 3,
+    "photos": [
+      "photo-of-month-placeholder.png",
+      "photo-of-month-placeholder.png",
+      "photo-of-month-placeholder.png",
+      "photo-of-month-placeholder.png"
+    ],
+    "source": "curated",
+    "createdBy": null,
+    "status": "active",
+    "flags": { "carCamping": true, "parking": 40, "toilet": true },
+    "nights": [
+      { "condition": "good", "reason": "맑고 달도 밤늦게 떠요", "cloudPct": 15 },
+      { "condition": "fair", "reason": "구름이 조금 있어요", "cloudPct": 45 },
+      { "condition": "good", "reason": "맑고 달은 새벽에 떠요", "cloudPct": 20 }
+    ]
   },
   {
     "id": "gwangdeoksan",
@@ -17,7 +40,25 @@
     "bortle": 3,
     "lpLevel": 0,
     "distanceKm": 75,
-    "elevationM": 1046
+    "elevationM": 1046,
+    "type": "nature",
+    "lat": 38.1192,
+    "lng": 127.4312,
+    "description": "광덕고개에서 올라가는 능선. 화천·철원 쪽 하늘이 어둡고 북쪽 시야가 좋아 가을 북쪽 하늘 별자리 보기에 좋아요. 마지막 2 km는 비포장이에요.",
+    "access": ["car"],
+    "paved": false,
+    "horizonDirs": ["N", "E", "S"],
+    "horizonAlt": 6,
+    "photos": ["photo-of-month-placeholder.png"],
+    "source": "curated",
+    "createdBy": null,
+    "status": "active",
+    "flags": { "carCamping": false, "parking": 15, "toilet": false },
+    "nights": [
+      { "condition": "fair", "reason": "구름이 조금 있어요", "cloudPct": 40 },
+      { "condition": "good", "reason": "맑고 달도 밤늦게 떠요", "cloudPct": 10 },
+      { "condition": "unknown", "reason": "예보가 아직 없어요", "cloudPct": null }
+    ]
   },
   {
     "id": "byeolmaro",
@@ -27,7 +68,25 @@
     "bortle": 3,
     "lpLevel": 1,
     "distanceKm": 150,
-    "elevationM": 799
+    "elevationM": 799,
+    "type": "observatory",
+    "lat": 37.1872,
+    "lng": 128.4933,
+    "description": "봉래산 정상의 시민 천문대. 주차장에서도 충분히 어둡고, 야간 관측 프로그램이 있어요. 겨울엔 올라가는 길이 자주 얼어요.",
+    "access": ["car", "transit"],
+    "paved": true,
+    "horizonDirs": ["E", "S", "W"],
+    "horizonAlt": 10,
+    "photos": ["photo-of-month-placeholder.png", "photo-of-month-placeholder.png"],
+    "source": "curated",
+    "createdBy": null,
+    "status": "active",
+    "flags": { "carCamping": false, "parking": 80, "toilet": true },
+    "nights": [
+      { "condition": "good", "reason": "맑고 달도 밤늦게 떠요", "cloudPct": 20 },
+      { "condition": "bad", "reason": "구름이 많아요", "cloudPct": 80 },
+      { "condition": "fair", "reason": "구름이 조금 있어요", "cloudPct": 50 }
+    ]
   },
   {
     "id": "yumyeongsan",
@@ -37,7 +96,25 @@
     "bortle": 5,
     "lpLevel": 2,
     "distanceKm": 50,
-    "elevationM": 862
+    "elevationM": 862,
+    "type": "suburb",
+    "lat": 37.6094,
+    "lng": 127.4984,
+    "description": "서울에서 1시간. 자연휴양림 주차장 위 임도에서 남서쪽 하늘이 열려요. 광공해가 있어 밝은 별·행성·달 위주로 보기 좋아요.",
+    "access": ["car", "walk"],
+    "paved": true,
+    "horizonDirs": ["S", "W"],
+    "horizonAlt": 12,
+    "photos": [],
+    "source": "curated",
+    "createdBy": null,
+    "status": "active",
+    "flags": { "carCamping": true, "parking": 60, "toilet": true },
+    "nights": [
+      { "condition": "bad", "reason": "흐리고 비 소식이 있어요", "cloudPct": 85 },
+      { "condition": "bad", "reason": "구름이 많아요", "cloudPct": 70 },
+      { "condition": "fair", "reason": "구름이 조금 있어요", "cloudPct": 55 }
+    ]
   },
   {
     "id": "sobaeksan",
@@ -47,7 +124,29 @@
     "bortle": 3,
     "lpLevel": 0,
     "distanceKm": 165,
-    "elevationM": 1383
+    "elevationM": 1383,
+    "type": "nature",
+    "lat": 36.9574,
+    "lng": 128.4836,
+    "description": "죽령에서 연화봉까지 7 km 임도. 천문대 옆 데크에서 360도 하늘이 열려요. 밤 산행이라 헤드랜턴과 방한복이 필수예요.",
+    "access": ["walk"],
+    "paved": false,
+    "horizonDirs": ["N", "E", "S", "W"],
+    "horizonAlt": 2,
+    "photos": [
+      "photo-of-month-placeholder.png",
+      "photo-of-month-placeholder.png",
+      "photo-of-month-placeholder.png"
+    ],
+    "source": "curated",
+    "createdBy": null,
+    "status": "active",
+    "flags": { "carCamping": false, "parking": 30, "toilet": true },
+    "nights": [
+      { "condition": "good", "reason": "맑고 달도 밤늦게 떠요", "cloudPct": 10 },
+      { "condition": "good", "reason": "맑고 달은 새벽에 떠요", "cloudPct": 20 },
+      { "condition": "fair", "reason": "구름이 조금 있어요", "cloudPct": 45 }
+    ]
   },
   {
     "id": "yeongyang",
@@ -57,7 +156,25 @@
     "bortle": 2,
     "lpLevel": 0,
     "distanceKm": 260,
-    "elevationM": 410
+    "elevationM": 410,
+    "type": "observatory",
+    "lat": 36.7222,
+    "lng": 129.1125,
+    "description": "아시아 최초 국제밤하늘보호공원 안에 있어요. 보호 구역이라 가로등이 거의 없고, 바로 옆에 캠핑장이 있어요.",
+    "access": ["car"],
+    "paved": true,
+    "horizonDirs": ["N", "E", "S", "W"],
+    "horizonAlt": 8,
+    "photos": ["photo-of-month-placeholder.png", "photo-of-month-placeholder.png"],
+    "source": "curated",
+    "createdBy": null,
+    "status": "active",
+    "flags": { "carCamping": true, "parking": 50, "toilet": true },
+    "nights": [
+      { "condition": "good", "reason": "맑고 달도 밤늦게 떠요", "cloudPct": 15 },
+      { "condition": "fair", "reason": "구름이 조금 있어요", "cloudPct": 35 },
+      { "condition": "good", "reason": "맑고 달은 새벽에 떠요", "cloudPct": 15 }
+    ]
   },
   {
     "id": "bohyeonsan",
@@ -67,7 +184,25 @@
     "bortle": 3,
     "lpLevel": 0,
     "distanceKm": 270,
-    "elevationM": 1124
+    "elevationM": 1124,
+    "type": "observatory",
+    "lat": 36.1638,
+    "lng": 128.9765,
+    "description": "국내 최대 1.8 m 망원경이 있는 연구 천문대. 정상 주차장은 밤에도 열려 있고, 경북 내륙이라 남쪽 하늘이 어두워요.",
+    "access": ["car"],
+    "paved": true,
+    "horizonDirs": ["E", "S", "W"],
+    "horizonAlt": 7,
+    "photos": ["photo-of-month-placeholder.png"],
+    "source": "curated",
+    "createdBy": null,
+    "status": "active",
+    "flags": { "carCamping": false, "parking": 40, "toilet": true },
+    "nights": [
+      { "condition": "fair", "reason": "구름이 조금 있어요", "cloudPct": 50 },
+      { "condition": "good", "reason": "맑고 달도 밤늦게 떠요", "cloudPct": 20 },
+      { "condition": "bad", "reason": "흐리고 비 소식이 있어요", "cloudPct": 90 }
+    ]
   },
   {
     "id": "goheung",
@@ -77,7 +212,25 @@
     "bortle": 3,
     "lpLevel": 0,
     "distanceKm": 380,
-    "elevationM": 20
+    "elevationM": 20,
+    "type": "nature",
+    "lat": 34.4813,
+    "lng": 127.4703,
+    "description": "남해 바다 위 수평선까지 열린 하늘. 겨울 새벽엔 남쪽 낮은 별(카노푸스)을 노려볼 수 있어요. 습도가 높은 날이 많아요.",
+    "access": ["car"],
+    "paved": true,
+    "horizonDirs": ["E", "S", "W"],
+    "horizonAlt": 1,
+    "photos": ["photo-of-month-placeholder.png", "photo-of-month-placeholder.png"],
+    "source": "curated",
+    "createdBy": null,
+    "status": "active",
+    "flags": { "carCamping": true, "parking": 30, "toilet": false },
+    "nights": [
+      { "condition": "good", "reason": "맑고 달도 밤늦게 떠요", "cloudPct": 20 },
+      { "condition": "good", "reason": "맑고 달은 새벽에 떠요", "cloudPct": 10 },
+      { "condition": "unknown", "reason": "예보가 아직 없어요", "cloudPct": null }
+    ]
   },
   {
     "id": "jeju1100",
@@ -87,7 +240,25 @@
     "bortle": 3,
     "lpLevel": 1,
     "distanceKm": 460,
-    "elevationM": 1100
+    "elevationM": 1100,
+    "type": "nature",
+    "lat": 33.3571,
+    "lng": 126.4621,
+    "description": "한라산 서쪽 1100도로의 최고점. 안개가 잦지만 걷히면 섬에서 가장 어두운 하늘이에요. 바람막이가 꼭 필요해요.",
+    "access": ["car", "transit"],
+    "paved": true,
+    "horizonDirs": ["N", "E", "S", "W"],
+    "horizonAlt": 4,
+    "photos": ["photo-of-month-placeholder.png"],
+    "source": "curated",
+    "createdBy": null,
+    "status": "active",
+    "flags": { "carCamping": false, "parking": 50, "toilet": true },
+    "nights": [
+      { "condition": "bad", "reason": "비가 와요", "cloudPct": 95 },
+      { "condition": "fair", "reason": "구름이 조금 있어요", "cloudPct": 55 },
+      { "condition": "good", "reason": "맑고 달은 새벽에 떠요", "cloudPct": 25 }
+    ]
   },
   {
     "id": "gamaksan",
@@ -97,7 +268,25 @@
     "bortle": 3,
     "lpLevel": 0,
     "distanceKm": 260,
-    "elevationM": 951
+    "elevationM": 951,
+    "type": "nature",
+    "lat": 35.5905,
+    "lng": 127.88,
+    "description": "정상까지 포장도로. 풍력 발전기 사이로 360도 하늘이 열리고, 가을엔 아스타 꽃밭 위로 은하수가 걸려요.",
+    "access": ["car"],
+    "paved": true,
+    "horizonDirs": ["N", "E", "S", "W"],
+    "horizonAlt": 3,
+    "photos": [],
+    "source": "curated",
+    "createdBy": null,
+    "status": "active",
+    "flags": { "carCamping": true, "parking": 25, "toilet": true },
+    "nights": [
+      { "condition": "good", "reason": "맑고 달도 밤늦게 떠요", "cloudPct": 15 },
+      { "condition": "fair", "reason": "구름이 조금 있어요", "cloudPct": 40 },
+      { "condition": "good", "reason": "맑고 달은 새벽에 떠요", "cloudPct": 10 }
+    ]
   },
   {
     "id": "hwangmaesan",
@@ -107,7 +296,30 @@
     "bortle": 3,
     "lpLevel": 0,
     "distanceKm": 290,
-    "elevationM": 850
+    "elevationM": 850,
+    "type": "camping",
+    "lat": 35.491,
+    "lng": 128.0012,
+    "description": "해발 850 m 오토캠핑장. 텐트 앞에서 바로 은하수를 봐요. 봄 철쭉·가을 억새 축제 기간엔 예약이 빨리 차요.",
+    "access": ["car"],
+    "paved": true,
+    "horizonDirs": ["E", "S", "W"],
+    "horizonAlt": 9,
+    "photos": [
+      "photo-of-month-placeholder.png",
+      "photo-of-month-placeholder.png",
+      "photo-of-month-placeholder.png",
+      "photo-of-month-placeholder.png"
+    ],
+    "source": "curated",
+    "createdBy": null,
+    "status": "active",
+    "flags": { "carCamping": true, "parking": 120, "toilet": true },
+    "nights": [
+      { "condition": "good", "reason": "맑고 달도 밤늦게 떠요", "cloudPct": 20 },
+      { "condition": "good", "reason": "맑고 달은 새벽에 떠요", "cloudPct": 15 },
+      { "condition": "fair", "reason": "구름이 조금 있어요", "cloudPct": 45 }
+    ]
   },
   {
     "id": "eoreumgol",
@@ -117,7 +329,25 @@
     "bortle": 4,
     "lpLevel": 1,
     "distanceKm": 330,
-    "elevationM": 700
+    "elevationM": 700,
+    "type": "nature",
+    "lat": 35.5636,
+    "lng": 128.983,
+    "description": "케이블카 하부 주차장 일대. 계곡이라 시야가 좁지만 북동쪽이 트여 있어요. 여름밤에도 서늘해요.",
+    "access": ["car", "walk"],
+    "paved": true,
+    "horizonDirs": ["N", "E"],
+    "horizonAlt": 15,
+    "photos": ["photo-of-month-placeholder.png"],
+    "source": "curated",
+    "createdBy": null,
+    "status": "under_review",
+    "flags": { "carCamping": false, "parking": 40, "toilet": true },
+    "nights": [
+      { "condition": "fair", "reason": "구름이 조금 있어요", "cloudPct": 45 },
+      { "condition": "bad", "reason": "구름이 많아요", "cloudPct": 75 },
+      { "condition": "fair", "reason": "구름이 조금 있어요", "cloudPct": 40 }
+    ]
   },
   {
     "id": "yeocha",
@@ -127,7 +357,25 @@
     "bortle": 4,
     "lpLevel": 1,
     "distanceKm": 390,
-    "elevationM": 200
+    "elevationM": 200,
+    "type": "nature",
+    "lat": 34.7372,
+    "lng": 128.5935,
+    "description": "거제 남단 해안 비포장 도로 위 전망대. 남쪽 바다 위로 오리온과 시리우스가 올라와요. 길이 좁아 큰 차는 힘들어요.",
+    "access": ["car"],
+    "paved": false,
+    "horizonDirs": ["S", "W"],
+    "horizonAlt": 2,
+    "photos": ["photo-of-month-placeholder.png", "photo-of-month-placeholder.png"],
+    "source": "curated",
+    "createdBy": null,
+    "status": "active",
+    "flags": { "carCamping": true, "parking": 10, "toilet": false },
+    "nights": [
+      { "condition": "good", "reason": "맑고 달도 밤늦게 떠요", "cloudPct": 10 },
+      { "condition": "good", "reason": "맑고 달은 새벽에 떠요", "cloudPct": 25 },
+      { "condition": "good", "reason": "맑고 달은 새벽에 떠요", "cloudPct": 15 }
+    ]
   },
   {
     "id": "mangsan",
@@ -137,6 +385,24 @@
     "bortle": 4,
     "lpLevel": 1,
     "distanceKm": 395,
-    "elevationM": 397
+    "elevationM": 397,
+    "type": "nature",
+    "lat": 34.7605,
+    "lng": 128.6012,
+    "description": "저구항에서 1시간 산행. 정상에서 남해 섬들 위로 360도 하늘이 열려요. 야간 산행이라 2인 이상을 권해요.",
+    "access": ["walk"],
+    "paved": false,
+    "horizonDirs": ["N", "E", "S", "W"],
+    "horizonAlt": 1,
+    "photos": [],
+    "source": "ugc",
+    "createdBy": "거제토박이",
+    "status": "active",
+    "flags": { "carCamping": false, "parking": null, "toilet": false },
+    "nights": [
+      { "condition": "fair", "reason": "구름이 조금 있어요", "cloudPct": 35 },
+      { "condition": "unknown", "reason": "예보가 아직 없어요", "cloudPct": null },
+      { "condition": "unknown", "reason": "예보가 아직 없어요", "cloudPct": null }
+    ]
   }
 ]

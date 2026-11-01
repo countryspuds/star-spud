@@ -183,3 +183,27 @@
 .legendExample {
   margin-left: auto;
 }
+
+/* ── 소형 (명소 상세 §18.1, 높이 약 60px): 눈금 + 바 + 달 라벨만 ── */
+.compact {
+  overflow-x: auto;
+  margin: 0 -4px;
+  padding: 0 4px;
+}
+
+/* 좁은 카드(모바일)에서는 눈금 라벨이 겹치지 않게 가로 스크롤 — 큰 게이지와 같은 방식 */
+.compact .track {
+  min-width: 480px;
+}
+
+.compact .ticks {
+  margin-bottom: 4px;
+}
+
+.compact .tick {
+  bottom: -4px;
+}
+
+.compact .below {
+  margin-top: 3px;
+}

@@ -285,42 +285,6 @@
   border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.illust {
-  position: relative;
-  width: 36px;
-  height: 36px;
-  display: block;
-}
-
-.bubble {
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  min-width: 18px;
-  height: 16px;
-  padding: 0 4px;
-  border-radius: 8px 8px 8px 2px;
-  background: #fff;
-  color: #141414;
-  font-size: 10px;
-  line-height: 14px;
-  text-align: center;
-  font-weight: 700;
-}
-
-.sprout {
-  position: absolute;
-  top: -6px;
-  left: 50%;
-  width: 4px;
-  height: 10px;
-  margin-left: -2px;
-  background: var(--sprout);
-  box-shadow:
-    -4px 2px 0 var(--sprout),
-    4px 2px 0 var(--sprout);
-}
-
 .rowText {
   display: flex;
   flex-direction: column;

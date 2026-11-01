@@ -1,4 +1,5 @@
 import { use } from "react";
+import { Link } from "react-router-dom";
 import { getSpots } from "../../data";
 import { ExampleCaption, Label } from "../ui/Label";
 import styles from "./map.module.css";
@@ -19,18 +20,21 @@ export function SpotList({ sido, sigungu }: { sido?: string; sigungu?: string })
         <ul className={styles.spots}>
           {spots.map((s) => (
             <li key={s.id} className={styles.spot}>
-              <span
-                className={styles.swatch}
-                style={{ background: `var(--lp-${s.lpLevel})` }}
-                aria-label={`광공해 ${s.lpLevel}단계`}
-              />
-              <div className={styles.spotText}>
-                <span className={styles.spotName}>{s.name}</span>
-                <span className={styles.spotSub}>
-                  {s.sigungu} · Bortle {s.bortle} · {s.elevationM.toLocaleString("ko-KR")} m
-                </span>
-              </div>
-              <span className={`${styles.spotDist} tabular`}>{s.distanceKm} km</span>
+              {/* 행 전체가 명소 상세 링크 (명세 §18.1) */}
+              <Link to={`/spots/${s.id}`} className={styles.spotLink}>
+                <span
+                  className={styles.swatch}
+                  style={{ background: `var(--lp-${s.lpLevel})` }}
+                  aria-label={`광공해 ${s.lpLevel}단계`}
+                />
+                <div className={styles.spotText}>
+                  <span className={styles.spotName}>{s.name}</span>
+                  <span className={styles.spotSub}>
+                    {s.sigungu} · Bortle {s.bortle} · {s.elevationM.toLocaleString("ko-KR")} m
+                  </span>
+                </div>
+                <span className={`${styles.spotDist} tabular`}>{s.distanceKm} km</span>
+              </Link>
             </li>
           ))}
         </ul>

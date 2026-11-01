@@ -13,8 +13,15 @@ function anchorStyle(p: number): CSSProperties {
   return { left: `${p}%`, transform: `translateX(${shift})` };
 }
 
+interface Props {
+  times: NightTimes;
+  place: string;
+  /** 소형(명세 §18.1): 카드·헤더·범례 없이 눈금 + 바 + 달 라벨만, 높이 약 60px */
+  compact?: boolean;
+}
+
 /** 오늘 밤 게이지 바 — 명세 §4.4 */
-export function NightGauge({ times, place }: { times: NightTimes; place: string }) {
+export function NightGauge({ times, place, compact = false }: Props) {
   const axis = gaugeAxis(times);
   const P = (iso: string) => axisPct(toMs(iso), axis);
 
@@ -53,6 +60,65 @@ export function NightGauge({ times, place }: { times: NightTimes; place: string 
 
   const setLabel = `월몰 ${fmtHM(times.moonset)}${sameDay(times.moonset, times.sunset) ? "" : " (내일)"}`;
 
+  const ticksRow = (
+    <div className={styles.ticks}>
+      {ticks.map((t) => (
+        <div key={t.label} className={styles.tick} style={{ left: `${P(t.iso)}%` }}>
+          <span className={styles.tickLabel} style={anchorStyle(P(t.iso))}>
+            <span>{t.label}</span>
+            <span>{fmtHM(t.iso)}</span>
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+
+  const bar = (
+    <div className={styles.bar} style={{ background: gradient }}>
+      {moon.map((m) => (
+        <span
+          key={m.from}
+          className={styles.moonSeg}
+          style={{
+            left: `${axisPct(m.from, axis)}%`,
+            width: `${axisPct(m.to, axis) - axisPct(m.from, axis)}%`,
+          }}
+        />
+      ))}
+      {nowVisible && <span className={styles.nowLine} style={{ left: `${nowP}%` }} />}
+    </div>
+  );
+
+  const moonLabels = (
+    <div className={styles.below}>
+      {riseVisible && (
+        <span className={styles.moonLabel} style={anchorStyle(axisPct(riseMs, axis))}>
+          월출 {fmtHM(times.moonrise)}
+        </span>
+      )}
+      {lastMoon && (
+        <span
+          className={styles.moonLabel}
+          style={anchorStyle(axisPct(Math.min(setMs, lastMoon.to), axis))}
+        >
+          {setLabel}
+        </span>
+      )}
+    </div>
+  );
+
+  if (compact) {
+    return (
+      <div className={styles.compact} role="img" aria-label={answer}>
+        <div className={styles.track}>
+          {ticksRow}
+          {bar}
+          {moonLabels}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <Card variant="glass" className={styles.gauge}>
       <div className={styles.head}>
@@ -67,17 +133,7 @@ export function NightGauge({ times, place }: { times: NightTimes; place: string 
 
       <div className={styles.scroller}>
         <div className={styles.track}>
-          {/* 눈금 줄 */}
-          <div className={styles.ticks}>
-            {ticks.map((t) => (
-              <div key={t.label} className={styles.tick} style={{ left: `${P(t.iso)}%` }}>
-                <span className={styles.tickLabel} style={anchorStyle(P(t.iso))}>
-                  <span>{t.label}</span>
-                  <span>{fmtHM(t.iso)}</span>
-                </span>
-              </div>
-            ))}
-          </div>
+          {ticksRow}
 
           {/* 달 아이콘 · 지금 ▲ */}
           <div className={styles.above}>
@@ -96,37 +152,8 @@ export function NightGauge({ times, place }: { times: NightTimes; place: string 
             )}
           </div>
 
-          {/* 바 */}
-          <div className={styles.bar} style={{ background: gradient }}>
-            {moon.map((m) => (
-              <span
-                key={m.from}
-                className={styles.moonSeg}
-                style={{
-                  left: `${axisPct(m.from, axis)}%`,
-                  width: `${axisPct(m.to, axis) - axisPct(m.from, axis)}%`,
-                }}
-              />
-            ))}
-            {nowVisible && <span className={styles.nowLine} style={{ left: `${nowP}%` }} />}
-          </div>
-
-          {/* 달 라벨 */}
-          <div className={styles.below}>
-            {riseVisible && (
-              <span className={styles.moonLabel} style={anchorStyle(axisPct(riseMs, axis))}>
-                월출 {fmtHM(times.moonrise)}
-              </span>
-            )}
-            {lastMoon && (
-              <span
-                className={styles.moonLabel}
-                style={anchorStyle(axisPct(Math.min(setMs, lastMoon.to), axis))}
-              >
-                {setLabel}
-              </span>
-            )}
-          </div>
+          {bar}
+          {moonLabels}
 
           {/* 지금 라벨 */}
           <div className={styles.below}>
