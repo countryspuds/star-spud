@@ -7,6 +7,7 @@
 import communityJson from "./community.json";
 import spotsJson from "./spots.json";
 import photoPlaceholder from "../assets/photo-of-month-placeholder.png";
+import { monthKst } from "../lib/time";
 import { getMe } from "./auth";
 import type {
   CommunityRail,
@@ -286,7 +287,8 @@ export interface ContestEntry {
   postDeleted: boolean;
 }
 
-const monthOf = (iso: string) => iso.slice(0, 7);
+// 응모 달은 한국 시각 기준 — UTC로 자르면 매월 1일 00:00~08:59 KST 응모가 지난달로 간다
+const monthOf = (iso: string) => monthKst(iso);
 /** 응모 시각 — 예전 저장분(필드 없음)은 글 작성일로 본다 */
 const enteredAtOf = (p: PostRow) => p.contestEnteredAt ?? p.createdAt;
 
@@ -338,7 +340,7 @@ function validate(input: PostInput, authorId: string, existing?: PostRow): void 
   if (input.photoContest && input.type !== "photo") throw new Error("PHOTO_CONTEST_TYPE");
   // 월 2장 제한 — 새로 응모할 때만, 응모하는 달(지금) 기준 (지난달 글을 지금 응모해도 이번 달로 센다)
   if (input.photoContest && !existing?.photoContest) {
-    const month = monthOf(new Date().toISOString());
+    const month = monthKst();
     const used = getContestEntries(authorId).filter((e) => e.month === month).length;
     if (used >= CONTEST_MONTHLY_LIMIT) throw new Error("CONTEST_LIMIT");
   }

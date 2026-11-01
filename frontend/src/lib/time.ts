@@ -29,6 +29,11 @@ export function todayYmd(now: Date = new Date()): string {
   return ymdFmt.format(now);
 }
 
+/** 달 "YYYY-MM" (KST) — 시각 문자열이나 Date를 한국 시각의 달로. 월별 집계는 모두 이걸로 */
+export function monthKst(t: Date | string = new Date()): string {
+  return ymdFmt.format(typeof t === "string" ? new Date(t) : t).slice(0, 7);
+}
+
 /** "YYYY-MM-DD"에 n일 더한 날짜 */
 export function addDays(ymd: string, n: number): string {
   return ymdFmt.format(new Date(Date.parse(`${ymd}T12:00:00+09:00`) + n * 86_400_000));

@@ -5,6 +5,7 @@
 import { getMe, subscribeMe } from "./auth";
 import { getContestEntries, getFeed, getPost, subscribeCommunity, type Post } from "./community";
 import { getListing, getListings, subscribeMarket } from "./market";
+import { monthKst } from "../lib/time";
 import { getMyPotatoes, getPotato, subscribeMyPotatoes } from "./potatoes";
 import type { ActivityItem, MyActivity } from "./types";
 
@@ -45,7 +46,7 @@ async function build(): Promise<MyActivity> {
     comments: [],
     likes: [],
     entries: [],
-    contest: { month: new Date().toISOString().slice(0, 7), slots: 2, entries: [] },
+    contest: { month: monthKst(), slots: 2, entries: [] },
     reactions: { likes: 0, comments: 0, saves: 0 },
   };
   if (!me) return empty;
@@ -107,7 +108,8 @@ async function build(): Promise<MyActivity> {
     tag: e.month.replace("-", ".") + " 응모",
   }));
 
-  const month = new Date().toISOString().slice(0, 7);
+  // 이번 달도 한국 시각 기준 (community.ts의 응모 달과 같은 기준)
+  const month = monthKst();
   const listings = await getListings({
     q: "",
     category: null,
