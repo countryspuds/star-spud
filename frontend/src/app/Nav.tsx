@@ -26,10 +26,16 @@ function AuthChip() {
       </PillLink>
     );
   }
+  // 온보딩 전(nickname null)이면 칩이 온보딩으로 데려간다 — 둘러보는 중에도 돌아올 길
+  const onboarding = me.nickname === null;
   return (
-    <Link to="/me" className={styles.chip} aria-label="내 프로필">
+    <Link
+      to={onboarding ? "/onboarding" : "/me"}
+      className={styles.chip}
+      aria-label={onboarding ? "온보딩 이어하기" : "내 프로필"}
+    >
       <Avatar avatarUrl={me.avatarUrl} potatoAvatar={me.potatoAvatar} size={22} />
-      <span className={styles.chipName}>{me.nickname ?? "온보딩 중"}</span>
+      <span className={styles.chipName}>{onboarding ? "온보딩 이어하기" : me.nickname}</span>
     </Link>
   );
 }

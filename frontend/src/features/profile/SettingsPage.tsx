@@ -24,13 +24,21 @@ const SIDO_CODES = Object.keys(SIDO) as SidoCode[];
 const fmtDate = (ymd: string) => ymd.replaceAll("-", ".");
 
 /* ── 프로필 카드 ───────────────────────── */
-function ProfileCard({ me }: { me: Me }) {
+function ProfileCard({
+  me,
+  saved,
+  onSaved,
+}: {
+  me: Me;
+  /** 저장 완료 표시 — 저장 뒤 me가 바뀌면 이 카드가 새로 만들어지므로 부모가 들고 있다 */
+  saved: boolean;
+  onSaved: (saved: boolean) => void;
+}) {
   const current = me.nickname ?? "";
   const [nickname, setNickname] = useState(current);
   const [avatar, setAvatar] = useState<PotatoAvatar>(me.potatoAvatar);
   const [homeSido, setHomeSido] = useState<SidoCode | "">((me.homeSido as SidoCode | null) ?? "");
   const [saving, setSaving] = useState(false);
-  const [saved, setSaved] = useState(false);
   const nickStatus = useNicknameCheck(nickname, current);
 
   const dirty =
@@ -42,7 +50,7 @@ function ProfileCard({ me }: { me: Me }) {
     setNickname(current);
     setAvatar(me.potatoAvatar);
     setHomeSido((me.homeSido as SidoCode | null) ?? "");
-    setSaved(false);
+    onSaved(false);
   };
 
   const onSubmit = async (e: FormEvent) => {
@@ -55,7 +63,7 @@ function ProfileCard({ me }: { me: Me }) {
         potatoAvatar: avatar,
         homeSido: homeSido || null,
       });
-      setSaved(true);
+      onSaved(true);
     } finally {
       setSaving(false);
     }
@@ -370,6 +378,7 @@ function HelpCard() {
 /** `/me/settings` — 명세 §15 */
 export function SettingsPage() {
   const me = useOutletContext<Me>();
+  const [saved, setSaved] = useState(false);
   return (
     <>
       <header className={styles.head}>
@@ -380,7 +389,12 @@ export function SettingsPage() {
       </header>
       <div className={styles.settingsGrid}>
         {/* 저장 뒤 me가 바뀌면 폼 초기값을 새로 잡도록 key */}
-        <ProfileCard key={`${me.nickname}-${me.potatoAvatar}-${me.homeSido}`} me={me} />
+        <ProfileCard
+          key={`${me.nickname}-${me.potatoAvatar}-${me.homeSido}`}
+          me={me}
+          saved={saved}
+          onSaved={setSaved}
+        />
         <div className={styles.settingsRight}>
           <Suspense fallback={null}>
             <AlertsCard />

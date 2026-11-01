@@ -28,6 +28,8 @@ import styles from "./feedback.module.css";
 
 const APP_VERSION = import.meta.env.VITE_APP_VERSION ?? "dev";
 const MAX_SCREENSHOTS = 3;
+/** 느슨한 이메일 형식 — 공백 없이 "x@y.z" 꼴. 실제 수신 가능 여부는 서버가 본다 */
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /** 유형 4개 — 색은 명세 §16 */
 const TYPES: { type: FeedbackType; label: string; hint: string; color: string }[] = [
@@ -75,9 +77,19 @@ function browserName(ua: string): string {
 /* ── 폼 ─────────────────────────────── */
 function FeedbackForm({ onDone }: { onDone: (id: string) => void }) {
   const me = useMe();
-  const [params] = useSearchParams();
+  // 유형은 URL(?type=)이 기준 — 푸터 링크로 다른 유형을 눌러도 바로 따라오고, 주소를 공유하면 같은 유형이 열린다
+  const [params, setParams] = useSearchParams();
   const typeParam = params.get("type");
-  const [type, setType] = useState<FeedbackType>(isFeedbackType(typeParam) ? typeParam : "bug");
+  const type: FeedbackType = isFeedbackType(typeParam) ? typeParam : "bug";
+  const setType = (t: FeedbackType) =>
+    setParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        next.set("type", t);
+        return next;
+      },
+      { replace: true },
+    );
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [files, setFiles] = useState<File[]>([]);
@@ -92,7 +104,10 @@ function FeedbackForm({ onDone }: { onDone: (id: string) => void }) {
   const [preview] = useState(collectDiagnostics);
 
   const canEmail = me !== null && me.email !== null;
-  const canSubmit = title.trim() !== "" && body.trim() !== "" && !submitting;
+  // 비로그인이 적은 이메일은 비어 있거나 형식이 맞아야 한다 (noValidate라 브라우저 검증이 없음)
+  const emailTrimmed = email.trim();
+  const emailInvalid = me === null && emailTrimmed !== "" && !EMAIL_RE.test(emailTrimmed);
+  const canSubmit = title.trim() !== "" && body.trim() !== "" && !emailInvalid && !submitting;
 
   const addFiles = (list: FileList | null) => {
     if (!list) return;
@@ -121,8 +136,8 @@ function FeedbackForm({ onDone }: { onDone: (id: string) => void }) {
         body: body.trim(),
         screenshots: [],
         diagnostics: withDiagnostics ? collectDiagnostics() : undefined,
-        replyByEmail: me ? canEmail && replyByEmail : email.trim() !== "",
-        email: me ? undefined : email.trim() || undefined,
+        replyByEmail: me ? canEmail && replyByEmail : emailTrimmed !== "",
+        email: me ? undefined : emailTrimmed || undefined,
       });
       onDone(id);
     } finally {
@@ -281,7 +296,14 @@ function FeedbackForm({ onDone }: { onDone: (id: string) => void }) {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="비워 두면 답변을 받을 수 없어요"
                 autoComplete="email"
+                aria-invalid={emailInvalid}
+                aria-describedby={emailInvalid ? "fb-email-error" : undefined}
               />
+              {emailInvalid && (
+                <span id="fb-email-error" className={styles.error} role="alert">
+                  이메일 형식이 아니에요
+                </span>
+              )}
             </div>
           )}
         </div>
