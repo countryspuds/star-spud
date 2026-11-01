@@ -61,6 +61,8 @@ interface PostRow extends Omit<Post, "spot" | "commentCount"> {
   comments: PostComment[];
   /** 소프트 삭제 시각 — specs/06: 30일 뒤 정리, 그동안 복구 가능 */
   deletedAt?: string;
+  /** 이달의 사진에 응모한 시각 — 월별 제한·응모 기록은 글 작성일이 아니라 이 값으로 센다 */
+  contestEnteredAt?: string | null;
 }
 
 interface Mock {
@@ -272,6 +274,7 @@ async function requireMe(): Promise<PostAuthor> {
 /** 응모 기록 한 줄 — 글이 삭제돼도 남는다 (specs/06 삭제 모달 안내와 같은 규칙) */
 export interface ContestEntry {
   postId: string;
+  /** 응모 시각 (글 작성일이 아니다) */
   createdAt: string;
   /** YYYY-MM */
   month: string;
@@ -284,16 +287,18 @@ export interface ContestEntry {
 }
 
 const monthOf = (iso: string) => iso.slice(0, 7);
+/** 응모 시각 — 예전 저장분(필드 없음)은 글 작성일로 본다 */
+const enteredAtOf = (p: PostRow) => p.contestEnteredAt ?? p.createdAt;
 
 /** 내 응모 기록 — 삭제된 글 포함, 최신순. TODO: GET /api/v1/me/contest-entries */
 export function getContestEntries(authorId: string): ContestEntry[] {
   return posts
     .filter((p) => p.photoContest && p.author.id === authorId)
-    .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt))
+    .sort((a, b) => Date.parse(enteredAtOf(b)) - Date.parse(enteredAtOf(a)))
     .map((p) => ({
       postId: p.id,
-      createdAt: p.createdAt,
-      month: monthOf(p.createdAt),
+      createdAt: enteredAtOf(p),
+      month: monthOf(enteredAtOf(p)),
       title: p.body.length > 30 ? `${p.body.slice(0, 30)}…` : p.body,
       src: p.photos.map(assetUrl)[0] ?? "",
       likeCount: p.likeCount,
@@ -331,9 +336,9 @@ function validate(input: PostInput, authorId: string, existing?: PostRow): void 
       throw new Error("POLL_OPTIONS");
   }
   if (input.photoContest && input.type !== "photo") throw new Error("PHOTO_CONTEST_TYPE");
-  // 월 2장 제한 — 새로 응모할 때만 (이미 응모된 글을 고치는 건 그대로)
+  // 월 2장 제한 — 새로 응모할 때만, 응모하는 달(지금) 기준 (지난달 글을 지금 응모해도 이번 달로 센다)
   if (input.photoContest && !existing?.photoContest) {
-    const month = monthOf(existing?.createdAt ?? new Date().toISOString());
+    const month = monthOf(new Date().toISOString());
     const used = getContestEntries(authorId).filter((e) => e.month === month).length;
     if (used >= CONTEST_MONTHLY_LIMIT) throw new Error("CONTEST_LIMIT");
   }
@@ -384,6 +389,7 @@ export async function createPost(input: PostInput): Promise<Post> {
     // 그날 밤 메타는 서버가 붙인다 — mock은 없음
     night: null,
     photoContest: input.photoContest,
+    contestEnteredAt: input.photoContest ? new Date().toISOString() : null,
     comments: [],
   };
   posts = [row, ...posts];
@@ -410,6 +416,12 @@ export async function updatePost(id: string, input: PostInput): Promise<Post> {
     body: input.body.trim(),
     reviewInfo: input.reviewInfo,
     photoContest: input.photoContest,
+    // 새로 켜면 지금 시각으로 응모, 끄면 응모 취소, 그대로면 유지
+    contestEnteredAt: input.photoContest
+      ? row.photoContest
+        ? enteredAtOf(row)
+        : new Date().toISOString()
+      : null,
     editedAt: new Date().toISOString(),
     meetup:
       input.type === "meetup" && input.meetup

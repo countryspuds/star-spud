@@ -59,6 +59,18 @@ const SESSION_KEY = "starspud.mockMe";
 
 const REMEMBER_KEY = "starspud.mockMeRemember";
 
+/** 로그인 유지로 저장된 사용자가 같은 계정이면 최신 정보로 덮어쓴다 — 새 탭에서도 바뀐 지역·아바타가 보인다 */
+function syncRemembered(me: Me): void {
+  try {
+    const remembered = parseMe(localStorage.getItem(REMEMBER_KEY));
+    if (remembered && remembered.id === me.id) {
+      localStorage.setItem(REMEMBER_KEY, JSON.stringify(me));
+    }
+  } catch {
+    // 저장이 막힌 환경에서는 그냥 넘어간다
+  }
+}
+
 /** 저장된 사용자 — 예전 저장분에 providers가 없으면 카카오로 본다 */
 function parseMe(raw: string | null): Me | null {
   if (!raw) return null;
@@ -98,8 +110,11 @@ const listeners = new Set<() => void>();
 
 function setMe(me: Me | null): void {
   writeSession(me);
-  // 온보딩·프로필·계정 연결로 바뀐 사용자 정보를 이메일 계정 저장소에도 반영 — 재로그인해도 그대로
-  if (me) syncAccount(me);
+  // 온보딩·프로필·계정 연결로 바뀐 사용자 정보를 이메일 계정 저장소와 로그인 유지 저장분에도 반영
+  if (me) {
+    syncAccount(me);
+    syncRemembered(me);
+  }
   mePromise = Promise.resolve(me);
   listeners.forEach((l) => l());
 }
