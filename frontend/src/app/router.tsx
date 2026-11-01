@@ -10,6 +10,7 @@ import { WelcomePage } from "../features/auth/WelcomePage";
 import { ProfileLayout } from "../features/profile/ProfileLayout";
 import { FieldPage } from "../features/profile/FieldPage";
 import { SettingsPage } from "../features/profile/SettingsPage";
+import { FeedbackPage } from "../features/feedback/FeedbackPage";
 
 export const router = createBrowserRouter([
   {
@@ -31,8 +32,9 @@ export const router = createBrowserRouter([
           { path: "settings", element: <SettingsPage /> },
         ],
       },
-      // 문의는 다음 PR에서 구현 — 그때까지 준비 중 페이지
-      { path: "feedback", element: <ComingSoon section="문의" /> },
+      { path: "feedback", element: <FeedbackPage /> },
+      // 변경 내역 페이지는 Phase 2 — 문의 화면의 링크만 받는다 (명세 §16)
+      { path: "changelog", element: <ComingSoon section="변경 내역" /> },
       // MVP 제외 — 메뉴 자리와 준비 중 페이지만 둔다 (ADR-0012 · 명세 §17)
       { path: "community", element: <ComingSoon section="커뮤니티" /> },
       { path: "market", element: <ComingSoon section="장터" /> },

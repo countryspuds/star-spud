@@ -243,3 +243,37 @@ export interface MyFeedback {
   /** YYYY-MM-DD */
   createdAt: string;
 }
+
+/** 문의에 붙이는 진단 정보 — 명세 §16. 제출 시점에 실제 값을 모은다 */
+export interface Diagnostics {
+  userAgent: string;
+  /** "가로×세로" px */
+  screen: string;
+  /** 문의 화면 직전에 보던 경로 (없으면 null) */
+  lastRoute: string | null;
+  appVersion: string;
+}
+
+/** 문의 제출 — `POST /api/v1/feedback` */
+export interface FeedbackInput {
+  type: FeedbackType;
+  title: string;
+  body: string;
+  /** 업로드한 스크린샷 키 (presign 업로드는 Phase 1 후반 — 지금은 항상 빈 배열) */
+  screenshots: string[];
+  diagnostics?: Diagnostics;
+  replyByEmail: boolean;
+  /** 비로그인 사용자가 적은 답변 받을 이메일 */
+  email?: string;
+}
+
+export interface FeedbackReceipt {
+  id: string;
+}
+
+/** 최근 반영된 요청 — 정적 목록 (명세 §16) */
+export interface RecentChange {
+  /** YYYY-MM-DD */
+  date: string;
+  title: string;
+}

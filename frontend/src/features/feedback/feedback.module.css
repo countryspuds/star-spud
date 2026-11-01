@@ -1,0 +1,423 @@
+/* ── 헤더·그리드 (명세 §16) ─────────── */
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px 4px 14px;
+}
+
+.h1 {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: var(--gap);
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ── 좌 폼 ─────────────────────────── */
+.form {
+  padding: 22px 24px;
+}
+
+.form form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.fieldLabel {
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.optional {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--fg-3);
+}
+
+.types {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+@media (max-width: 600px) {
+  .types {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.type {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid var(--edge);
+  background: rgba(255, 255, 255, 0.02);
+  text-align: left;
+  cursor: pointer;
+  min-width: 0;
+}
+
+.type[data-selected="true"] {
+  border-color: var(--type-color);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.type:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 2px;
+}
+
+.typeLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--type-color);
+}
+
+.typeHint {
+  font-size: 11px;
+  color: var(--fg-2);
+}
+
+.input,
+.textarea {
+  width: 100%;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px solid var(--edge);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--fg);
+  font: inherit;
+  font-size: 14px;
+}
+
+.input {
+  height: 44px;
+}
+
+.textarea {
+  padding: 12px 14px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--fg-3);
+}
+
+.input:focus-visible,
+.textarea:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 1px;
+}
+
+/* 드롭존 */
+.dropzone {
+  height: 64px;
+  border-radius: 12px;
+  border: 1px dashed var(--edge);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s;
+}
+
+.dropzone[data-over="true"] {
+  border-color: var(--lime);
+}
+
+.dropBtn {
+  background: none;
+  border: 0;
+  font-size: 13px;
+  color: var(--fg-2);
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+}
+
+.dropBtn:disabled {
+  cursor: not-allowed;
+  color: var(--fg-3);
+}
+
+.dropBtn:focus-visible {
+  outline: 2px solid var(--lime);
+}
+
+.files {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.files li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 26px;
+  padding: 0 6px 0 10px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--edge);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  max-width: 100%;
+}
+
+.files li span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fileRemove {
+  background: none;
+  border: 0;
+  color: var(--fg-2);
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  padding: 2px 4px;
+}
+
+/* 체크 */
+.checks {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.check[data-disabled="true"] {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.check input {
+  width: 18px;
+  height: 18px;
+  margin: 1px 0 0;
+  accent-color: var(--lime);
+  flex: none;
+}
+
+.checkText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 13px;
+  min-width: 0;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--fg-3);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.formFoot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 4px;
+}
+
+.formFoot button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* 성공 */
+.done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 40px 24px;
+}
+
+.done img {
+  width: 96px;
+  height: 96px;
+}
+
+.doneTitle {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.doneBody {
+  font-size: 14px;
+  color: var(--fg-2);
+}
+
+.doneActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.pillPrimary {
+  display: inline-flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 18px;
+  border-radius: var(--radius-pill);
+  background: var(--blue);
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* ── 우측 레일 ──────────────────────── */
+.rails {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  align-self: start;
+  min-width: 0;
+}
+
+.rail {
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  scroll-margin-top: 16px;
+}
+
+.railHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.railEmpty {
+  font-size: 13px;
+  color: var(--fg-3);
+}
+
+.requests,
+.changes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.request {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px 0;
+}
+
+.request + .request,
+.changes li + li {
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.requestText {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.requestTitle {
+  font-size: 13px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chip {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  border: 1px solid currentColor;
+}
+
+.changes li {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 8px 0;
+  font-size: 13px;
+}
+
+.more {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--fg-2);
+  align-self: flex-start;
+}
+
+.more:hover {
+  color: var(--fg);
+}
+
+.potatoNote {
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--fg-2);
+}
+
+.potatoNote img {
+  flex: none;
+}
