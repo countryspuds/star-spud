@@ -1,0 +1,222 @@
+[
+  {
+    "id": "sp_anb_1",
+    "spotId": "anbandegi",
+    "nickname": "별사냥꾼",
+    "level": 4,
+    "state": "normal",
+    "foodCount": 6,
+    "lastVisitedOn": "2026-10-24",
+    "latestReview": "배추 수확이 끝난 뒤라 밭이 비어서 지평선까지 다 보였어요. 새벽 2시 오리온이 정면.",
+    "photos": ["photo-of-month-placeholder.png"]
+  },
+  {
+    "id": "sp_anb_2",
+    "spotId": "anbandegi",
+    "nickname": "강릉토박이",
+    "level": 3,
+    "state": "normal",
+    "foodCount": 4,
+    "lastVisitedOn": "2026-10-05",
+    "latestReview": "주차장 화장실이 밤에도 열려 있어요. 바람이 세니 두꺼운 옷 챙기세요.",
+    "photos": ["photo-of-month-placeholder.png", "photo-of-month-placeholder.png"]
+  },
+  {
+    "id": "sp_anb_3",
+    "spotId": "anbandegi",
+    "nickname": "삼각대",
+    "level": 1,
+    "state": "normal",
+    "foodCount": 1,
+    "lastVisitedOn": "2026-09-28",
+    "latestReview": "첫 은하수 사진 성공. 멍에전망대 쪽이 남쪽 시야가 가장 넓어요.",
+    "photos": ["photo-of-month-placeholder.png"]
+  },
+  {
+    "id": "sp_anb_4",
+    "spotId": "anbandegi",
+    "nickname": "은하수덕후",
+    "level": 2,
+    "state": "normal",
+    "foodCount": 2,
+    "lastVisitedOn": "2026-09-13",
+    "latestReview": "9월 중순, 자정 넘어 은하수 중심이 서쪽으로 기울어요. 조금 일찍 가는 게 좋아요.",
+    "photos": []
+  },
+  {
+    "id": "sp_anb_5",
+    "spotId": "anbandegi",
+    "nickname": "오로라",
+    "level": 2,
+    "state": "normal",
+    "foodCount": 2,
+    "lastVisitedOn": "2026-08-15",
+    "latestReview": "페르세우스 유성우 날. 사람이 많아서 주차가 어려웠지만 유성은 넉넉히 봤어요.",
+    "photos": []
+  },
+  {
+    "id": "sp_anb_6",
+    "spotId": "anbandegi",
+    "nickname": "밤도깨비",
+    "level": 1,
+    "state": "hungry",
+    "foodCount": 1,
+    "lastVisitedOn": "2026-07-20",
+    "latestReview": "장마 끝난 직후라 습도가 높았어요. 그래도 별은 보였어요.",
+    "photos": []
+  },
+  {
+    "id": "sp_hwa_1",
+    "spotId": "hwangmaesan",
+    "nickname": "캠핑조아",
+    "level": 3,
+    "state": "normal",
+    "foodCount": 3,
+    "lastVisitedOn": "2026-10-19",
+    "latestReview": "캠핑장 B구역이 남쪽 시야가 가장 좋아요. 억새 축제 기간이라 사람은 많았어요.",
+    "photos": ["photo-of-month-placeholder.png", "photo-of-month-placeholder.png"]
+  },
+  {
+    "id": "sp_hwa_2",
+    "spotId": "hwangmaesan",
+    "nickname": "산골소년",
+    "level": 1,
+    "state": "normal",
+    "foodCount": 1,
+    "lastVisitedOn": "2026-10-03",
+    "latestReview": "텐트 안에서 누워 보는 별이 이런 거구나 했어요.",
+    "photos": []
+  },
+  {
+    "id": "sp_bye_1",
+    "spotId": "byeolmaro",
+    "nickname": "토성고리",
+    "level": 2,
+    "state": "normal",
+    "foodCount": 2,
+    "lastVisitedOn": "2026-10-11",
+    "latestReview": "관측 프로그램에서 토성 고리를 봤어요. 주차장 가로등은 22시에 꺼져요.",
+    "photos": ["photo-of-month-placeholder.png"]
+  },
+  {
+    "id": "sp_sob_1",
+    "spotId": "sobaeksan",
+    "nickname": "연화봉지기",
+    "level": 3,
+    "state": "normal",
+    "foodCount": 3,
+    "lastVisitedOn": "2026-10-02",
+    "latestReview": "임도 7 km는 길지만 평탄해요. 데크에서 보는 북두칠성이 손에 잡힐 듯.",
+    "photos": []
+  },
+  {
+    "id": "sp_gwa_1",
+    "spotId": "gwangdeoksan",
+    "nickname": "화천별밤",
+    "level": 2,
+    "state": "normal",
+    "foodCount": 2,
+    "lastVisitedOn": "2026-10-26",
+    "latestReview": "비포장 구간은 승용차도 천천히 가면 괜찮아요. 북쪽 하늘이 정말 어두워요.",
+    "photos": ["photo-of-month-placeholder.png"]
+  },
+  {
+    "id": "sp_yeo_1",
+    "spotId": "yeongyang",
+    "nickname": "밤하늘공원",
+    "level": 2,
+    "state": "normal",
+    "foodCount": 2,
+    "lastVisitedOn": "2026-10-20",
+    "latestReview": "가로등이 하나도 없어서 눈이 어둠에 적응되면 은하수가 맨눈에 보여요.",
+    "photos": []
+  },
+  {
+    "id": "sp_boh_1",
+    "spotId": "bohyeonsan",
+    "nickname": "망원경",
+    "level": 3,
+    "state": "normal",
+    "foodCount": 3,
+    "lastVisitedOn": "2026-10-15",
+    "latestReview": "정상 주차장은 밤에도 열려 있어요. 남쪽으로 영천 시내 불빛이 조금 보여요.",
+    "photos": []
+  },
+  {
+    "id": "sp_boh_2",
+    "spotId": "bohyeonsan",
+    "nickname": "영천별",
+    "level": 1,
+    "state": "normal",
+    "foodCount": 1,
+    "lastVisitedOn": "2026-09-30",
+    "latestReview": "올라가는 길이 꽤 꼬불꼬불해요. 밤에는 천천히.",
+    "photos": ["photo-of-month-placeholder.png"]
+  },
+  {
+    "id": "sp_goh_1",
+    "spotId": "goheung",
+    "nickname": "남쪽바다",
+    "level": 2,
+    "state": "normal",
+    "foodCount": 2,
+    "lastVisitedOn": "2026-10-22",
+    "latestReview": "수평선 바로 위까지 별이 보여요. 새벽엔 이슬이 많이 내려서 렌즈 히터 필수.",
+    "photos": ["photo-of-month-placeholder.png"]
+  },
+  {
+    "id": "sp_jej_1",
+    "spotId": "jeju1100",
+    "nickname": "한라산안개",
+    "level": 1,
+    "state": "normal",
+    "foodCount": 1,
+    "lastVisitedOn": "2026-10-08",
+    "latestReview": "두 번 갔는데 한 번은 안개로 실패. 걷히면 정말 어두워요.",
+    "photos": []
+  },
+  {
+    "id": "sp_eor_1",
+    "spotId": "eoreumgol",
+    "nickname": "얼음골",
+    "level": 1,
+    "state": "normal",
+    "foodCount": 1,
+    "lastVisitedOn": "2026-09-20",
+    "latestReview": "계곡이라 시야는 좁지만 북동쪽으로 카시오페이아가 잘 보였어요.",
+    "photos": []
+  },
+  {
+    "id": "sp_yum_1",
+    "spotId": "yumyeongsan",
+    "nickname": "가평주말",
+    "level": 2,
+    "state": "normal",
+    "foodCount": 2,
+    "lastVisitedOn": "2026-10-25",
+    "latestReview": "서울에서 가까워서 퇴근 후에도 갈 수 있어요. 목성이 밝게 보였어요.",
+    "photos": []
+  },
+  {
+    "id": "sp_yum_2",
+    "spotId": "yumyeongsan",
+    "nickname": "행성관측",
+    "level": 1,
+    "state": "normal",
+    "foodCount": 1,
+    "lastVisitedOn": "2026-10-18",
+    "latestReview": "광공해는 있지만 쌍안경으로 플레이아데스는 충분히 보여요.",
+    "photos": []
+  },
+  {
+    "id": "sp_yec_1",
+    "spotId": "yeocha",
+    "nickname": "거제밤",
+    "level": 1,
+    "state": "normal",
+    "foodCount": 1,
+    "lastVisitedOn": "2026-10-12",
+    "latestReview": "비포장 길이 좁아요. 전망대 데크에서 남쪽 바다 위 별이 좋아요.",
+    "photos": ["photo-of-month-placeholder.png"]
+  }
+]

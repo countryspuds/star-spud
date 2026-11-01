@@ -27,6 +27,16 @@ export function PillButton({
   return <button type={type} className={pillClass(tone, size, className)} {...rest} />;
 }
 
+/** pill 모양 외부 링크 (길찾기 등 바깥 주소) */
+export function PillAnchor({
+  tone = "secondary",
+  size = "md",
+  className,
+  ...rest
+}: ComponentPropsWithoutRef<"a"> & PillStyle) {
+  return <a className={pillClass(tone, size, className)} {...rest} />;
+}
+
 /** pill 모양 라우터 링크 */
 export function PillLink({
   tone = "secondary",

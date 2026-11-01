@@ -1,5 +1,5 @@
 import { useState } from "react";
-import potatoImg from "../../assets/potato/potato.svg";
+import { PotatoIllust } from "../../components/potato/PotatoIllust";
 import { Card } from "../../components/ui/Card";
 import { ExampleCaption, Label } from "../../components/ui/Label";
 import { isNeglected, type Potato } from "../../data/potatoes";
@@ -8,24 +8,6 @@ import styles from "./profile.module.css";
 type Filter = "all" | "neglected";
 
 const fmtDate = (ymd: string) => ymd.replaceAll("-", ".");
-
-/**
- * 감자 일러스트 — specs/04의 등급 4 × 상태 2 일러스트가 아직 없어 도트 감자 하나에
- * 등급 배지, hungry는 말풍선, sprouted는 싹을 CSS로 얹는다.
- */
-function PotatoIllust({ potato }: { potato: Potato }) {
-  return (
-    <span className={styles.illust} data-state={potato.state}>
-      <img src={potatoImg} alt="" width={36} height={36} className="pixelated" />
-      {potato.state === "hungry" && (
-        <span className={styles.bubble} aria-hidden="true">
-          …
-        </span>
-      )}
-      {potato.state === "sprouted" && <span className={styles.sprout} aria-hidden="true" />}
-    </span>
-  );
-}
 
 function RightLabel({ potato }: { potato: Potato }) {
   if (potato.state === "hungry") return <span className={styles.alert}>배고파요</span>;
@@ -75,7 +57,7 @@ export function PotatoList({ potatoes }: { potatoes: Potato[] }) {
         <ul className={styles.rows}>
           {shown.map((p) => (
             <li key={p.id} className={styles.row}>
-              <PotatoIllust potato={p} />
+              <PotatoIllust level={p.level} state={p.state} />
               <div className={styles.rowText}>
                 <span className={styles.spotName}>{p.spot.name}</span>
                 <span className={styles.date}>

@@ -11,6 +11,7 @@ import { ProfileLayout } from "../features/profile/ProfileLayout";
 import { FieldPage } from "../features/profile/FieldPage";
 import { SettingsPage } from "../features/profile/SettingsPage";
 import { FeedbackPage } from "../features/feedback/FeedbackPage";
+import { SpotPage } from "../features/spot/SpotPage";
 
 export const router = createBrowserRouter([
   {
@@ -20,6 +21,9 @@ export const router = createBrowserRouter([
       // 지도 탭·시도 전환은 모두 같은 MapPage 인스턴스 안에서 처리 → pan/zoom 상태 유지
       { path: "map/*", element: <MapPage /> },
       { path: "calendar", element: <CalendarPage /> },
+      // 명소 상세 (명세 §18.1). 감자 심기(§18.2)는 다음 PR — 상세의 CTA가 가리키는 자리만 준비 중으로 둔다
+      { path: "spots/:id", element: <SpotPage /> },
+      { path: "spots/:id/plant", element: <ComingSoon section="감자 심기" /> },
       // 옛 주소 — 메뉴명이 '캘린더'로 바뀌면서 /calendar로, '감자밭'이 '프로필'로 바뀌면서 /me로 통합 (§2·§13)
       { path: "events", element: <Navigate to="/calendar" replace /> },
       { path: "field", element: <Navigate to="/me" replace /> },

@@ -366,3 +366,55 @@ mock 이미지: `assets/maps/starscore-5km.svg` (광공해 + 명소 앵커 20개
 - `/community` 피드(글 종류 5: 후기·질문·모임·사진 응모·잡담, 명소 태그+오늘 밤 지수 칩, 투표, 우주 뉴스 레일), `/community/:id` 상세+댓글, `/community/write`, `/community/:id/edit`(저장 시 "(수정됨)"), 삭제 확인 모달(30일 소프트 삭제) — specs/06
 - `/market` 목록(카테고리·필터·3열 카드·안전 거래 띠), `/market/:id` 상세(채팅 연결, 판매자 감자 활동) — specs/07
 - `/me/activity` 활동 탭, 프로필 사진 업로드, 계정 연결(네이버·이메일), 탈퇴 30일 복구, 제안 감자
+
+---
+
+## 18. 명소 상세 · 감자 심기 · 감자 상세 · 알림함 (MVP 루프의 남은 화면, 11/1)
+
+디자인 캔버스에 없는 화면이다. 기존 화면의 언어(§1 토큰, 반투명 카드, mono 라벨, 픽셀 감자·달)로 만들고, 규칙은 `specs/01`(명소)·`specs/02`(조건)·`specs/04`(감자)·`specs/10`(알림)을 따른다. 데이터 필드명은 specs의 모델을 쓴다.
+
+### 18.1 명소 상세 `/spots/:id`
+```
+← 지도로 (13px --fg-2)
+헤더 카드(--card, padding 22px 24px):
+  mono 라벨 "{SIDO} · {SIGUNGU} · BORTLE {n}"          우측: 유형 칩(자연/천문대/캠핑장/도심 근교, mono 10px 테두리)
+  h1 28px 700 명소명                                     우측: 조건 칩 "오늘 밤 {good|fair|bad}" (good --sprout / fair #e5c33d / bad --fg-3 / unknown 점선)
+  13px --fg-2: "{거리} km · 차박 {가능|불가} · 주차 {n}대 · 화장실 {있음|없음}"   ← specs/01 flags
+2열 grid minmax(0,1.2fr) minmax(0,1fr), gap 16px:
+  좌: 사진 카드 — 공개 감자 기록 사진 모자이크(최대 6, 2×3, radius 10px). 없으면 유형별 기본 이미지(assets/photo-of-month-placeholder.png 임시).
+      아래 "정보" 표(반투명 카드, 2열 라벨/값): 접근성(car/walk/transit) · 포장도로 · 시야 개방(N·E·S·W 중 열린 방향, 지평선 고도 {deg}°) · 설명(description)
+  우: "오늘 밤 이곳" 카드(반투명): 날짜 탭 오늘/내일/모레(pill) → 판정 칩 크게 + 이유 한 줄(서버 `reason`) + 타일 3개(구름 % · 달 % + 월출 · 천문박명 끝) + 소형 NightGauge(§4.4, 높이 60px)
+      버튼 2개: primary "길찾기"(카카오맵 딥링크 `kakaomap://route?ep={lat},{lng}&by=CAR`, 데스크톱은 `https://map.kakao.com/link/to/{name},{lat},{lng}`) / 보조 "명소 저장"(Phase 2, disabled)
+      로그인 + 온보딩 완료: primary 전폭 "감자 심기" → §18.2 (이미 내 감자가 있으면 "먹이 주기 · Lv{n}")
+      비로그인: 보조 "로그인하고 감자 심기" → /login?next=
+하단 "이곳의 감자밭" 카드(반투명): 헤더 "공개 감자 {potato_count}" + 정렬(최신 기록순)
+  행 = grid 36px minmax(0,1fr) auto: 등급 일러스트(Lv1~4, state 표시) / 닉네임 13px 600 + mono 방문일 + 최신 후기 발췌 12px(2줄 ellipsis) + 사진 썸네일 ≤3(48px) / 우측 mono "Lv{n} · 먹이 {m}"
+  더 보기(cursor 페이징, `GET /api/v1/spots/{id}/potatoes?cursor=`)
+  신고 링크(로그인 시, 우하단 11px --fg-3) → 사유 선택 모달 → `POST /api/v1/spots/{id}/reports`
+`source=ugc`면 헤더에 "사용자 등록 명소 · @{닉네임}" 배지. `under_review`면 "검토 중" 배지.
+모바일(≤860px): 1열, "오늘 밤 이곳" 카드가 사진보다 위, 감자 심기 버튼은 하단 고정 바(높이 64px, --bg 배경, 위 1px --edge).
+```
+데이터: `GET /api/v1/spots/{id}?date=` (mock `src/data/spots.json`에 `description, access[], paved, horizon_dirs[], horizon_alt, photos[], source` 추가), `GET /api/v1/spots/{id}/potatoes`.
+
+### 18.2 감자 심기 / 먹이 주기 `/spots/:id/plant` (모달 또는 전체 페이지, 모바일은 페이지)
+specs/04의 `POST /api/v1/spots/{id}/potato/feeds`. 카드(--card, max-width 640px 가운데):
+- 헤더: 감자 일러스트 64px(기존 감자 있으면 현재 등급, 없으면 Lv1 실루엣) + "{명소명}에 감자 심기" / "먹이 주기 · Lv{n} → Lv{n+1}" 20px 700 + mono "기록 1건 = 먹이 1개"
+- 방문일: date input(기본 오늘, max 오늘, min 2000-01-01). 같은 날 기록이 있으면 인라인 오류 "그날 기록이 이미 있어요 → 수정하기"(409).
+- 후기: textarea 4행, 2~2000자, 카운터. placeholder "하늘은 어땠는지, 주차·화장실·진입로는 어땠는지."
+- 사진: 드롭존 + 썸네일 ≤5(첫 장 대표). HEIC는 클라이언트 변환 실패 시 거부 문구.
+- 공개 여부: 토글 "이 감자를 공개할게요"(기본 on) + 설명 "공개 감자는 명소 상세에 보여요. 비공개면 내 감자밭에서만."
+- 버튼: 취소 / primary "감자 심기"|"먹이 주기". 제출 중 비활성.
+- 성공 화면(같은 카드 교체): 감자 일러스트 + 먹이 아이콘(서버 `food`: star·moon·planet·galaxy·meteor) + "Lv{n} {등급명}이 됐어요" / 첫 감자면 "첫 감자를 심었어요" + 버튼 "내 감자밭 보기"(/me) / "명소로 돌아가기". `level_up: false`면 "Lv4는 최고 등급이에요. 먹이 {m}개".
+
+### 18.3 감자 상세 `/me/potatoes/:id`
+- 헤더(반투명): 일러스트 96px + 명소명 22px 700(링크 → /spots/:id) + mono "Lv{n} {등급명} · 먹이 {m} · 마지막 방문 {date}" + 상태 배지(normal 없음 / hungry "배고파요" #ff8a8a + 말풍선 "{다음 major 이벤트}이 D-{n}에 와요" / sprouted "싹이 났어요 · 오래 안 갔어요") + 우측 공개 토글(`PATCH /api/v1/potatoes/{id}`).
+- 먹이 목록(최신순): 행 = 먹이 아이콘 28px / mono 방문일 / 후기 전문(접기 3줄) / 사진 썸네일 / 우측 "수정 · 삭제"(본인). 삭제 확인: "마지막 기록을 지우면 감자도 사라져요"(마지막일 때만).
+- 하단 "먹이 주기" primary → §18.2.
+
+### 18.4 알림함 `/notifications` (specs/10, MVP: 앱 내 알림함)
+- 네비 우측 아바타 칩 왼쪽에 종 아이콘(16px stroke svg) + 미읽음 점(--lime 6px). 클릭 → 페이지.
+- 리스트(--card): 행 = 유형 아이콘(배고픔 = 감자 + 말풍선, 이벤트 = 픽셀 달) / 제목 14px 600(미읽음은 --fg, 읽음 --fg-2) + 본문 13px + mono 시각 / 클릭 시 `link`로 이동 + 읽음 처리. 상단 "모두 읽음". 빈 상태: 시무룩 감자 + "아직 알림이 없어요".
+- `GET /api/v1/me/notifications?cursor=` · `POST /api/v1/me/notifications/{id}/read` · `POST .../read-all`. mock 3건(배고픔 1, 이벤트 2).
+
+### 18.5 mock 추가
+`src/data/spots.json` 필드 확장, `src/data/potatoes.json`에 `feeds[]`(각 `{id, visited_on, food, review, photo_urls, event_id?}`), `src/data/notifications.json`. 함수: `getSpot(id, date)`, `getSpotPotatoes(id)`, `plantOrFeed(spotId, payload)`(mock: 감자 있으면 먹이 추가·level 재계산, 없으면 Lv1 생성), `getPotato(id)`, `updateFeed/deleteFeed`, `getNotifications/markRead`. 등급·상태·먹이 종류는 **서버 값**이라는 전제로 mock에서만 계산하고 컴포넌트는 값만 그린다.
