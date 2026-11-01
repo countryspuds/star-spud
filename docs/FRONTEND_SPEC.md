@@ -411,6 +411,9 @@ mock 이미지: `assets/maps/starscore-5km.svg` (광공해 + 명소 앵커 20개
 - `/market` — 검색 + "판매하기"(판매 등록 화면은 뒤 Phase라 disabled "곧 열려요"), 카테고리 칩 7(specs/07 `gear.category`에서 app 제외) · 필터(지역·가격 밴드·거래 방식·판매중만, `?q&cat&sido&price&trade&selling`) · 3열 카드(제목·가격·상태·지역·직거래/택배·시각·찜, 거래완료는 흐림 + 배지) · 안전 거래 안내 띠.
 - `/market/:id` — 사진 자리(최대 10, 장비 종류별 svg 아이콘 placeholder — 실제 제품 사진은 쓰지 않는다) · 카테고리 태그·조회 · 제목·가격 28px · 상태/거래/구성 3타일 · 설명 · 채팅하기(disabled "Phase 3") + 찜 · 판매자 카드(감자 N·후기 N·거래 N — 공개 프로필은 Phase 3이라 내 상품만 `/me` 링크) · 주의사항 3줄.
 - mock: `src/data/market.json`(12건, 거래완료 2·예약중 1), `src/data/market.ts`(찜만 세션 저장 · 판매 상태·조회 수·판매자 활동 수는 서버 값), 아이콘 `src/assets/gear/gear-*.svg`.
+- `/login` — 카카오 버튼 아래 "또는 이메일로" 구분선 + 이메일/비밀번호 폼(표시 토글·로그인 유지·비밀번호 잊음 → `/reset-password`) + "이메일로 가입" → `/signup`. `/signup` — 스텝 "계정 › 닉네임 › 완료": 이메일 + 인증코드 받기 → 6자리 코드(mono, 재전송 60초 타이머) → 비밀번호(강도 바 4칸, 8자 + 영문 + 숫자) → 확인 → "다음 · 닉네임과 감자 고르기" → 기존 `/onboarding` 합류. `/reset-password` — 이메일 → 링크 발송 안내(30분 유효 · 스팸함) + 소셜 전용 계정 안내. mock 규칙은 `src/data/auth.ts`(시드 `gamja@example.com` / `gamja1234`, 이 탭에서 가입한 이메일, 코드는 6자리면 통과·`000000`만 오류, 비밀번호는 SHA-256 해시만 세션에).
+- `/me/settings` 계정 — 카카오·네이버·이메일 행에 연결 상태(`Me.providers`, ADR-0014 계정 1 : 수단 N). 네이버 "연결"(mock 즉시 연결) · 이메일 "설정"(주소 + 비밀번호 폼) 활성. 해제는 뒤 Phase.
+- `/me/activity` — 탭 후기·댓글·좋아요·응모(`?tab=`) + 11월 이달의 사진 응모 2칸(사진 응모 글이 자동으로 들어옴, 빈 칸은 `/community/write`) + 받은 반응 3타일(내 글 좋아요·댓글, 내 상품 찜). `src/data/activity.ts`가 감자·커뮤니티·장터 mock에서 모은다.
 
 **디자인 목록**
 

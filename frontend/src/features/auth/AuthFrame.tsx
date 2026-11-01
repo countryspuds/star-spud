@@ -27,12 +27,20 @@ const STARS: ReadonlyArray<readonly [number, number, number, number]> = [
 
 export type Step = 1 | 2 | 3;
 
-/** 상단 스텝 "1 약관 › 2 닉네임 › 3 완료" — active에 포함된 번호만 --lime (명세 §14) */
-export function Steps({ active }: { active: readonly Step[] }) {
+const STEP_LABELS: readonly [string, string, string] = ["약관", "닉네임", "완료"];
+
+/** 상단 스텝 "1 약관 › 2 닉네임 › 3 완료" — active에 포함된 번호만 --lime (명세 §14). 이메일 가입은 "계정 › 닉네임 › 완료" */
+export function Steps({
+  active,
+  labels = STEP_LABELS,
+}: {
+  active: readonly Step[];
+  labels?: readonly [string, string, string];
+}) {
   const items: { n: Step; label: string }[] = [
-    { n: 1, label: "약관" },
-    { n: 2, label: "닉네임" },
-    { n: 3, label: "완료" },
+    { n: 1, label: labels[0] },
+    { n: 2, label: labels[1] },
+    { n: 3, label: labels[2] },
   ];
   return (
     <ol className={styles.steps} aria-label="가입 단계">

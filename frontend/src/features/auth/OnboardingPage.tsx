@@ -23,6 +23,7 @@ const AGREEMENTS = [
 type AgreementKey = (typeof AGREEMENTS)[number]["key"];
 
 const SIDO_CODES = Object.keys(SIDO) as SidoCode[];
+const EMAIL_STEPS = ["계정", "닉네임", "완료"] as const;
 
 /** `/onboarding` — 첫 로그인(nickname null) 사용자만. 완료 전엔 감자 심기·후기 불가 (specs/08) */
 export function OnboardingPage() {
@@ -75,9 +76,17 @@ export function OnboardingPage() {
       title="감자 하나 심고 시작해요"
       body="닉네임과 내 감자만 고르면 끝이에요. 주로 보는 지역을 알려주면 오늘 밤 추천이 더 가까워져요."
     >
-      <Steps active={[1, 2]} />
+      {/* 이메일 가입은 /signup의 "계정 › 닉네임 › 완료"를 이어간다 */}
+      <Steps active={[1, 2]} labels={me.providers.includes("email") ? EMAIL_STEPS : undefined} />
       <h2 className={styles.h2}>거의 다 됐어요</h2>
-      <p className={styles.lead}>카카오 계정 {me.email ?? "(이메일 없음)"}으로 가입해요.</p>
+      <p className={styles.lead}>
+        {me.providers.includes("email")
+          ? "이메일"
+          : me.providers.includes("naver")
+            ? "네이버"
+            : "카카오"}{" "}
+        계정 {me.email ?? "(이메일 없음)"}으로 가입해요.
+      </p>
 
       <form className={styles.form} onSubmit={onSubmit} noValidate>
         {/* 1. 닉네임 */}

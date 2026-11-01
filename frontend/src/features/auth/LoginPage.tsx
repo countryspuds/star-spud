@@ -1,15 +1,17 @@
+import { Suspense } from "react";
 import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import { loginWithKakao } from "../../data/auth";
+import { lazyPage } from "../../lib/lazyPage";
+import { PHASE2 } from "../../lib/phase2";
 import { AuthFrame } from "./AuthFrame";
+import { safeNext } from "./safeNext";
 import { useMe } from "./useMe";
 import styles from "./auth.module.css";
 
-/** 로그인 후 돌아갈 곳 — 같은 사이트 경로만 허용 (specs/08 `next`) */
-function safeNext(raw: string | null): string {
-  return raw && raw.startsWith("/") && !raw.startsWith("//") ? raw : "/";
-}
+/** Phase 2: "또는 이메일로" 구분선 + 이메일 폼 — 플래그가 켜졌을 때만 청크를 받는다 (ADR-0014) */
+const emailLogin = PHASE2 ? lazyPage(() => import("./EmailLogin")) : null;
 
-/** `/login` — MVP는 카카오만. 네이버·이메일은 Phase 2라 렌더하지 않는다 (명세 §14·§17, ADR-0014) */
+/** `/login` — MVP는 카카오만. 이메일 폼은 VITE_PHASE2=true일 때만 아래에 붙는다 (명세 §14·§17, ADR-0014) */
 export function LoginPage() {
   const me = useMe();
   const navigate = useNavigate();
@@ -39,6 +41,7 @@ export function LoginPage() {
         계속하면 이용약관과 개인정보 처리방침에 동의하게 돼요. 소셜 계정의 이메일과 프로필 이름만
         받아요.
       </p>
+      {emailLogin && <Suspense fallback={null}>{emailLogin}</Suspense>}
     </AuthFrame>
   );
 }

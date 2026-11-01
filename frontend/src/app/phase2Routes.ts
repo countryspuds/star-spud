@@ -28,3 +28,15 @@ export const marketRoutes: RouteObject[] = [
   { path: "market", element: lazyPage(() => import("../features/market/MarketPage")) },
   { path: "market/:id", element: lazyPage(() => import("../features/market/ListingPage")) },
 ];
+
+/** 이메일 가입·비밀번호 재설정 (ADR-0014) — 로그인 레이아웃(네비 링크 숨김) 아래 */
+export const authRoutes: RouteObject[] = [
+  { path: "signup", element: lazyPage(() => import("../features/auth/SignupPage")) },
+  { path: "reset-password", element: lazyPage(() => import("../features/auth/ResetPasswordPage")) },
+];
+
+/** 활동 탭 (명세 §15) — ProfileLayout 아래 */
+export const activityRoute: RouteObject = {
+  path: "activity",
+  element: lazyPage(() => import("../features/profile/ActivityPage")),
+};

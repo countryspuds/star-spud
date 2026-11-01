@@ -234,9 +234,14 @@ export interface CalendarMonth {
 /** 감자 아바타 — specs/08 `users.potato_avatar` */
 export type PotatoAvatar = "basic" | "happy" | "sad";
 
+/** 로그인 수단 — ADR-0014 `auth_identities.provider`. MVP는 kakao만, naver·email은 Phase 2 */
+export type AuthProvider = "kakao" | "naver" | "email";
+
 /** 로그인 사용자 — `GET /api/v1/me` (specs/08 `users`). 온보딩 전엔 nickname이 null */
 export interface Me {
   id: string;
+  /** 이 계정에 연결된 로그인 수단 (계정 1 : 수단 N) */
+  providers: AuthProvider[];
   nickname: string | null;
   /** 업로드한 프로필 사진. 없으면 potatoAvatar를 그린다 */
   avatarUrl: string | null;
@@ -245,6 +250,8 @@ export interface Me {
   homeSido: string | null;
   /** 마스킹된 이메일 (제공자가 준 경우) */
   email: string | null;
+  /** 이메일 로그인에 쓰는 주소(마스킹) — providers에 email이 있을 때만 */
+  emailLogin: string | null;
   /** ISO 가입 시각 */
   createdAt: string;
   /** 닉네임 마지막 변경일·다음 변경 가능일(YYYY-MM-DD)과 지금 바꿀 수 있는지 — 30일 규칙은 서버가 판정 */
@@ -639,4 +646,33 @@ export interface MarketFilter {
   price: PriceBand | null;
   trade: "meet" | "delivery" | null;
   sellingOnly: boolean;
+}
+
+/* ── 활동 탭 (Phase 2 · 명세 §15) ───────────────────────────────── */
+
+export type ActivityTab = "reviews" | "comments" | "likes" | "entries";
+
+export interface ActivityItem {
+  id: string;
+  /** 앱 내 경로 */
+  link: string;
+  title: string;
+  /** 발췌 또는 부제 */
+  body: string;
+  /** ISO */
+  at: string;
+  /** mono 꼬리표 (명소명·글 종류 등) */
+  tag: string;
+}
+
+/** 내 활동 — `GET /api/v1/me/activity` */
+export interface MyActivity {
+  reviews: ActivityItem[];
+  comments: ActivityItem[];
+  likes: ActivityItem[];
+  entries: ActivityItem[];
+  /** 이달의 사진 응모 — 이번 달 (YYYY-MM), 응모 칸 2개 */
+  contest: { month: string; slots: 2; entries: { postId: string; src: string; title: string }[] };
+  /** 받은 반응 — 내 글의 좋아요·댓글, 내 상품의 찜 */
+  reactions: { likes: number; comments: number; saves: number };
 }

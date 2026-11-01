@@ -15,6 +15,8 @@ import { Avatar } from "../../components/ui/Avatar";
 import { Card } from "../../components/ui/Card";
 import { ExampleCaption, Label } from "../../components/ui/Label";
 import { PillButton } from "../../components/ui/Pill";
+import { lazyPage } from "../../lib/lazyPage";
+import { PHASE2 } from "../../lib/phase2";
 import { POTATO_AVATARS, POTATO_AVATAR_LABEL, POTATO_AVATAR_SRC } from "../../lib/potatoAvatar";
 import { NICKNAME_MAX, NICK_STATUS_TEXT, useNicknameCheck } from "../auth/useNicknameCheck";
 import authStyles from "../auth/auth.module.css";
@@ -274,6 +276,9 @@ function AlertsForm({ initial }: { initial: NotificationSettings }) {
 }
 
 /* ── 계정 카드 ─────────────────────────── */
+/** Phase 2: 네이버 "연결" · 이메일 "설정" 활성 행 — 플래그가 켜졌을 때만 청크를 받는다 (ADR-0014) */
+const accountLinks = PHASE2 ? lazyPage(() => import("./AccountLinks")) : null;
+
 function AccountCard({ me }: { me: Me }) {
   const [confirming, setConfirming] = useState(false);
   const [deleting, setDeleting] = useState(false);
@@ -291,24 +296,28 @@ function AccountCard({ me }: { me: Me }) {
   return (
     <Card variant="glass" className={styles.settingsCard}>
       <Label>계정</Label>
-      <ul className={styles.accountRows}>
-        <li className={styles.accountRow}>
-          <span className={styles.alertTitle}>카카오</span>
-          <span className={styles.linked}>연결됨 · {me.email ?? "이메일 없음"}</span>
-        </li>
-        <li className={styles.accountRow}>
-          <span className={styles.alertTitle}>네이버</span>
-          <PillButton size="sm" disabled>
-            Phase 2
-          </PillButton>
-        </li>
-        <li className={styles.accountRow}>
-          <span className={styles.alertTitle}>이메일 로그인</span>
-          <PillButton size="sm" disabled>
-            Phase 2
-          </PillButton>
-        </li>
-      </ul>
+      {accountLinks ? (
+        <Suspense fallback={null}>{accountLinks}</Suspense>
+      ) : (
+        <ul className={styles.accountRows}>
+          <li className={styles.accountRow}>
+            <span className={styles.alertTitle}>카카오</span>
+            <span className={styles.linked}>연결됨 · {me.email ?? "이메일 없음"}</span>
+          </li>
+          <li className={styles.accountRow}>
+            <span className={styles.alertTitle}>네이버</span>
+            <PillButton size="sm" disabled>
+              Phase 2
+            </PillButton>
+          </li>
+          <li className={styles.accountRow}>
+            <span className={styles.alertTitle}>이메일 로그인</span>
+            <PillButton size="sm" disabled>
+              Phase 2
+            </PillButton>
+          </li>
+        </ul>
+      )}
       <button type="button" className={styles.danger} onClick={() => setConfirming(true)}>
         회원 탈퇴
       </button>
