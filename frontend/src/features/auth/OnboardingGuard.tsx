@@ -7,7 +7,14 @@ import { useMe } from "./useMe";
  * 라우터와 같은 `matchPath`로 비교한다 — 대소문자(`/NOTIFICATIONS`)와 끝의 "/"(`/me/`)를 라우터가 받아들이는
  * 그대로 받아들여, 문자열 비교로는 새는 주소가 없게 한다.
  */
-const REQUIRES_ONBOARDING = ["/me/*", "/notifications/*", "/spots/:id/plant"];
+const REQUIRES_ONBOARDING = [
+  "/me/*",
+  "/notifications/*",
+  "/spots/:id/plant",
+  // Phase 2 커뮤니티 쓰기 (플래그가 꺼져 있으면 라우트 자체가 없다)
+  "/community/write",
+  "/community/:id/edit",
+];
 
 /**
  * 라우트 가드 — specs/08: 첫 로그인(`nickname IS NULL`) 사용자는 둘러보기(홈·지도·캘린더 등)는 되지만

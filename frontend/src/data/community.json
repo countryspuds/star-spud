@@ -1,0 +1,342 @@
+{
+  "spotIndex": {
+    "anbandegi": 82,
+    "gwangdeoksan": 58,
+    "byeolmaro": 63,
+    "yumyeongsan": 61,
+    "sobaeksan": 74,
+    "yeongyang": 71,
+    "bohyeonsan": 66,
+    "goheung": 55,
+    "jeju1100": 47,
+    "gamaksan": 52,
+    "hwangmaesan": 69,
+    "eoreumgol": 44,
+    "yeocha": 57,
+    "mangsan": 49
+  },
+  "storeNearby": {
+    "anbandegi": false,
+    "gwangdeoksan": false,
+    "byeolmaro": true,
+    "yumyeongsan": true,
+    "sobaeksan": false,
+    "yeongyang": true,
+    "bohyeonsan": false,
+    "goheung": true,
+    "jeju1100": false,
+    "gamaksan": false,
+    "hwangmaesan": true,
+    "eoreumgol": true,
+    "yeocha": false,
+    "mangsan": false
+  },
+  "posts": [
+    {
+      "id": "p_101",
+      "type": "review",
+      "author": {
+        "id": "u_201",
+        "nickname": "감자농부",
+        "avatarUrl": null,
+        "potatoAvatar": "basic"
+      },
+      "spotId": "anbandegi",
+      "body": "10월 18일 밤 안반데기. 달이 열 시쯤 지고 나니 은하수가 남서쪽으로 길게 눕더라고요. 바람이 세서 삼각대는 낮게 잡는 게 좋아요. 주차장은 넉넉했고 화장실은 밤에도 열려 있었어요.",
+      "photos": ["photo-of-month-placeholder.png", "photo-of-month-placeholder.png"],
+      "likeCount": 42,
+      "likedByMe": false,
+      "spotSavedByMe": true,
+      "createdAt": "2026-10-30T22:10:00+09:00",
+      "editedAt": null,
+      "meetup": null,
+      "poll": null,
+      "reviewInfo": { "visitedOn": "2026-10-18" },
+      "night": { "index": 88, "moonIllum": 42, "waxing": true, "cloudPct": 10 },
+      "photoContest": false,
+      "comments": [
+        {
+          "id": "c_101_1",
+          "author": {
+            "id": "u_202",
+            "nickname": "초보별지기",
+            "avatarUrl": null,
+            "potatoAvatar": "sad"
+          },
+          "body": "바람 정보 감사해요. 다음 주에 가려는데 방풍 자켓 챙길게요.",
+          "likeCount": 3,
+          "likedByMe": false,
+          "createdAt": "2026-10-30T22:40:00+09:00"
+        },
+        {
+          "id": "c_101_2",
+          "author": {
+            "id": "u_203",
+            "nickname": "밤하늘사진가",
+            "avatarUrl": null,
+            "potatoAvatar": "happy"
+          },
+          "body": "두 번째 사진 구도 좋네요. 배추밭 능선이 은하수랑 딱 맞아요.",
+          "likeCount": 8,
+          "likedByMe": false,
+          "createdAt": "2026-10-31T07:15:00+09:00"
+        },
+        {
+          "id": "c_101_3",
+          "author": {
+            "id": "u_204",
+            "nickname": "별똥별",
+            "avatarUrl": null,
+            "potatoAvatar": "basic"
+          },
+          "body": "화장실 밤에도 열려 있는 거 확실한가요? 지난달엔 잠겨 있었어요.",
+          "likeCount": 1,
+          "likedByMe": false,
+          "createdAt": "2026-10-31T21:02:00+09:00"
+        }
+      ]
+    },
+    {
+      "id": "p_102",
+      "type": "question",
+      "author": {
+        "id": "u_202",
+        "nickname": "초보별지기",
+        "avatarUrl": null,
+        "potatoAvatar": "sad"
+      },
+      "spotId": "yumyeongsan",
+      "body": "첫 장비로 뭘 사야 할까요? 예산은 20만 원 안쪽이고 주로 유명산 쪽으로 다녀요. 쌍안경이 낫다는 말도 있고, 작은 굴절 망원경이 낫다는 말도 있어서요.",
+      "photos": [],
+      "likeCount": 9,
+      "likedByMe": false,
+      "spotSavedByMe": false,
+      "createdAt": "2026-10-31T19:40:00+09:00",
+      "editedAt": "2026-10-31T20:05:00+09:00",
+      "meetup": null,
+      "poll": {
+        "options": [
+          { "id": "o1", "label": "10×50 쌍안경", "votes": 31 },
+          { "id": "o2", "label": "70 mm 굴절 망원경", "votes": 12 },
+          { "id": "o3", "label": "스마트폰 + 삼각대부터", "votes": 19 }
+        ],
+        "total": 62,
+        "myVote": null
+      },
+      "reviewInfo": null,
+      "night": null,
+      "photoContest": false,
+      "comments": [
+        {
+          "id": "c_102_1",
+          "author": {
+            "id": "u_201",
+            "nickname": "감자농부",
+            "avatarUrl": null,
+            "potatoAvatar": "basic"
+          },
+          "body": "쌍안경 한 표. 들고 다니기 편하고 성단 보는 재미가 커요.",
+          "likeCount": 12,
+          "likedByMe": false,
+          "createdAt": "2026-10-31T19:55:00+09:00"
+        },
+        {
+          "id": "c_102_2",
+          "author": {
+            "id": "u_mock",
+            "nickname": "감자별",
+            "avatarUrl": null,
+            "potatoAvatar": "happy"
+          },
+          "body": "저는 스마트폰으로 시작했어요. 삼각대만 있어도 은하수가 찍혀서 동기 부여가 돼요.",
+          "likeCount": 5,
+          "likedByMe": false,
+          "createdAt": "2026-10-31T21:30:00+09:00"
+        }
+      ]
+    },
+    {
+      "id": "p_103",
+      "type": "meetup",
+      "author": {
+        "id": "u_mock",
+        "nickname": "감자별",
+        "avatarUrl": null,
+        "potatoAvatar": "happy"
+      },
+      "spotId": "sobaeksan",
+      "body": "이번 주 토요일 달 없는 밤에 소백산 연화봉 같이 올라갈 분 모아요. 죽령휴게소에서 모여서 천문대 쪽으로 걸어 올라갑니다. 초보도 환영, 랜턴은 빨간 불 모드로요.",
+      "photos": [],
+      "likeCount": 17,
+      "likedByMe": false,
+      "spotSavedByMe": true,
+      "createdAt": "2026-10-29T21:00:00+09:00",
+      "editedAt": null,
+      "meetup": {
+        "at": "2026-11-07T21:00:00+09:00",
+        "meetPoint": "죽령휴게소 주차장",
+        "capacity": 8,
+        "joined": 5,
+        "joinedByMe": false,
+        "status": "open"
+      },
+      "poll": null,
+      "reviewInfo": null,
+      "night": null,
+      "photoContest": false,
+      "comments": [
+        {
+          "id": "c_103_1",
+          "author": {
+            "id": "u_204",
+            "nickname": "별똥별",
+            "avatarUrl": null,
+            "potatoAvatar": "basic"
+          },
+          "body": "참여했어요! 차 한 대 가져가니 두 분 태워드릴 수 있어요.",
+          "likeCount": 4,
+          "likedByMe": false,
+          "createdAt": "2026-10-30T08:12:00+09:00"
+        }
+      ]
+    },
+    {
+      "id": "p_104",
+      "type": "photo",
+      "author": {
+        "id": "u_203",
+        "nickname": "밤하늘사진가",
+        "avatarUrl": null,
+        "potatoAvatar": "happy"
+      },
+      "spotId": "hwangmaesan",
+      "body": "황매산 캠핑장 위로 떨어진 오리온자리 유성우 한 조각. 24 mm · f/1.8 · 15초 · ISO 3200. 11월 이달의 사진에 응모합니다.",
+      "photos": ["photo-of-month-placeholder.png"],
+      "likeCount": 128,
+      "likedByMe": false,
+      "spotSavedByMe": false,
+      "createdAt": "2026-10-20T08:30:00+09:00",
+      "editedAt": null,
+      "meetup": null,
+      "poll": null,
+      "reviewInfo": { "visitedOn": "2026-10-19" },
+      "night": { "index": 79, "moonIllum": 55, "waxing": true, "cloudPct": 20 },
+      "photoContest": true,
+      "comments": [
+        {
+          "id": "c_104_1",
+          "author": {
+            "id": "u_201",
+            "nickname": "감자농부",
+            "avatarUrl": null,
+            "potatoAvatar": "basic"
+          },
+          "body": "유성 궤적 색이 살아 있네요. 이번 달 1등 예감.",
+          "likeCount": 15,
+          "likedByMe": false,
+          "createdAt": "2026-10-20T09:00:00+09:00"
+        },
+        {
+          "id": "c_104_2",
+          "author": {
+            "id": "u_202",
+            "nickname": "초보별지기",
+            "avatarUrl": null,
+            "potatoAvatar": "sad"
+          },
+          "body": "15초에 이 정도면 광공해가 정말 적은 곳이군요.",
+          "likeCount": 2,
+          "likedByMe": false,
+          "createdAt": "2026-10-21T19:20:00+09:00"
+        }
+      ]
+    },
+    {
+      "id": "p_105",
+      "type": "chat",
+      "author": { "id": "u_204", "nickname": "별똥별", "avatarUrl": null, "potatoAvatar": "basic" },
+      "spotId": null,
+      "body": "11월 들어서 산 위는 벌써 영하예요. 핫팩은 손보다 카메라 배터리에 붙이는 게 더 효과적이더라고요. 다들 방한 어떻게 하세요?",
+      "photos": [],
+      "likeCount": 6,
+      "likedByMe": false,
+      "spotSavedByMe": false,
+      "createdAt": "2026-11-01T09:15:00+09:00",
+      "editedAt": null,
+      "meetup": null,
+      "poll": null,
+      "reviewInfo": null,
+      "night": null,
+      "photoContest": false,
+      "comments": [
+        {
+          "id": "c_105_1",
+          "author": {
+            "id": "u_203",
+            "nickname": "밤하늘사진가",
+            "avatarUrl": null,
+            "potatoAvatar": "happy"
+          },
+          "body": "보온병에 뜨거운 물 + 발열 깔창. 새벽 세 시까지 버텨요.",
+          "likeCount": 3,
+          "likedByMe": false,
+          "createdAt": "2026-11-01T09:40:00+09:00"
+        }
+      ]
+    }
+  ],
+  "rail": {
+    "news": [
+      {
+        "id": "n_1",
+        "title": "사자자리 유성우, 17일 밤 극대기 — 달 없는 새벽이 관측 적기",
+        "source": "한국천문연구원",
+        "publishedAt": "2026-11-01T06:00:00+09:00",
+        "url": null
+      },
+      {
+        "id": "n_2",
+        "title": "11월 새벽 동쪽 하늘에 목성·화성 나란히",
+        "source": "천문 소식 RSS",
+        "publishedAt": "2026-10-31T18:30:00+09:00",
+        "url": null
+      },
+      {
+        "id": "n_3",
+        "title": "올겨울 쌍둥이자리 유성우, 12월 14일 전후 ZHR 150 예상",
+        "source": "천문 소식 RSS",
+        "publishedAt": "2026-10-30T09:10:00+09:00",
+        "url": null
+      }
+    ],
+    "photoContest": {
+      "month": "2026-11",
+      "deadline": "2026-11-30",
+      "entries": [
+        {
+          "id": "pe_1",
+          "src": "photo-of-month-placeholder.png",
+          "author": "밤하늘사진가",
+          "postId": "p_104"
+        },
+        {
+          "id": "pe_2",
+          "src": "photo-of-month-placeholder.png",
+          "author": "감자농부",
+          "postId": null
+        },
+        {
+          "id": "pe_3",
+          "src": "photo-of-month-placeholder.png",
+          "author": "은하수덕후",
+          "postId": null
+        }
+      ]
+    },
+    "moon": {
+      "illum": 48,
+      "waxing": false,
+      "line": "하현 무렵 · 23:40 월출 · 밤 전반은 달이 없어요"
+    }
+  }
+}

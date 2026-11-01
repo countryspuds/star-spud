@@ -421,3 +421,159 @@ export interface RecentChange {
   date: string;
   title: string;
 }
+
+/* ── 커뮤니티 (Phase 2 · specs/06 디자인 메모) ───────────────────── */
+
+/** 글 종류 5 — 후기 · 질문 · 모임 · 사진 응모 · 잡담 */
+export type PostType = "review" | "question" | "meetup" | "photo" | "chat";
+
+/** 피드 탭 — 추천 · 최신 · 모임 · 질문 · 잡담 · 이달의 사진 */
+export type FeedTab = "recommended" | "latest" | "meetup" | "question" | "chat" | "photo";
+
+export interface PostAuthor {
+  id: string;
+  /** 탈퇴하면 "탈퇴한 사용자" */
+  nickname: string;
+  avatarUrl: string | null;
+  potatoAvatar: PotatoAvatar;
+}
+
+/** 명소 태그 — 오늘 밤 지수(0~100)는 서버가 계산해 내려준다 */
+export interface PostSpotTag {
+  id: string;
+  name: string;
+  tonightIndex: number;
+}
+
+/** 모임 글의 모임 카드 — specs/06 §6.3 필드 일부 */
+export interface MeetupInfo {
+  /** 만나는 시각 ISO */
+  at: string;
+  /** 집결 장소 */
+  meetPoint: string;
+  /** 정원 2~20 */
+  capacity: number;
+  joined: number;
+  joinedByMe: boolean;
+  /** 서버 판정 — 정원이 차면 full, 시각이 지나면 ended */
+  status: "open" | "full" | "ended";
+}
+
+export interface PollOption {
+  id: string;
+  label: string;
+  votes: number;
+}
+
+/** 질문 글의 투표 */
+export interface PollInfo {
+  options: PollOption[];
+  total: number;
+  /** 내가 고른 선택지. 안 했으면 null */
+  myVote: string | null;
+}
+
+/** 후기 정보 — 방문일. 그날 밤 메타는 서버가 붙인다 */
+export interface ReviewInfo {
+  visitedOn: string;
+}
+
+/** 글 한 건 — `GET /api/v1/posts?tab=` */
+export interface Post {
+  id: string;
+  type: PostType;
+  author: PostAuthor;
+  spot: PostSpotTag | null;
+  body: string;
+  photos: string[];
+  likeCount: number;
+  commentCount: number;
+  likedByMe: boolean;
+  /** 태그된 명소를 내가 저장했는지 */
+  spotSavedByMe: boolean;
+  createdAt: string;
+  /** 수정했으면 ISO 시각 → "(수정됨)" */
+  editedAt: string | null;
+  meetup: MeetupInfo | null;
+  poll: PollInfo | null;
+  reviewInfo: ReviewInfo | null;
+  /** 이달의 사진 응모 */
+  photoContest: boolean;
+}
+
+/** 후기 글의 "그날 밤" 메타 — 서버 값 */
+export interface PostNightMeta {
+  index: number;
+  moonIllum: number;
+  waxing: boolean;
+  cloudPct: number | null;
+}
+
+/** 명소 편의 4타일 — 주차 · 화장실 · 차박 · 편의점 */
+export interface PostFacilities {
+  parking: number | null;
+  toilet: boolean;
+  carCamping: boolean;
+  storeNearby: boolean;
+}
+
+export interface PostComment {
+  id: string;
+  author: PostAuthor;
+  body: string;
+  likeCount: number;
+  likedByMe: boolean;
+  createdAt: string;
+}
+
+/** 글 상세 — `GET /api/v1/posts/{id}` */
+export interface PostDetail extends Post {
+  night: PostNightMeta | null;
+  facilities: PostFacilities | null;
+  comments: PostComment[];
+}
+
+/** 글 작성·수정 — `POST /api/v1/posts` · `PATCH /api/v1/posts/{id}` */
+export interface PostInput {
+  type: PostType;
+  spotId: string | null;
+  body: string;
+  /** presign으로 올린 사진 키 — 업로드는 TODO라 지금은 항상 빈 배열 */
+  photoKeys: string[];
+  reviewInfo: ReviewInfo | null;
+  photoContest: boolean;
+  meetup: { at: string; meetPoint: string; capacity: number } | null;
+  poll: { options: string[] } | null;
+}
+
+/** 임시저장 — 폼 값 그대로 (사진은 저장하지 않는다) */
+export interface PostDraft extends PostInput {
+  savedAt: string;
+}
+
+/** 우측 레일 — `GET /api/v1/community/rail` */
+export interface CommunityRail {
+  /** 오늘 밤 뜨는 명소 — 지수 순위 */
+  tonightSpots: { id: string; name: string; index: number }[];
+  /** 이번 주 모임 */
+  weekMeetups: {
+    postId: string;
+    title: string;
+    at: string;
+    spotName: string;
+    joined: number;
+    capacity: number;
+  }[];
+  /** 우주 뉴스 — RSS 자리. url이 없으면 링크 없이 보여준다 */
+  news: { id: string; title: string; source: string; publishedAt: string; url: string | null }[];
+  /** 이달의 사진 응모 */
+  photoContest: {
+    /** YYYY-MM */
+    month: string;
+    /** 응모 마감 YYYY-MM-DD */
+    deadline: string;
+    entries: { id: string; src: string; author: string; postId: string | null }[];
+  };
+  /** 오늘 밤 달 한 줄 */
+  moon: { illum: number; waxing: boolean; line: string };
+}
