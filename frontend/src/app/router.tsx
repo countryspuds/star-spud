@@ -15,6 +15,8 @@ import { SpotPage } from "../features/spot/SpotPage";
 import { PlantPage } from "../features/potato/PlantPage";
 import { PotatoDetailPage } from "../features/potato/PotatoDetailPage";
 import { NotificationsPage } from "../features/notifications/NotificationsPage";
+import { PHASE2 } from "../lib/phase2";
+import { communityRoutes } from "./phase2Routes";
 
 export const router = createBrowserRouter([
   {
@@ -46,8 +48,11 @@ export const router = createBrowserRouter([
       { path: "notifications", element: <NotificationsPage /> },
       // 변경 내역 페이지는 Phase 2 — 문의 화면의 링크만 받는다 (명세 §16)
       { path: "changelog", element: <ComingSoon section="변경 내역" /> },
-      // MVP 제외 — 메뉴 자리와 준비 중 페이지만 둔다 (ADR-0012 · 명세 §17)
-      { path: "community", element: <ComingSoon section="커뮤니티" /> },
+      // MVP 제외 — 메뉴 자리와 준비 중 페이지만 둔다 (ADR-0012 · 명세 §17).
+      // Phase 2 화면은 VITE_PHASE2=true일 때만 붙는다 (PRD §4) — 꺼져 있으면 아래 ComingSoon 그대로
+      ...(PHASE2
+        ? communityRoutes
+        : [{ path: "community", element: <ComingSoon section="커뮤니티" /> }]),
       { path: "market", element: <ComingSoon section="장터" /> },
       { path: "me/activity", element: <ComingSoon section="활동" /> },
       { path: "faq", element: <ComingSoon section="자주 묻는 질문" /> },

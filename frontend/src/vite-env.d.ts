@@ -7,4 +7,6 @@ interface ImportMetaEnv {
   readonly VITE_MOCK_LOGGED_IN?: string;
   /** 푸터·진단 정보에 표시하는 앱 버전 */
   readonly VITE_APP_VERSION?: string;
+  /** "true"면 Phase 2 화면(커뮤니티·장터·이메일 로그인·활동)을 켠다. 아니면 준비 중 페이지 (PRD §4) */
+  readonly VITE_PHASE2?: string;
 }
