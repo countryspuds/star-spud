@@ -8,7 +8,7 @@ import {
   type DragEvent,
   type FormEvent,
 } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import potatoHappy from "../../assets/potato/potato-happy.svg";
 import { Card } from "../../components/ui/Card";
 import { ExampleCaption, Label } from "../../components/ui/Label";
@@ -408,11 +408,15 @@ function SuggestionPotato() {
 
 /** `/feedback` — 명세 §16. 비로그인도 보낼 수 있다 */
 export function FeedbackPage() {
-  const [doneId, setDoneId] = useState<string | null>(null);
+  const { search } = useLocation();
+  // 접수 화면은 제출한 그 주소(?type=)에서만 — 푸터 등에서 다른 유형 링크로 들어오면 그 유형의 빈 폼이 열린다
+  const [done, setDone] = useState<{ id: string; search: string } | null>(null);
+  const doneId = done !== null && done.search === search ? done.id : null;
+  const onDone = (id: string) => setDone({ id, search });
   // 다시 보내기 때 폼을 새로 만들기 위한 키
   const [formKey, setFormKey] = useState(0);
   const again = () => {
-    setDoneId(null);
+    setDone(null);
     setFormKey((k) => k + 1);
   };
   return (
@@ -425,7 +429,7 @@ export function FeedbackPage() {
         {doneId ? (
           <Done id={doneId} onAgain={again} />
         ) : (
-          <FeedbackForm key={formKey} onDone={setDoneId} />
+          <FeedbackForm key={formKey} onDone={onDone} />
         )}
         <div className={styles.rails}>
           <Suspense fallback={null}>
