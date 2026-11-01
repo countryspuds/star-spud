@@ -2,8 +2,8 @@ import type { ReactNode } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useMe } from "./useMe";
 
-/** 온보딩을 마쳐야 들어갈 수 있는 곳 — 프로필(감자밭·설정·감자 상세)과 감자 심기/먹이 주기 */
-const REQUIRES_ONBOARDING = ["/me"];
+/** 온보딩을 마쳐야 들어갈 수 있는 곳 — 프로필(감자밭·설정·감자 상세)·알림함·감자 심기/먹이 주기 */
+const REQUIRES_ONBOARDING = ["/me", "/notifications"];
 const REQUIRES_ONBOARDING_RE = [/^\/spots\/[^/]+\/plant$/];
 
 /**

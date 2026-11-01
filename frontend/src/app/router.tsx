@@ -14,6 +14,7 @@ import { FeedbackPage } from "../features/feedback/FeedbackPage";
 import { SpotPage } from "../features/spot/SpotPage";
 import { PlantPage } from "../features/potato/PlantPage";
 import { PotatoDetailPage } from "../features/potato/PotatoDetailPage";
+import { NotificationsPage } from "../features/notifications/NotificationsPage";
 
 export const router = createBrowserRouter([
   {
@@ -41,6 +42,8 @@ export const router = createBrowserRouter([
         ],
       },
       { path: "feedback", element: <FeedbackPage /> },
+      // 알림함 (명세 §18.4, specs/10 MVP). 로그인·온보딩 필요
+      { path: "notifications", element: <NotificationsPage /> },
       // 변경 내역 페이지는 Phase 2 — 문의 화면의 링크만 받는다 (명세 §16)
       { path: "changelog", element: <ComingSoon section="변경 내역" /> },
       // MVP 제외 — 메뉴 자리와 준비 중 페이지만 둔다 (ADR-0012 · 명세 §17)

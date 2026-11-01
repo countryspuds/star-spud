@@ -1,0 +1,178 @@
+/* ── 알림함 (명세 §18.4) ───────────────── */
+.page {
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  width: min(720px, 100%);
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.headText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.h1 {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.head button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.list > li + li {
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: start;
+  padding: 14px 4px;
+  border-radius: 12px;
+}
+
+.row:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.row:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: -2px;
+}
+
+.iconPotato {
+  position: relative;
+  display: block;
+  width: 28px;
+  height: 28px;
+  margin: 2px 4px 0;
+}
+
+.row > img {
+  margin: 2px 4px 0;
+}
+
+.bubble {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  min-width: 16px;
+  height: 14px;
+  padding: 0 3px;
+  border-radius: 7px 7px 7px 2px;
+  background: #fff;
+  color: #141414;
+  font-size: 9px;
+  line-height: 12px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+/* 미읽음은 --fg, 읽음은 --fg-2 */
+.title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--fg-2);
+}
+
+.row[data-unread="true"] .title {
+  color: var(--fg);
+}
+
+.body {
+  font-size: 13px;
+  color: var(--fg-2);
+  line-height: 1.5;
+}
+
+.time {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--fg-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  margin-top: 6px;
+  border-radius: 50%;
+  background: var(--lime);
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  padding: 36px 16px 28px;
+}
+
+.empty p {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.empty span {
+  font-size: 13px;
+  color: var(--fg-2);
+}
+
+.foot {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-top: 4px;
+}
+
+.note {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--fg-3);
+  line-height: 1.5;
+}
+
+.settingsLink {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.settingsLink:hover {
+  color: var(--fg-2);
+}
