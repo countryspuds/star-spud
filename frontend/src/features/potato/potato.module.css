@@ -1,0 +1,601 @@
+/* ── 감자 심기 / 먹이 주기 (명세 §18.2) ─── */
+.page {
+  display: flex;
+  justify-content: center;
+}
+
+.plant {
+  width: min(640px, 100%);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.plantHead {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.silhouette {
+  filter: brightness(0.3) grayscale(0.5);
+}
+
+.plantTitle {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.h1 {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--fg-2);
+}
+
+.hint {
+  font-size: 12px;
+  color: var(--fg-2);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.fieldRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.fieldLabel {
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.optional {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--fg-3);
+}
+
+.counter {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--fg-3);
+}
+
+.counter[data-over="true"] {
+  color: #ff8a8a;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px solid var(--edge);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--fg);
+  font: inherit;
+  font-size: 14px;
+}
+
+.input {
+  height: 44px;
+  color-scheme: dark;
+}
+
+.textarea {
+  padding: 12px 14px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.textarea::placeholder {
+  color: var(--fg-3);
+}
+
+.input:focus-visible,
+.textarea:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 1px;
+}
+
+.error {
+  font-size: 12px;
+  color: #ff8a8a;
+}
+
+.errorLink {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 600;
+}
+
+/* 드롭존 + 미리보기 */
+.dropzone {
+  height: 64px;
+  border-radius: 12px;
+  border: 1px dashed var(--edge);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s;
+}
+
+.dropzone[data-over="true"] {
+  border-color: var(--lime);
+}
+
+.dropBtn {
+  background: none;
+  border: 0;
+  font-size: 13px;
+  color: var(--fg-2);
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+}
+
+.dropBtn:disabled {
+  cursor: not-allowed;
+  color: var(--fg-3);
+}
+
+.dropBtn:focus-visible {
+  outline: 2px solid var(--lime);
+}
+
+.previews {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.previews li {
+  position: relative;
+  width: 72px;
+  height: 72px;
+}
+
+.previews img {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 10px;
+  background: #12161f;
+}
+
+.coverTag {
+  position: absolute;
+  left: 4px;
+  bottom: 4px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  padding: 1px 5px;
+  border-radius: var(--radius-pill);
+  background: var(--lime);
+  color: #141414;
+}
+
+.previewRemove {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid var(--edge);
+  background: var(--card);
+  color: var(--fg-2);
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* 공개 토글 */
+.publicRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.publicText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.toggle,
+.toggleOn {
+  flex: none;
+  width: 40px;
+  height: 22px;
+  padding: 2px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--edge);
+  background: rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background 0.15s;
+}
+
+.toggleOn {
+  background: var(--lime);
+  border-color: var(--lime);
+  justify-content: flex-end;
+}
+
+.toggle:disabled,
+.toggleOn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.knob {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #eaeef5;
+}
+
+.toggleOn .knob {
+  background: #141414;
+}
+
+.formFoot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-top: 4px;
+}
+
+.formBtns {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.formBtns button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* 성공 */
+.success {
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 40px 24px;
+}
+
+.successArt {
+  position: relative;
+  margin-bottom: 6px;
+}
+
+.successFood {
+  position: absolute;
+  right: -22px;
+  bottom: -4px;
+}
+
+.successBody {
+  font-size: 14px;
+  color: var(--fg-2);
+}
+
+.successActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+/* ── 감자 상세 (명세 §18.3) ─────────────── */
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+.detailHead {
+  padding: 20px 22px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.detailText {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  flex: 1;
+}
+
+.detailSpot {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.detailSpot:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.stateRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+
+.stateBadge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  border: 1px solid #ff8a8a;
+  color: #ff8a8a;
+}
+
+.speech {
+  position: relative;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 10px 10px 10px 2px;
+  background: #fff;
+  color: #141414;
+}
+
+.publicCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: none;
+}
+
+.feeds {
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.feedsHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.feedList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.feedRow {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: start;
+  padding: 12px 0;
+}
+
+.feedRow + .feedRow {
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.feedText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.review,
+.reviewFolded {
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.reviewFolded {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.fold,
+.textBtn {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: 12px;
+  color: var(--fg-2);
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+.fold:hover,
+.textBtn:hover {
+  color: var(--fg);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.thumbs {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.thumbs img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 8px;
+  background: #12161f;
+}
+
+.feedActions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--fg-3);
+  white-space: nowrap;
+  padding-top: 2px;
+}
+
+.editor {
+  grid-column: 2 / 4;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.editor .input {
+  width: 180px;
+  max-width: 100%;
+}
+
+.editorBtns {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.editorBtns button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.detailFoot {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.notFound {
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+}
+
+/* 삭제 확인 모달 */
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(10, 13, 20, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.modal {
+  width: min(400px, 100%);
+  padding: 24px;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--edge);
+  background: var(--card);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modalTitle {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.modalBody {
+  font-size: 14px;
+  color: var(--fg-2);
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.modalActions button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.dangerPill {
+  background: #c8503a;
+  border-color: #c8503a;
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  .plant {
+    padding: 20px 16px;
+  }
+
+  .detailHead {
+    flex-wrap: wrap;
+  }
+
+  .feedRow {
+    grid-template-columns: 28px minmax(0, 1fr);
+  }
+
+  .feedActions {
+    grid-column: 2;
+  }
+
+  .editor {
+    grid-column: 2;
+  }
+}

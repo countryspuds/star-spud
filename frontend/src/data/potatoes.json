@@ -12,7 +12,31 @@
     "foodCount": 3,
     "lastVisitedOn": "2026-10-18",
     "latestReview": "텐트 밖으로 나오자마자 은하수. 10월 중순이 딱이었어요.",
-    "isPublic": true
+    "isPublic": true,
+    "feeds": [
+      {
+        "id": "f_hwa_3",
+        "visitedOn": "2026-10-18",
+        "food": "galaxy",
+        "review": "텐트 밖으로 나오자마자 은하수. 10월 중순이 딱이었어요.",
+        "photoUrls": ["photo-of-month-placeholder.png"]
+      },
+      {
+        "id": "f_hwa_2",
+        "visitedOn": "2026-08-12",
+        "food": "meteor",
+        "review": "페르세우스 유성우 밤. 캠핑장 전체가 불을 끄고 하늘만 봤어요. 한 시간에 서른 개쯤 셌어요.",
+        "photoUrls": ["photo-of-month-placeholder.png", "photo-of-month-placeholder.png"],
+        "eventId": "e_perseid_2026"
+      },
+      {
+        "id": "f_hwa_1",
+        "visitedOn": "2026-05-23",
+        "food": "moon",
+        "review": "보름에 가까운 달이 밝아 은하수는 못 봤지만, 달빛 아래 철쭉 능선 산책이 좋았어요.",
+        "photoUrls": []
+      }
+    ]
   },
   {
     "id": "p_anbandegi",
@@ -22,7 +46,45 @@
     "foodCount": 5,
     "lastVisitedOn": "2026-10-10",
     "latestReview": "바람이 세서 삼각대를 꼭 눌러야 했지만 하늘은 최고.",
-    "isPublic": true
+    "isPublic": true,
+    "feeds": [
+      {
+        "id": "f_anb_5",
+        "visitedOn": "2026-10-10",
+        "food": "galaxy",
+        "review": "바람이 세서 삼각대를 꼭 눌러야 했지만 하늘은 최고.",
+        "photoUrls": ["photo-of-month-placeholder.png"]
+      },
+      {
+        "id": "f_anb_4",
+        "visitedOn": "2026-09-26",
+        "food": "moon",
+        "review": "한가위 보름달. 별은 적었지만 달빛에 비친 배추밭이 은빛이었어요.",
+        "photoUrls": []
+      },
+      {
+        "id": "f_anb_3",
+        "visitedOn": "2026-08-13",
+        "food": "meteor",
+        "review": "페르세우스 극대기 다음 날 새벽. 사람은 줄고 유성은 그대로.",
+        "photoUrls": [],
+        "eventId": "e_perseid_2026"
+      },
+      {
+        "id": "f_anb_2",
+        "visitedOn": "2026-06-20",
+        "food": "galaxy",
+        "review": "하지 무렵이라 밤이 짧았어요. 새벽 1시부터 3시까지가 전부.",
+        "photoUrls": []
+      },
+      {
+        "id": "f_anb_1",
+        "visitedOn": "2026-04-18",
+        "food": "galaxy",
+        "review": "봄 은하수 첫 관측. 새벽 3시에 동쪽에서 올라와요.",
+        "photoUrls": ["photo-of-month-placeholder.png"]
+      }
+    ]
   },
   {
     "id": "p_byeolmaro",
@@ -32,7 +94,24 @@
     "foodCount": 2,
     "lastVisitedOn": "2026-08-02",
     "latestReview": "천문대 주차장에서도 충분히 어두워요. 토성 고리를 봤어요.",
-    "isPublic": true
+    "isPublic": true,
+    "feeds": [
+      {
+        "id": "f_bye_2",
+        "visitedOn": "2026-08-02",
+        "food": "moon",
+        "review": "천문대 주차장에서도 충분히 어두워요. 토성 고리를 봤어요.",
+        "photoUrls": []
+      },
+      {
+        "id": "f_bye_1",
+        "visitedOn": "2026-03-03",
+        "food": "moon",
+        "review": "개기월식! 붉은 달이 봉래산 위로. 영하라서 핫팩 필수였어요.",
+        "photoUrls": ["photo-of-month-placeholder.png"],
+        "eventId": "e_lunar_2026_03"
+      }
+    ]
   },
   {
     "id": "p_jeju1100",
@@ -42,7 +121,16 @@
     "foodCount": 1,
     "lastVisitedOn": "2026-05-03",
     "latestReview": "안개가 걷힌 뒤 30분이 전부였지만 그걸로 충분했어요.",
-    "isPublic": false
+    "isPublic": false,
+    "feeds": [
+      {
+        "id": "f_jej_1",
+        "visitedOn": "2026-05-03",
+        "food": "galaxy",
+        "review": "안개가 걷힌 뒤 30분이 전부였지만 그걸로 충분했어요.",
+        "photoUrls": []
+      }
+    ]
   },
   {
     "id": "p_sobaeksan",
@@ -52,7 +140,24 @@
     "foodCount": 2,
     "lastVisitedOn": "2026-09-14",
     "latestReview": "천문대 옆 데크에서. 새벽 2시 넘어서 구름이 걷혔어요.",
-    "isPublic": true
+    "isPublic": true,
+    "feeds": [
+      {
+        "id": "f_sob_2",
+        "visitedOn": "2026-09-14",
+        "food": "galaxy",
+        "review": "천문대 옆 데크에서. 새벽 2시 넘어서 구름이 걷혔어요.",
+        "photoUrls": []
+      },
+      {
+        "id": "f_sob_1",
+        "visitedOn": "2026-01-03",
+        "food": "meteor",
+        "review": "사분의자리 유성우. 영하 15도에 두 시간 버텼어요.",
+        "photoUrls": [],
+        "eventId": "e_quad_2026"
+      }
+    ]
   },
   {
     "id": "p_yeocha",
@@ -61,7 +166,16 @@
     "state": "normal",
     "foodCount": 1,
     "lastVisitedOn": "2026-10-25",
-    "latestReview": "남쪽 바다 위로 오리온이 올라오는 걸 봤어요.",
-    "isPublic": true
+    "latestReview": "달이 밝았지만 남쪽 바다 위로 오리온이 올라오는 걸 봤어요.",
+    "isPublic": true,
+    "feeds": [
+      {
+        "id": "f_yec_1",
+        "visitedOn": "2026-10-25",
+        "food": "moon",
+        "review": "달이 밝았지만 남쪽 바다 위로 오리온이 올라오는 걸 봤어요.",
+        "photoUrls": []
+      }
+    ]
   }
 ]

@@ -287,6 +287,52 @@ export interface Potato {
   isPublic: boolean;
 }
 
+/** 먹이 종류 — specs/04. 서버가 방문일 조건(이벤트 → 달 → 보틀 → 별)으로 결정 */
+export type Food = "star" | "moon" | "planet" | "galaxy" | "meteor";
+
+/** 먹이(기록) 한 건 — specs/04 `feeds` (명세 §18.5) */
+export interface Feed {
+  id: string;
+  /** 방문일 YYYY-MM-DD */
+  visitedOn: string;
+  food: Food;
+  review: string;
+  photoUrls: string[];
+  /** 먹이 결정에 쓰인 이벤트 (있을 때만) */
+  eventId?: string;
+}
+
+/** 감자 상세 — `GET /api/v1/potatoes/{id}` (본인). 먹이는 최신순 */
+export interface PotatoDetail extends Potato {
+  feeds: Feed[];
+  /** hungry 말풍선용 — 다음 major 이벤트. 없으면 null */
+  nextMajorEvent: { title: string; dday: number } | null;
+}
+
+/** 기록 제출 — `POST /api/v1/spots/{id}/potato/feeds` (specs/04) */
+export interface FeedInput {
+  visitedOn: string;
+  review: string;
+  /** presign으로 올린 사진 키 — 업로드는 TODO라 지금은 항상 빈 배열 */
+  photoKeys: string[];
+  /** 감자 단위 공개 여부 */
+  isPublic: boolean;
+}
+
+/** 기록 응답 — specs/04: `potato{level, state, food}`, `is_new_potato`, `level_up` */
+export interface PlantResult {
+  potato: Potato;
+  feed: Feed;
+  isNewPotato: boolean;
+  levelUp: boolean;
+}
+
+/** 기록 수정 — `PATCH /api/v1/feeds/{id}` */
+export interface FeedPatch {
+  visitedOn?: string;
+  review?: string;
+}
+
 /** 알림 설정 — `PATCH /api/v1/me/notification-settings` (명세 §15). MVP는 앱 내 알림함 생성 여부 */
 export interface NotificationSettings {
   meteorPeak: boolean;

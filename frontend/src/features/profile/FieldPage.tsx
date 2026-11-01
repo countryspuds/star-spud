@@ -1,13 +1,13 @@
-import { Suspense, use } from "react";
+import { Suspense } from "react";
 import { Label } from "../../components/ui/Label";
 import { PillLink } from "../../components/ui/Pill";
-import { getMyPotatoes } from "../../data/potatoes";
+import { useMyPotatoes } from "../potato/useMyPotatoes";
 import { FieldMap } from "./FieldMap";
 import { PotatoList } from "./PotatoList";
 import styles from "./profile.module.css";
 
 function FieldBody() {
-  const potatoes = use(getMyPotatoes());
+  const potatoes = useMyPotatoes();
   return (
     <>
       <header className={styles.head}>

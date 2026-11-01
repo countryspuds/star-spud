@@ -7,7 +7,7 @@ import spotsJson from "./spots.json";
 import spotPotatoesJson from "./spotPotatoes.json";
 import photoPlaceholder from "../assets/photo-of-month-placeholder.png";
 import { getMe, subscribeMe } from "./auth";
-import { getMyPotatoes } from "./potatoes";
+import { getMyPotatoes, subscribeMyPotatoes } from "./potatoes";
 import type {
   Condition,
   NightTimes,
@@ -191,6 +191,7 @@ export function invalidateSpotPotatoes(): void {
   }
 }
 subscribeMe(invalidateSpotPotatoes);
+subscribeMyPotatoes(invalidateSpotPotatoes);
 
 // ── 신고 ───────────────────────────────────────────────
 /** 이 탭에서 신고한 명소 → 사유 */
