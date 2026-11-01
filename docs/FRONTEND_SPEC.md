@@ -311,3 +311,58 @@ mock 이미지: `assets/maps/starscore-5km.svg` (광공해 + 명소 앵커 20개
 - 커뮤니티·장터·네이버·이메일 로그인·프로필 활동 탭·사진 업로드는 Phase 2. MVP에서는 메뉴 + 준비 중 페이지.
 - 명소 유형 4개(자연·천문대·캠핑장·도심 근교)와 플래그(차박·주차·화장실·포장도로·시야 개방 방향)는 `specs/01`의 데이터 모델을 쓴다. 명소 리스트·상세·후기 정보 체크박스는 이 필드에 맞춘다.
 - 브랜치·커밋은 ADR-0008 (develop에서 분기, Conventional Commits 한글).
+
+---
+
+## 13. 공통 네비·푸터·로그인 상태 (11/1)
+
+- 네비 6개(§2): 홈 `/` · 지도 `/map` · 캘린더 `/calendar` · 프로필 `/me` · 커뮤니티 `/community` · 장터 `/market`. 커뮤니티·장터는 MVP에서 `<ComingSoon section="커뮤니티|장터" />`.
+- 우측: 비로그인 = "로그인" pill(32px) → `/login`. 로그인 = **아바타 칩**(높이 32px, 좌 아바타 22px + 닉네임 13px 600, `--glass` 배경, `--edge` 테두리) → `/me`. 아바타 = 업로드 사진이 있으면 원형 사진, 없으면 감자 아바타(`potato_avatar`에 따라 `potato.svg | potato-happy.svg | potato-sad.svg`, pixelated).
+- **푸터**(모든 페이지, `padding: 26px 24px 8px; border-top: 1px solid --edge`): 4열 grid `minmax(0,1.4fr) repeat(3, minmax(0,1fr))`, gap 24px. 1열 로고(22px)+"별보러감자" 15px 700 + 한 줄 소개 12px `--fg-2`. 2열 "서비스": 별보기 지도·천문 캘린더·커뮤니티·장터. 3열 "도움말": 문의·버그 제보 / 기능 제안 / 명소 정보 수정 요청 / 자주 묻는 질문 — 앞 셋은 `/feedback?type=bug|feature|spot_fix`. 4열 "정책": 이용약관·개인정보 처리방침·커뮤니티·장터 가이드·데이터 출처. 하단 줄(mono 10px `--fg-3`, 위 1px 선): "© 2026 Star-Spud · 천문 정보: 한국천문연구원 · 날씨: 기상청 · 광공해: NOAA VIIRS · 지도: {SDK}" / "v{버전} · 문의하기". 열 제목은 mono 라벨. 링크 13px `--fg-2`. ≤860px: 2열.
+
+## 14. 로그인 · 온보딩 `/login`, `/onboarding`, `/welcome` (MVP: 카카오만, ADR-0014)
+
+**공통 레이아웃**: 네비(링크 숨김, 우측 "둘러보기 →") 아래 grid `minmax(0,1fr) 440px`, gap 16px. 좌 소개 패널(`--card`, min-height 780px, 픽셀 별 15~20개 absolute, 우상단에 `starscore-5km.svg` 62% 폭 opacity .55, 하단 정렬 카피: mono 라벨 / h1 40px 700 `letter-spacing -.025em` / 본문 15px `--fg-2`). 우 카드(`--card`, padding 32px 30px, `align-self: start`). ≤900px: 1열, 소개 패널 min-height 260px.
+
+**`/login`**: h2 "로그인" 22px 700 + "별도 회원가입 없이 3초면 끝나요." → **카카오로 시작하기** 버튼(높이 48px, radius 12px, 배경 `#FEE500`, 글자 `#191919`, 좌측 18px 정사각 아이콘 자리) → 약관 문구 11px `--fg-3`("계속하면 이용약관과 개인정보 처리방침에 동의하게 돼요. 소셜 계정의 이메일과 프로필 이름만 받아요."). 네이버 버튼·이메일 폼은 **Phase 2** (디자인 있음, 지금은 렌더하지 않음). 카카오 버튼은 `GET /api/v1/auth/kakao/authorize`로 이동(백엔드 없으면 mock: `/onboarding`으로).
+
+**`/onboarding`** (첫 로그인, `nickname IS NULL`일 때 강제 리다이렉트. 완료 전엔 감자 심기·후기 불가): 상단 스텝 "1 약관 › 2 닉네임 › 3 완료"(mono 11px, 활성 `--lime` 원형 18px). h2 "거의 다 됐어요" + "카카오 계정 {masked email}으로 가입해요."
+1. 닉네임: input 46px, 2~12자 maxlength, 우측 안 상태 "✓ 사용 가능"(`--sprout`) / "이미 쓰는 닉네임이에요"(`#ff8a8a`). 디바운스 400ms `GET /api/v1/users/nickname-check?v=`. 아래 mono 10px "한글·영문·숫자 2~12자 · 30일에 한 번 변경" / "{n}/12".
+2. 내 감자: 3열 버튼(기본·웃는·시무룩, 52px 픽셀 아이콘 + 11px 라벨). 선택 = `--lime` 테두리 + `rgba(217,252,70,.08)` 배경.
+3. 주로 보는 지역(선택): select, 17 시·도. 안내 "홈의 '오늘 밤' 추천과 거리 계산 기준이 돼요."
+4. 약관 박스(`rgba(255,255,255,.03)`, `--edge`): "전체 동의" 체크(600) / 1px 선 / 이용약관(필수) · 개인정보 수집·이용(필수) · 만 14세 이상(필수) · 유성우·이벤트 알림 받기(선택). 체크박스 18px `accent-color: --lime`, 우측 mono 10px "필수"(`--lime`)/"선택"(`--fg-3`).
+5. 버튼 "감자 심으러 가기"(primary 48px) — 필수 3개 체크 + 닉네임 유효할 때만 활성. `POST /api/v1/me/onboarding {nickname, potatoAvatar, homeSido?, marketingOptIn}` → `/welcome`.
+
+**`/welcome`**: 스텝 3 활성. 카드 가운데 정렬: 선택한 감자 96px, 라벨 "가입 완료", h2 "환영해요, {닉네임}", "{지역} 기준으로 오늘 밤을 추천해 드릴게요." → 할 일 3개 행(mono `01 02 03` `--lime` + 제목 13px 600 + 설명 12px: 오늘 밤 어디 갈지 고르기 / 다녀와서 감자 심기 / {다음 major 이벤트} 알림 받기) → 버튼 "별보기 지도 열기"(primary, `/map`) / "홈으로"(보조).
+
+## 15. 프로필 `/me` (MVP: 감자밭 + 설정 일부)
+
+**레이아웃**: grid `280px minmax(0,1fr)`, gap 16px. 좌 사이드바(`--card`, padding 20px 16px, `align-self: start`): 아바타 88px 가운데 / 닉네임 18px 700 / mono "{지역} · since {가입연월}" / 숫자 3개(mono 11px, 값 14px: **감자 N · 배고픔 N · 명소 N** — `specs/04` 기준: 감자 = (사용자, 명소) 수, 배고픔 = `state=hungry|sprouted`) / 1px 선 / 메뉴 3개(감자밭 `/me` · 활동 `/me/activity` · 설정 `/me/settings`; 각 행 제목 14px 600 + mono 10px 부제; 활성 = `rgba(255,255,255,.06)` 배경 + `--edge` 테두리, radius 12px) / 1px 선 / "로그아웃" 보조 버튼 전폭. ≤900px: 1열.
+
+**감자밭 `/me`**: 헤더(라벨 "MY FIELD · {N} POTATOES" + h1 24px "내 감자밭" + 우측 primary "감자 심기" → `/map`). 2열 grid:
+- 좌 "전국 감자밭"(반투명 카드, min-height 520px): 감자 있는 셀만 감자색 4톤으로 칠한 도트 지도(`MapCanvas` 재사용, 나머지 셀 `#2a3140`), 우상단 mono "4,144셀 중 **{n}** · {%}", 하단 범례 "■ 심은 셀 · ■ 아직 · 시·도 {k}/17 밟음". 데이터 `GET /api/v1/me/potatoes` → 명소 좌표 → 셀.
+- 우 "내 감자"(반투명 카드): 상단 필터 pill "전체 N" / "배고픔 N". 행 = `grid 36px minmax(0,1fr) auto`: 감자 일러스트(등급 Lv1~4, `state=hungry`는 말풍선, `sprouted`는 싹 — `specs/04` 표시 규칙) / 명소명 14px 600 + mono 날짜(마지막 방문) + 최신 후기 발췌 12px(ellipsis) / 우측 mono 11px "Lv{n} · 먹이 {m}" (hungry면 `#ff8a8a` "배고파요"). 정렬: 상태 우선(hungry·sprouted) → 최근 방문. 행 클릭 → 감자 상세(`/me/potatoes/:id`, Phase 1 후반: 먹이 목록·기록 수정·삭제·공개 여부). 하단 mono 10px 안내: "큰 천체 이벤트가 지나가도록 안 가면 감자가 배고파해요. 다시 가서 기록하면 등급이 올라요."
+- **폐기**: 이전 디자인의 "싹 = 60일 + 지수 80" 문구, 타임라인의 "싹 트는 중" 긍정 표현.
+
+**활동 `/me/activity`**: Phase 2 (후기·댓글·좋아요·응모 탭). 지금은 메뉴에 두되 `<ComingSoon section="활동" />`.
+
+**설정 `/me/settings`**: 헤더 "설정". 2열 grid.
+- 좌 "프로필" 카드(반투명): **프로필 사진**(원형 84px 미리보기 + 우하단 30px 카메라 버튼 + `input type=file accept=image/png,jpeg,webp`; 버튼 "사진 업로드"(흰 pill 32px) · "감자로 되돌리기"(보조); 안내 mono 10px "JPG · PNG · WEBP, 5 MB 이하 · 정사각형으로 잘려요 / 사진이 없으면 아래에서 고른 감자가 프로필이 돼요") → 닉네임(온보딩과 동일 + "마지막 변경 {날짜} · 다음 변경 가능 {날짜}", 30일 내면 input disabled) → 내 감자 3종(라벨 "내 감자 · 사진이 없을 때 쓰는 아바타") → 주로 보는 지역 select → 우측 정렬 "취소"/"저장"(primary). `PATCH /api/v1/me {nickname?, potatoAvatar?, homeSido?}`, 사진은 `POST /api/v1/uploads/presign` → PUT → `PATCH /api/v1/me {avatarUrl}`. 업로드는 Phase 2로 미뤄도 됨(ADR-0014); 그 경우 버튼 disabled + "곧 열려요" 툴팁.
+- 우 상단 "알림" 카드: 행(제목 14px 600 + 부제 12px + 우측 토글 40×22, 켜짐 `--lime`/`#141414` 손잡이): 유성우 극대기 / 신월·촬영 적기 / 내 감자가 배고프면 / 내 후기에 댓글(Phase 2, disabled) / 오늘 밤 지수 80 이상. MVP는 앱 내 알림함(`specs/10`)이므로 토글은 알림함 생성 여부. `PATCH /api/v1/me/notification-settings`.
+- 우 중간 "계정" 카드: 카카오 — "연결됨 · {masked}"(mono `--sprout`) / 네이버·이메일 로그인 — Phase 2(행은 두되 버튼 disabled "Phase 2") / 회원 탈퇴 — 빨강 링크 → 확인 모달("감자밭과 후기가 모두 지워져요") → `DELETE /api/v1/me` (`specs/08`: 즉시 삭제. 30일 복구는 Phase 2).
+- 우 하단 "도움말" 카드: 문의·버그 제보·기능 제안(`/feedback`, 부제 "보낸 요청 {n} · 반영됨 {m}") / 자주 묻는 질문(`/faq`, Phase 2는 ComingSoon).
+
+## 16. 문의 `/feedback` (MVP: 접수 폼 + 내 요청 목록)
+
+헤더 라벨 "HELP · FEEDBACK" + h1 24px "무엇을 도와드릴까요?". grid `minmax(0,1fr) 360px`.
+- 좌 카드(`--card`, padding 22px 24px): **유형** 4열 버튼(버그 제보 `#ff8a8a` "뭔가 안 돼요" / 기능 제안 `--lime` "이런 게 있으면" / 명소 정보 수정 `#7fb0ff` "주차·진입로가 달라요" / 기타 문의 `--fg-2` "계정 · 신고 · 제휴"; 선택 = 해당 색 테두리 + `rgba(255,255,255,.05)`; URL `?type=`로 초기값). 제목 input. 내용 textarea 7행(placeholder "버그라면: 어느 화면에서, 무엇을 눌렀을 때, 어떻게 됐는지 순서대로…"). 스크린샷 dashed 드롭존 64px, 최대 3장(presign 업로드, Phase 1 후반). 체크 박스 2개(기본 on): "진단 정보를 함께 보낼게요"(mono: 브라우저 · 화면 크기 · 마지막 페이지 · 앱 버전 — `navigator.userAgent`, `innerWidth×innerHeight`, 직전 라우트, `import.meta.env.VITE_APP_VERSION`) / "답변을 이메일로 받을게요"(로그인·이메일 있을 때만). 하단: mono "보통 2~3일 안에 답해요" + primary "보내기". `POST /api/v1/feedback {type, title, body, screenshots[], diagnostics?, replyByEmail}` → 성공 시 카드 자리에 웃는 감자 + "접수됐어요 · #{id}" + "내 요청 보기".
+- 우 레일(반투명 카드 3개, `align-self: start`): **내가 보낸 요청**(행: 제목 13px 600 + mono "{유형} · {날짜}" + 상태 칩 mono 10px 테두리: 접수 `--fg-2` / 확인 중 `#e5c33d` / 반영됨 `--sprout` / 보류 `--fg-3`; 하단 안내 "접수 → 확인 중 → 반영됨 / 보류. 반영되면 알림이 가요") `GET /api/v1/me/feedback`; **최근 반영된 요청**(정적 목록 3개 + "전체 변경 내역 →" `/changelog`, Phase 2는 링크만); 한 줄 카드 "반영된 제안을 보낸 분께는 제안 감자가 감자밭에 심겨요"(웃는 감자 36px) — 제안 감자 자체는 Phase 2, 문구만.
+- 비로그인도 보낼 수 있다(`user_id null`, 이메일 입력란 추가 노출).
+
+## 17. Phase 2 화면 (디자인 완료, **구현하지 않음**)
+
+캔버스 "대한민국 광공해 도트 지도"에 있음. AGENTS.md 규칙대로 MVP 제외 기능은 만들지 않는다. 라우트는 `<ComingSoon />`로 받는다.
+- `/login` 네이버 버튼 · 이메일/비밀번호 폼, `/signup`(이메일 인증코드 → 비밀번호 → 온보딩 합류), `/reset-password` — ADR-0014
+- `/community` 피드(글 종류 5: 후기·질문·모임·사진 응모·잡담, 명소 태그+오늘 밤 지수 칩, 투표, 우주 뉴스 레일), `/community/:id` 상세+댓글, `/community/write`, `/community/:id/edit`(저장 시 "(수정됨)"), 삭제 확인 모달(30일 소프트 삭제) — specs/06
+- `/market` 목록(카테고리·필터·3열 카드·안전 거래 띠), `/market/:id` 상세(채팅 연결, 판매자 감자 활동) — specs/07
+- `/me/activity` 활동 탭, 프로필 사진 업로드, 계정 연결(네이버·이메일), 탈퇴 30일 복구, 제안 감자

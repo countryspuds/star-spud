@@ -111,3 +111,9 @@
   line-height: 1.35;
   word-break: keep-all;
 }
+
+/* ── Avatar ────────────────────── */
+.avatarPhoto {
+  border-radius: 50%;
+  object-fit: cover;
+}
