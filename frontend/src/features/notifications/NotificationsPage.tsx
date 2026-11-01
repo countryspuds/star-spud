@@ -99,8 +99,9 @@ function Inbox() {
 function Gate() {
   const me = useMe();
   const { pathname } = useLocation();
-  // 비로그인은 로그인으로. 온보딩 전은 OnboardingGuard가 /onboarding으로 보낸다
+  // 비로그인은 로그인으로. 온보딩 전은 OnboardingGuard가 막지만, 화면 진입부에서도 한 번 더 확인한다
   if (!me) return <Navigate to={`/login?next=${encodeURIComponent(pathname)}`} replace />;
+  if (me.nickname === null) return <Navigate to="/onboarding" replace />;
   return <Inbox />;
 }
 
