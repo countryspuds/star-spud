@@ -1,13 +1,14 @@
-import { Suspense, use, useState } from "react";
+import { Suspense, useState } from "react";
 import { Navigate, NavLink, Outlet, useLocation } from "react-router-dom";
 import { logout, type Me } from "../../data/auth";
-import { getMyPotatoes, isNeglected } from "../../data/potatoes";
+import { isNeglected } from "../../data/potatoes";
 import { SIDO, isSidoCode } from "../../data/regions";
 import { Avatar } from "../../components/ui/Avatar";
 import { Card } from "../../components/ui/Card";
 import { ExampleCaption } from "../../components/ui/Label";
 import { PillButton } from "../../components/ui/Pill";
 import { useMe } from "../auth/useMe";
+import { useMyPotatoes } from "../potato/useMyPotatoes";
 import styles from "./profile.module.css";
 
 const MENU = [
@@ -21,7 +22,7 @@ const sinceOf = (iso: string) => iso.slice(0, 7).replace("-", ".");
 
 /** 감자 N · 배고픔 N · 명소 N — specs/04: 감자 = (사용자, 명소) 수, 배고픔 = hungry|sprouted */
 function Stats() {
-  const potatoes = use(getMyPotatoes());
+  const potatoes = useMyPotatoes();
   const spots = new Set(potatoes.map((p) => p.spot.id)).size;
   const items = [
     ["감자", potatoes.length],

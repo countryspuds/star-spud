@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { PotatoIllust } from "../../components/potato/PotatoIllust";
 import { Card } from "../../components/ui/Card";
 import { ExampleCaption, Label } from "../../components/ui/Label";
@@ -56,16 +57,19 @@ export function PotatoList({ potatoes }: { potatoes: Potato[] }) {
       ) : (
         <ul className={styles.rows}>
           {shown.map((p) => (
-            <li key={p.id} className={styles.row}>
-              <PotatoIllust level={p.level} state={p.state} />
-              <div className={styles.rowText}>
-                <span className={styles.spotName}>{p.spot.name}</span>
-                <span className={styles.date}>
-                  {fmtDate(p.lastVisitedOn)} · Lv{p.level}
-                </span>
-                <span className={styles.review}>{p.latestReview}</span>
-              </div>
-              <RightLabel potato={p} />
+            <li key={p.id}>
+              {/* 행 클릭 → 감자 상세 (명세 §15·§18.3) */}
+              <Link to={`/me/potatoes/${p.id}`} className={styles.row}>
+                <PotatoIllust level={p.level} state={p.state} />
+                <div className={styles.rowText}>
+                  <span className={styles.spotName}>{p.spot.name}</span>
+                  <span className={styles.date}>
+                    {fmtDate(p.lastVisitedOn)} · Lv{p.level}
+                  </span>
+                  <span className={styles.review}>{p.latestReview}</span>
+                </div>
+                <RightLabel potato={p} />
+              </Link>
             </li>
           ))}
         </ul>

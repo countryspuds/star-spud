@@ -17,6 +17,30 @@ const partsFmt = new Intl.DateTimeFormat("ko-KR", {
 
 export const toMs = (iso: string) => Date.parse(iso);
 
+const ymdFmt = new Intl.DateTimeFormat("en-CA", {
+  timeZone: TZ,
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+});
+
+/** 오늘 날짜 "YYYY-MM-DD" (KST) */
+export function todayYmd(now: Date = new Date()): string {
+  return ymdFmt.format(now);
+}
+
+/** "YYYY-MM-DD"에 n일 더한 날짜 */
+export function addDays(ymd: string, n: number): string {
+  return ymdFmt.format(new Date(Date.parse(`${ymd}T12:00:00+09:00`) + n * 86_400_000));
+}
+
+/** 두 날짜(YYYY-MM-DD) 차이 — b − a (일) */
+export function diffDays(a: string, b: string): number {
+  return Math.round(
+    (Date.parse(`${b}T12:00:00+09:00`) - Date.parse(`${a}T12:00:00+09:00`)) / 86_400_000,
+  );
+}
+
 /** "21:12" */
 export function fmtHM(t: string | number): string {
   return hmFmt.format(typeof t === "string" ? toMs(t) : t);
