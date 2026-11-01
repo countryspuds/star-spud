@@ -22,3 +22,9 @@ export const communityRoutes: RouteObject[] = [
     element: lazyPage(() => import("../features/community/PostEditorPage")),
   },
 ];
+
+/** 장터 (specs/07) — 목록 · 상품 상세. 판매 등록·채팅은 뒤 Phase */
+export const marketRoutes: RouteObject[] = [
+  { path: "market", element: lazyPage(() => import("../features/market/MarketPage")) },
+  { path: "market/:id", element: lazyPage(() => import("../features/market/ListingPage")) },
+];

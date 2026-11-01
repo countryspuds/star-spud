@@ -16,7 +16,7 @@ import { PlantPage } from "../features/potato/PlantPage";
 import { PotatoDetailPage } from "../features/potato/PotatoDetailPage";
 import { NotificationsPage } from "../features/notifications/NotificationsPage";
 import { PHASE2 } from "../lib/phase2";
-import { communityRoutes } from "./phase2Routes";
+import { communityRoutes, marketRoutes } from "./phase2Routes";
 
 export const router = createBrowserRouter([
   {
@@ -53,7 +53,7 @@ export const router = createBrowserRouter([
       ...(PHASE2
         ? communityRoutes
         : [{ path: "community", element: <ComingSoon section="커뮤니티" /> }]),
-      { path: "market", element: <ComingSoon section="장터" /> },
+      ...(PHASE2 ? marketRoutes : [{ path: "market", element: <ComingSoon section="장터" /> }]),
       { path: "me/activity", element: <ComingSoon section="활동" /> },
       { path: "faq", element: <ComingSoon section="자주 묻는 질문" /> },
       // 정책 문서 — 문안이 정해지면 페이지로 교체 (specs/08 미결)

@@ -577,3 +577,66 @@ export interface CommunityRail {
   /** 오늘 밤 달 한 줄 */
   moon: { illum: number; waxing: boolean; line: string };
 }
+
+/* ── 장터 (Phase 2 · specs/07 장비 카테고리) ───────────────────────── */
+
+/** 장비 카테고리 7 — specs/07 `gear.category`에서 app(천체 앱)은 중고 거래 대상이 아니라 뺐다 */
+export type GearCategory =
+  "binoculars" | "telescope" | "mount" | "camera" | "lens" | "tripod" | "accessory";
+
+/** 상품 상태 */
+export type ListingCondition = "new" | "like_new" | "good" | "used";
+/** 거래 방식 */
+export type TradeMethod = "meet" | "delivery" | "both";
+/** 판매 상태 — 서버 값 */
+export type ListingStatus = "selling" | "reserved" | "sold";
+/** 가격 밴드 필터 — specs/07 `price_band` (만원) */
+export type PriceBand = "under_10" | "10_30" | "30_100" | "over_100";
+
+/** 장터 목록 한 칸 — `GET /api/v1/market/listings` */
+export interface MarketListing {
+  id: string;
+  title: string;
+  /** 원 */
+  price: number;
+  category: GearCategory;
+  condition: ListingCondition;
+  /** 시·도 코드 */
+  sido: string;
+  trade: TradeMethod;
+  status: ListingStatus;
+  createdAt: string;
+  likeCount: number;
+  likedByMe: boolean;
+  viewCount: number;
+  /** 사진 수 (최대 10). 이미지 자체는 Phase 2 백엔드 — 지금은 카테고리 아이콘 자리 */
+  photoCount: number;
+}
+
+export interface MarketSeller {
+  id: string;
+  nickname: string;
+  avatarUrl: string | null;
+  potatoAvatar: PotatoAvatar;
+  potatoCount: number;
+  reviewCount: number;
+  tradeCount: number;
+}
+
+/** 상품 상세 — `GET /api/v1/market/listings/{id}` */
+export interface MarketListingDetail extends MarketListing {
+  description: string;
+  /** 구성품 한 줄 */
+  includes: string;
+  seller: MarketSeller;
+}
+
+/** 목록 필터 — 쿼리 파라미터 그대로 */
+export interface MarketFilter {
+  q: string;
+  category: GearCategory | null;
+  sido: string | null;
+  price: PriceBand | null;
+  trade: "meet" | "delivery" | null;
+  sellingOnly: boolean;
+}
