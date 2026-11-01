@@ -1,10 +1,13 @@
 import type { ReactNode } from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, matchPath, useLocation } from "react-router-dom";
 import { useMe } from "./useMe";
 
-/** 온보딩을 마쳐야 들어갈 수 있는 곳 — 프로필(감자밭·설정·감자 상세)·알림함·감자 심기/먹이 주기 */
-const REQUIRES_ONBOARDING = ["/me", "/notifications"];
-const REQUIRES_ONBOARDING_RE = [/^\/spots\/[^/]+\/plant$/];
+/**
+ * 온보딩을 마쳐야 들어갈 수 있는 곳 — 프로필(감자밭·설정·감자 상세)·알림함·감자 심기/먹이 주기.
+ * 라우터와 같은 `matchPath`로 비교한다 — 대소문자(`/NOTIFICATIONS`)와 끝의 "/"(`/me/`)를 라우터가 받아들이는
+ * 그대로 받아들여, 문자열 비교로는 새는 주소가 없게 한다.
+ */
+const REQUIRES_ONBOARDING = ["/me/*", "/notifications/*", "/spots/:id/plant"];
 
 /**
  * 라우트 가드 — specs/08: 첫 로그인(`nickname IS NULL`) 사용자는 둘러보기(홈·지도·캘린더 등)는 되지만
@@ -12,12 +15,8 @@ const REQUIRES_ONBOARDING_RE = [/^\/spots\/[^/]+\/plant$/];
  */
 export function OnboardingGuard({ children }: { children: ReactNode }) {
   const me = useMe();
-  const { pathname: rawPath } = useLocation();
-  // 라우터는 끝의 "/"를 허용하므로(`/spots/x/plant/`) 가드도 같은 주소로 보고 떼어낸 뒤 비교한다
-  const pathname = rawPath.length > 1 ? rawPath.replace(/\/+$/, "") : rawPath;
-  const needsOnboarding =
-    REQUIRES_ONBOARDING.some((p) => pathname === p || pathname.startsWith(`${p}/`)) ||
-    REQUIRES_ONBOARDING_RE.some((re) => re.test(pathname));
+  const { pathname } = useLocation();
+  const needsOnboarding = REQUIRES_ONBOARDING.some((pattern) => matchPath(pattern, pathname));
   if (me && me.nickname === null && needsOnboarding) {
     return <Navigate to="/onboarding" replace />;
   }
