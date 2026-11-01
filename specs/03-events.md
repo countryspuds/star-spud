@@ -1,6 +1,6 @@
 # 03. 천체 이벤트
 
-- Phase: **MVP는 데이터 + 캘린더 뷰 + KASI 연동**([ADR-0013](../docs/ADR/0013-calendar-in-mvp.md), [12 캘린더](./12-calendar.md)). 극대기 전날 알림(전역 on/off)은 MVP([10 알림](./10-notifications.md)), 이벤트별 알림 시점 선택은 Phase 2. 별도 `/events` 목록 화면은 만들지 않고 캘린더 하단 리스트가 대신한다.
+- Phase: **MVP는 데이터 + 캘린더 뷰 + KASI 연동**([ADR-0013](../docs/ADR/0013-calendar-in-mvp.md), [12 캘린더](./12-calendar.md)). 유성우 극대기 전날 알림(전역 on/off)은 MVP([10 알림](./10-notifications.md)), 유성우 외 이벤트 알림과 이벤트별 시점 선택은 Phase 2. 별도 `/events` 목록 화면은 만들지 않고 캘린더 하단 리스트가 대신한다.
 - 관련: [04 감자](./04-potato.md)(방치 판정에 사용) · [10 알림](./10-notifications.md) · [02 관측 조건](./02-observing-conditions.md)
 
 ## 목적
