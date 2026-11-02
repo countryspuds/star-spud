@@ -32,7 +32,7 @@ export function PlantCta({ spot }: { spot: SpotDetail }) {
   if (me.nickname === null) {
     return (
       <PillLink to="/onboarding" size="lg" className={styles.cta}>
-        온보딩 마치고 감자 심기
+        가입 마치고 감자 심기
       </PillLink>
     );
   }

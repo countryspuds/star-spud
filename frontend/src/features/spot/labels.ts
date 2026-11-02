@@ -10,8 +10,8 @@ import type {
 export const CONDITION: Record<Condition, { label: string; color: string }> = {
   good: { label: "좋음", color: "var(--sprout)" },
   fair: { label: "보통", color: "#e5c33d" },
-  bad: { label: "나쁨", color: "var(--fg-3)" },
-  unknown: { label: "정보 없음", color: "var(--fg-3)" },
+  bad: { label: "나쁨", color: "var(--fg-2)" },
+  unknown: { label: "정보 없음", color: "var(--fg-2)" },
 };
 
 export const SPOT_TYPE: Record<SpotType, string> = {

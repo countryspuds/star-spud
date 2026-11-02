@@ -10,7 +10,7 @@ export function NaverMap({ mapType, scale }: { mapType: "weather" | "terrain"; s
   return (
     <img
       src={getLayerSrc(mapType, scale)}
-      alt={mapType === "weather" ? "날씨 지도 자리표시 이미지" : "지형고도 지도 자리표시 이미지"}
+      alt={mapType === "weather" ? "날씨 지도 예시 이미지" : "지형고도 지도 예시 이미지"}
       width={1056}
       height={976}
       draggable={false}

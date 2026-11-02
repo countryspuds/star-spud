@@ -376,7 +376,7 @@ function Editor({ mode, initial, postId, draft }: EditorProps) {
             </label>
           </div>
           <p className={authStyles.helpLine}>
-            야간·산간 활동은 위험할 수 있어요. 서비스는 만남을 중개하지 않아요 (specs/06 안전 고지).
+            야간·산간 활동은 위험할 수 있어요. 서비스는 만남을 중개하지 않아요.
           </p>
         </fieldset>
       )}
@@ -455,7 +455,7 @@ function Editor({ mode, initial, postId, draft }: EditorProps) {
           aria-describedby="post-body-help"
         />
         <div className={authStyles.help} id="post-body-help">
-          <span>외부 링크는 nofollow로 표시돼요</span>
+          <span>외부 링크는 검색 순위에 반영되지 않아요</span>
           <span className="tabular">
             {bodyLen.toLocaleString()}/{BODY_MAX.toLocaleString()}
           </span>
@@ -484,9 +484,7 @@ function Editor({ mode, initial, postId, draft }: EditorProps) {
           >
             {photos.length >= PHOTO_MAX ? `${PHOTO_MAX}장 다 골랐어요` : "사진 고르기"}
           </PillButton>
-          <span className={authStyles.helpLine}>
-            JPG · PNG · WEBP. 업로드는 아직 연결 전이라 미리보기만 돼요 (presign TODO)
-          </span>
+          <span className={authStyles.helpLine}>JPG · PNG · WEBP. 지금은 미리보기만 돼요.</span>
         </div>
         {photos.length > 0 && (
           <ul className={styles.previews}>
@@ -608,7 +606,7 @@ function EditGate({ id }: { id: string }) {
       <Card className={styles.notFound}>
         <img src={potatoSad} alt="" width={96} height={96} className="pixelated" />
         <Label>NOT FOUND</Label>
-        <h1 className={styles.h1}>글이 없어요</h1>
+        <h1 className={styles.h1}>이 글은 찾을 수 없어요</h1>
         <PillLink to="/community" tone="primary">
           피드로 가기
         </PillLink>

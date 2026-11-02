@@ -62,7 +62,7 @@ export function Rail() {
       <Card variant="glass" className={styles.railCard}>
         <div className={styles.railHead}>
           <Label>SPACE NEWS · 우주 뉴스</Label>
-          <span className={styles.railNote}>RSS 자리</span>
+          <span className={styles.railNote}>예시 데이터</span>
         </div>
         <ul className={styles.railList}>
           {rail.news.map((n) => (

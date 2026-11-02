@@ -29,7 +29,7 @@ export function Home() {
       </div>
       <EventRow />
       <p className={styles.footnote}>
-        날짜·지수·관측값은 모두 예시 데이터이며 실제 관측값이 아닙니다.
+        날짜·지수·관측값은 모두 예시 데이터예요. 실제 관측값이 아니에요.
       </p>
     </Suspense>
   );

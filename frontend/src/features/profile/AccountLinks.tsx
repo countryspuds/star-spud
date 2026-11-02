@@ -131,7 +131,7 @@ export default function AccountLinks() {
         </span>
       )}
       <span className={styles.soon}>
-        연결 해제는 뒤 Phase · 한 계정에 여러 로그인 수단 (ADR-0014)
+        한 계정에 로그인 수단을 여러 개 연결할 수 있어요. 연결 해제는 곧 열려요.
       </span>
     </>
   );

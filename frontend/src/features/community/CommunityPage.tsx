@@ -77,7 +77,7 @@ export default function CommunityPage() {
       <div className={styles.column}>
         <header className={styles.head}>
           <div>
-            <Label>COMMUNITY · PHASE 2</Label>
+            <Label>COMMUNITY</Label>
             <h1 className={styles.h1}>커뮤니티</h1>
           </div>
           <ExampleCaption />

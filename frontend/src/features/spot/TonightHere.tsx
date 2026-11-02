@@ -1,4 +1,4 @@
-import { Suspense, use, useState, useTransition } from "react";
+import { Suspense, use, useId, useRef, useState, useTransition, type KeyboardEvent } from "react";
 import { MoonIcon } from "../../components/gauge/MoonIcon";
 import { NightGauge } from "../../components/gauge/NightGauge";
 import { Card } from "../../components/ui/Card";
@@ -36,7 +36,7 @@ function NightBlock({ id, date }: { id: string; date: string }) {
         <Tile
           label="구름량"
           value={n.cloudPct == null ? "—" : `${n.cloudPct}%`}
-          sub={n.cloudPct == null ? "예보 없음" : "관측 창 평균"}
+          sub={n.cloudPct == null ? "예보 없음" : "밤 시간대 평균"}
         />
         <Tile
           label="달"
@@ -85,20 +85,48 @@ export function TonightHere({ spot, dates }: { spot: SpotDetail; dates: readonly
   const [tab, setTab] = useState(0);
   // 탭 전환은 새 날짜의 Promise를 기다리는 동안 이전 내용을 그대로 두는 transition
   const [pending, startTransition] = useTransition();
+  const baseId = useId();
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  const select = (i: number) => startTransition(() => setTab(i));
+
+  // 탭 키보드 패턴: 좌우 화살표·Home·End로 이동
+  const onTabKey = (e: KeyboardEvent) => {
+    const count = TAB_LABELS.length;
+    const next = {
+      ArrowRight: (tab + 1) % count,
+      ArrowLeft: (tab + count - 1) % count,
+      Home: 0,
+      End: count - 1,
+    }[e.key];
+    if (next === undefined) return;
+    e.preventDefault();
+    select(next);
+    tabRefs.current[next]?.focus();
+  };
 
   return (
     <Card variant="glass" className={styles.tonight}>
       <div className={styles.tonightHead}>
-        <Label>오늘 밤 이곳</Label>
+        <h2 className={styles.cardHeading}>
+          <Label>{TAB_LABELS[tab]} 밤 이곳</Label>
+        </h2>
         <div className={styles.tabs} role="tablist" aria-label="날짜">
           {TAB_LABELS.map((label, i) => (
             <button
               key={label}
+              ref={(el) => {
+                tabRefs.current[i] = el;
+              }}
+              id={`${baseId}-tab-${i}`}
               type="button"
               role="tab"
               aria-selected={tab === i}
+              aria-controls={`${baseId}-panel`}
+              tabIndex={tab === i ? 0 : -1}
               className={tab === i ? styles.tabOn : styles.tab}
-              onClick={() => startTransition(() => setTab(i))}
+              onClick={() => select(i)}
+              onKeyDown={onTabKey}
             >
               {label}
               <span className={styles.tabDate}>{fmtMD(dates[i])}</span>
@@ -107,7 +135,13 @@ export function TonightHere({ spot, dates }: { spot: SpotDetail; dates: readonly
         </div>
       </div>
 
-      <div className={styles.night} data-pending={pending}>
+      <div
+        id={`${baseId}-panel`}
+        role="tabpanel"
+        aria-labelledby={`${baseId}-tab-${tab}`}
+        className={styles.night}
+        data-pending={pending}
+      >
         <Suspense fallback={null}>
           <NightBlock id={spot.id} date={dates[tab]} />
         </Suspense>
@@ -115,7 +149,7 @@ export function TonightHere({ spot, dates }: { spot: SpotDetail; dates: readonly
 
       <div className={styles.actions}>
         <RouteButton spot={spot} />
-        <PillButton disabled title="Phase 2에 열려요" aria-disabled="true">
+        <PillButton disabled title="곧 열려요" aria-disabled="true">
           명소 저장
         </PillButton>
       </div>

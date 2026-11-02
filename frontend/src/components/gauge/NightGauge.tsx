@@ -109,7 +109,11 @@ export function NightGauge({ times, place, compact = false }: Props) {
 
   if (compact) {
     return (
-      <div className={styles.compact} role="img" aria-label={answer}>
+      <div
+        className={styles.compact}
+        role="img"
+        aria-label={dark ? answer : "이 밤은 달 없는 어두운 시간이 없어요"}
+      >
         <div className={styles.track}>
           {ticksRow}
           {bar}

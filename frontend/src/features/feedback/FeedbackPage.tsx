@@ -301,7 +301,7 @@ function FeedbackForm({ onDone }: { onDone: (id: string) => void }) {
               />
               {emailInvalid && (
                 <span id="fb-email-error" className={styles.error} role="alert">
-                  이메일 형식이 아니에요
+                  이메일 형식을 확인해 주세요
                 </span>
               )}
             </div>

@@ -191,7 +191,7 @@ function CalendarBody({ year, month }: { year: number; month: number }) {
             <h2 className={styles.panelTitle}>이번 달 천문현상</h2>
             <span className={styles.panelMeta}>
               <Label>{events.length} EVENTS</Label>
-              <PillButton size="sm" disabled title="Phase 2에서 제공">
+              <PillButton size="sm" disabled title="곧 열려요">
                 알림 설정
               </PillButton>
             </span>
@@ -289,7 +289,7 @@ export function CalendarPage() {
           </p>
         )}
       >
-        <Suspense fallback={<p className={styles.caption}>불러오는 중…</p>}>
+        <Suspense fallback={<p className={styles.caption}>캘린더를 불러오는 중…</p>}>
           <CalendarBody year={year} month={month} />
         </Suspense>
       </ErrorBoundary>

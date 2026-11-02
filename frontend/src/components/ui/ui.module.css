@@ -89,6 +89,7 @@
   padding: 10px 12px;
   border-radius: 14px;
   background: #fff;
+  color: var(--light-fg); /* 면이 항상 흰색이므로 글자색도 타일이 정한다 */
 }
 
 .tileLabel {

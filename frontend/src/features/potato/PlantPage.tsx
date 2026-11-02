@@ -35,7 +35,7 @@ const ERROR_TEXT: Record<string, string> = {
   VISIT_DATE_INVALID: "방문일을 골라 주세요",
   REVIEW_LENGTH: "후기는 2~2000자로 적어 주세요",
   TOO_MANY_PHOTOS: "사진은 5장까지예요",
-  SPOT_NOT_FOUND: "명소를 찾을 수 없어요",
+  SPOT_NOT_FOUND: "감자가 이 명소를 찾지 못했어요. 지도에서 다시 골라 주세요",
 };
 
 interface Photo {
@@ -145,7 +145,12 @@ function PlantForm({
     : `${spot.name}에 감자 심기`;
   const duplicate = error === "FEED_ALREADY_EXISTS";
   const footError =
-    error && !duplicate ? (ERROR_TEXT[error] ?? "저장하지 못했어요. 다시 시도해 주세요") : null;
+    error && !duplicate
+      ? (ERROR_TEXT[error] ??
+        (feeding
+          ? "먹이가 감자에게 닿지 않았어요. 다시 시도해 주세요"
+          : "감자를 심지 못했어요. 다시 시도해 주세요"))
+      : null;
 
   return (
     <Card className={styles.plant}>
@@ -184,7 +189,7 @@ function PlantForm({
             <span id="plant-date-error" className={styles.error} role="alert">
               {duplicate ? (
                 <>
-                  그날 기록이 이미 있어요 →{" "}
+                  그날은 이미 먹이를 줬어요 →{" "}
                   <Link to={`/me/potatoes/${mine?.id ?? ""}`} className={styles.errorLink}>
                     수정하기
                   </Link>
@@ -311,7 +316,13 @@ function PlantForm({
           <div className={styles.formBtns}>
             <PillLink to={`/spots/${spot.id}`}>취소</PillLink>
             <PillButton type="submit" tone="primary" disabled={!canSubmit}>
-              {submitting ? "저장하는 중…" : feeding ? "먹이 주기" : "감자 심기"}
+              {submitting
+                ? feeding
+                  ? "먹이 주는 중…"
+                  : "감자 심는 중…"
+                : feeding
+                  ? "먹이 주기"
+                  : "감자 심기"}
             </PillButton>
           </div>
         </div>
@@ -372,7 +383,7 @@ function PlantBody({ spotId }: { spotId: string }) {
   if (!spot) {
     return (
       <Card className={`${styles.plant} ${styles.success}`}>
-        <h1 className={styles.h1}>이 명소는 찾을 수 없어요</h1>
+        <h1 className={styles.h1}>감자가 이 명소를 찾지 못했어요</h1>
         <PillLink to="/map" tone="primary">
           지도로 가기
         </PillLink>

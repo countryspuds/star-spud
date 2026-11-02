@@ -14,7 +14,12 @@ import styles from "./profile.module.css";
 
 const MENU = [
   { to: "/me", label: "감자밭", sub: "MY FIELD", end: true },
-  { to: "/me/activity", label: "활동", sub: PHASE2 ? "REVIEWS · LIKES" : "PHASE 2", end: false },
+  {
+    to: "/me/activity",
+    label: "활동",
+    sub: PHASE2 ? "REVIEWS · LIKES" : "COMING SOON",
+    end: false,
+  },
   { to: "/me/settings", label: "설정", sub: "PROFILE · ALERTS", end: false },
 ];
 

@@ -186,14 +186,38 @@
 
 /* ── 소형 (명소 상세 §18.1, 높이 약 60px): 눈금 + 바 + 달 라벨만 ── */
 .compact {
-  overflow-x: auto;
+  container-type: inline-size;
   margin: 0 -4px;
   padding: 0 4px;
 }
 
-/* 좁은 카드(모바일)에서는 눈금 라벨이 겹치지 않게 가로 스크롤 — 큰 게이지와 같은 방식 */
+/* 좁은 카드: 가로 스크롤 없이 폭에 맞춘다. 박명 라벨은 바로 위 타일에 같은 값이 있어 숨기고,
+   달 라벨은 서로 겹치지 않게 양끝으로 보낸다 */
+@container (max-width: 479px) {
+  /* ticks 순서: 일몰 · 박명 끝 · 박명 시작 · 일출 */
+  .compact .tick:nth-child(2) .tickLabel,
+  .compact .tick:nth-child(3) .tickLabel {
+    display: none;
+  }
+
+  .compact .below {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .compact .moonLabel {
+    position: static;
+    transform: none !important; /* 넓은 폭의 위치 지정은 인라인 스타일이다 */
+  }
+
+  .compact .moonLabel:last-child {
+    margin-left: auto;
+  }
+}
+
 .compact .track {
-  min-width: 480px;
+  min-width: 0;
 }
 
 .compact .ticks {

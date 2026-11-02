@@ -43,7 +43,7 @@ const LEGENDS: Record<MapTab, { title: string; items: Item[]; note?: string; exa
         { color: "var(--aq-worst)", label: "매우 나쁨", shape: "circle" },
         { color: "var(--aq-good)", label: "비", shape: "hatch" },
       ],
-      note: "실제 지도 SDK 연동 전 자리표시 이미지",
+      note: "실제 지도를 연결하기 전 예시 이미지예요",
     },
     terrain: {
       title: "지형 · 해발고도",
@@ -53,18 +53,18 @@ const LEGENDS: Record<MapTab, { title: string; items: Item[]; note?: string; exa
         { color: "#bcae96", label: "300–700 m" },
         { color: "#968b78", label: "700 m+" },
       ],
-      note: "네이버 지형도 연동 전 자리표시 이미지",
+      note: "실제 지형도를 연결하기 전 예시 이미지예요",
       example: true,
     },
     field: {
       title: "내 감자밭 · 심은 뒤 경과",
       items: [
         { color: "var(--potato-1)", label: "갓 심음" },
-        { color: "var(--potato-2)", label: "싹 틈" },
+        { color: "var(--potato-2)", label: "뿌리 내림" },
         { color: "var(--potato-3)", label: "자라는 중" },
         { color: "var(--potato-4)", label: "다 자람" },
       ],
-      note: "감자색 = 내가 심은 5 km 셀. 오래될수록 진해져요",
+      note: "감자색은 내가 심은 5 km 칸이에요. 오래될수록 진해져요",
       example: true,
     },
   };

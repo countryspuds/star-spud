@@ -24,7 +24,7 @@ const fmtDate = (ymd: string) => ymd.replaceAll("-", ".");
 const FOLD_LENGTH = 90;
 
 const EDIT_ERROR: Record<string, string> = {
-  FEED_ALREADY_EXISTS: "그날 기록이 이미 있어요",
+  FEED_ALREADY_EXISTS: "그날은 이미 먹이를 줬어요. 다른 날짜를 골라 주세요",
   VISIT_DATE_IN_FUTURE: "방문일은 오늘까지만 고를 수 있어요",
   VISIT_DATE_TOO_OLD: "2000년 1월 1일 이후만 기록할 수 있어요",
   VISIT_DATE_INVALID: "방문일을 골라 주세요",
@@ -77,7 +77,7 @@ function FeedEditor({ feed, onClose }: { feed: Feed; onClose: () => void }) {
         <span className={styles.hint}>방문일을 바꾸면 먹이 종류가 다시 정해져요</span>
         {error && (
           <span className={styles.error} role="alert">
-            {EDIT_ERROR[error] ?? "저장하지 못했어요"}
+            {EDIT_ERROR[error] ?? "먹이 기록을 고치지 못했어요. 다시 시도해 주세요"}
           </span>
         )}
         <div className={styles.editorBtns}>
@@ -160,7 +160,7 @@ function DetailBody({ id }: { id: string }) {
     return (
       <Card className={styles.notFound}>
         <img src={potatoSad} alt="" width={96} height={96} className="pixelated" />
-        <h1 className={styles.h1}>이 감자는 찾을 수 없어요</h1>
+        <h1 className={styles.h1}>이 감자를 밭에서 찾지 못했어요</h1>
         <PillLink to="/me" tone="primary">
           내 감자밭으로
         </PillLink>

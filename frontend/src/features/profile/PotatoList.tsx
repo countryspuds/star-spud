@@ -53,7 +53,11 @@ export function PotatoList({ potatoes }: { potatoes: Potato[] }) {
       </div>
 
       {shown.length === 0 ? (
-        <p className={styles.empty}>배고픈 감자가 없어요. 잘 돌보고 있네요.</p>
+        <p className={styles.empty}>
+          {potatoes.length === 0
+            ? "아직 심은 감자가 없어요. 다녀온 명소에 첫 감자를 심어 보세요."
+            : "배고픈 감자가 없어요. 잘 돌보고 있네요."}
+        </p>
       ) : (
         <ul className={styles.rows}>
           {shown.map((p) => (
