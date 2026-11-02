@@ -15,7 +15,7 @@ export function SpotList({ sido, sigungu }: { sido?: string; sigungu?: string })
         <ExampleCaption />
       </div>
       {spots.length === 0 ? (
-        <p className={styles.empty}>이 지역 명소는 아직 없어요.</p>
+        <p className={styles.empty}>이 지역엔 아직 감자 심을 명소가 없어요.</p>
       ) : (
         <ul className={styles.spots}>
           {spots.map((s) => (

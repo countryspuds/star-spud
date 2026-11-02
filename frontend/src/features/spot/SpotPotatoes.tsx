@@ -1,4 +1,4 @@
-import { use, useState, type FormEvent } from "react";
+import { use, useEffect, useRef, useState, type FormEvent, type MouseEvent } from "react";
 import { PotatoIllust } from "../../components/potato/PotatoIllust";
 import { Card } from "../../components/ui/Card";
 import { ExampleCaption, Label } from "../../components/ui/Label";
@@ -17,11 +17,28 @@ import styles from "./spot.module.css";
 const fmtDate = (ymd: string) => ymd.replaceAll("-", ".");
 
 /* ── 신고 모달 ───────────────────────── */
-type ReportState = "idle" | "sending" | "done" | "duplicate";
+type ReportState = "idle" | "sending" | "done" | "duplicate" | "error";
 
 function ReportModal({ spotId, onClose }: { spotId: string; onClose: () => void }) {
   const [reason, setReason] = useState<SpotReportReason>("wrong_location");
   const [state, setState] = useState<ReportState>("idle");
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  // 네이티브 모달: 상위 카드의 backdrop-filter에 갇히지 않고, 포커스 가두기와 Esc를 브라우저가 맡는다
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    const opener = document.activeElement;
+    dialog.showModal();
+    return () => {
+      dialog.close();
+      if (opener instanceof HTMLElement) opener.focus();
+    };
+  }, []);
+
+  const onBackdropClick = (e: MouseEvent<HTMLDialogElement>) => {
+    if (e.target === e.currentTarget) onClose();
+  };
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -32,20 +49,20 @@ function ReportModal({ spotId, onClose }: { spotId: string; onClose: () => void 
     } catch (err) {
       // specs/01: 사용자당 명소당 1건 — 재시도는 409
       setState(
-        err instanceof Error && err.message === "REPORT_ALREADY_EXISTS" ? "duplicate" : "idle",
+        err instanceof Error && err.message === "REPORT_ALREADY_EXISTS" ? "duplicate" : "error",
       );
     }
   };
 
   return (
-    <div className={styles.modalBackdrop} role="presentation" onClick={onClose}>
-      <div
-        className={styles.modal}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="report-title"
-        onClick={(e) => e.stopPropagation()}
-      >
+    <dialog
+      ref={dialogRef}
+      className={styles.modal}
+      aria-labelledby="report-title"
+      onCancel={onClose}
+      onClick={onBackdropClick}
+    >
+      <div className={styles.modalInner}>
         <h2 id="report-title" className={styles.modalTitle}>
           명소 신고
         </h2>
@@ -57,7 +74,7 @@ function ReportModal({ spotId, onClose }: { spotId: string; onClose: () => void 
                 : "이미 신고한 명소예요. 확인 중이니 조금만 기다려 주세요."}
             </p>
             <div className={styles.modalActions}>
-              <PillButton tone="primary" onClick={onClose}>
+              <PillButton tone="primary" onClick={onClose} autoFocus>
                 닫기
               </PillButton>
             </div>
@@ -67,7 +84,7 @@ function ReportModal({ spotId, onClose }: { spotId: string; onClose: () => void 
             <p className={styles.modalBody}>어떤 점이 잘못됐나요?</p>
             <div className={styles.reasons} role="radiogroup" aria-label="신고 사유">
               {REPORT_REASONS.map((r) => (
-                <label key={r.reason} className={styles.reason}>
+                <label key={r.reason} className={styles.reasonOption}>
                   <input
                     type="radio"
                     name="reason"
@@ -79,6 +96,11 @@ function ReportModal({ spotId, onClose }: { spotId: string; onClose: () => void 
                 </label>
               ))}
             </div>
+            {state === "error" && (
+              <p className={styles.formError} role="alert">
+                신고를 보내지 못했어요. 다시 시도해 주세요.
+              </p>
+            )}
             <div className={styles.modalActions}>
               <PillButton onClick={onClose}>취소</PillButton>
               <PillButton type="submit" tone="primary" disabled={state === "sending"}>
@@ -88,7 +110,7 @@ function ReportModal({ spotId, onClose }: { spotId: string; onClose: () => void 
           </form>
         )}
       </div>
-    </div>
+    </dialog>
   );
 }
 
@@ -109,14 +131,18 @@ export function SpotPotatoes({ spot }: { spot: SpotDetail }) {
   const items = pages.flatMap((p) => p.items);
   const nextCursor = pages[pages.length - 1].nextCursor;
   const [loadingMore, setLoadingMore] = useState(false);
+  const [moreFailed, setMoreFailed] = useState(false);
   const [reporting, setReporting] = useState(false);
 
   const loadMore = async () => {
     if (!nextCursor || loadingMore) return;
     setLoadingMore(true);
+    setMoreFailed(false);
     try {
       const page = await getSpotPotatoes(spot.id, nextCursor);
       setLoaded((prev) => (prev.first === first ? { ...prev, more: [...prev.more, page] } : prev));
+    } catch {
+      setMoreFailed(true);
     } finally {
       setLoadingMore(false);
     }
@@ -166,6 +192,11 @@ export function SpotPotatoes({ spot }: { spot: SpotDetail }) {
           </PillButton>
         ) : (
           <ExampleCaption />
+        )}
+        {moreFailed && (
+          <span className={styles.formError} role="alert">
+            감자를 더 데려오지 못했어요. 다시 눌러 주세요.
+          </span>
         )}
         {me && (
           <button type="button" className={styles.report} onClick={() => setReporting(true)}>

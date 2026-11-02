@@ -34,7 +34,7 @@ export function TonightDetails({ className }: { className?: string }) {
       </div>
 
       <div className={styles.tiles}>
-        <Tile label="구름량" value={`${t.cloudPct}%`} sub="전운량 예보" />
+        <Tile label="구름량" value={`${t.cloudPct}%`} sub="구름 예보" />
         <Tile
           label="달"
           value={
@@ -46,7 +46,7 @@ export function TonightDetails({ className }: { className?: string }) {
           sub={`${moonPhaseLabel(t.moonIllum, t.waxing)} · 월출 ${fmtHM(t.moonrise)}`}
         />
         <Tile
-          label="천문박명 끝"
+          label="캄캄해지는 시각"
           value={fmtHM(t.astroEnd)}
           sub={`월몰 ${fmtHM(t.moonset)}${moonsetNextDay ? " (내일)" : ""}`}
         />

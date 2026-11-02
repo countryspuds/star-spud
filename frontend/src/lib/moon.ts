@@ -28,7 +28,7 @@ export function moonFromLunAge(lunAge: number): { illum: number; waxing: boolean
 }
 
 export function moonPhaseLabel(illum: number, waxing: boolean): string {
-  if (illum <= 2) return "삭";
+  if (illum <= 2) return "신월";
   if (illum >= 98) return "보름";
   return waxing ? "차는 달" : "기우는 달";
 }

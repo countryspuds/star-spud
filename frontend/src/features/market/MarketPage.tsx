@@ -135,7 +135,7 @@ export default function MarketPage() {
     <div className={styles.page}>
       <header className={styles.head}>
         <div>
-          <Label>MARKET · PHASE 2</Label>
+          <Label>MARKET</Label>
           <h1 className={styles.h1}>장터</h1>
         </div>
         <ExampleCaption />
@@ -261,7 +261,7 @@ export default function MarketPage() {
       </div>
       <p className={styles.fine}>
         {filter.category ? `${GEAR_LABEL[filter.category]} · ` : ""}가격·상태·거래 수는 모두 예시
-        데이터예요. 채팅 연결은 Phase 3.
+        데이터예요. 채팅은 곧 열려요.
       </p>
     </div>
   );

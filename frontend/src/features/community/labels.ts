@@ -55,5 +55,5 @@ export const POST_ERROR_TEXT: Record<string, string> = {
   PHOTO_CONTEST_TYPE: "이달의 사진 응모는 '사진 응모' 글만 할 수 있어요",
   LOGIN_REQUIRED: "로그인이 필요해요",
   FORBIDDEN: "내 글만 고칠 수 있어요",
-  POST_NOT_FOUND: "글이 없어요. 삭제됐을 수 있어요",
+  POST_NOT_FOUND: "이 글은 찾을 수 없어요. 삭제됐을 수 있어요",
 };

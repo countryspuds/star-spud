@@ -72,7 +72,7 @@ function Inbox() {
       {items.length === 0 ? (
         <div className={styles.empty}>
           <img src={potatoSad} alt="" width={120} height={120} className="pixelated" />
-          <p>아직 알림이 없어요</p>
+          <p>아직 감자가 조용해요</p>
           <span>감자가 배고파하거나 유성우가 다가오면 여기에 알려 드려요.</span>
         </div>
       ) : (

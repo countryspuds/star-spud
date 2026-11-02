@@ -64,8 +64,7 @@ export function Footer() {
       </div>
       <div className={styles.footerBottom}>
         <span>
-          © 2026 Star-Spud · 천문 정보: 한국천문연구원 · 날씨: 기상청 · 광공해: NOAA VIIRS · 지도:
-          미정(ADR-0011)
+          © 2026 Star-Spud · 천문 정보: 한국천문연구원 · 날씨: 기상청 · 광공해: NOAA VIIRS
         </span>
         <span>
           v{APP_VERSION} · <Link to="/feedback">문의하기</Link>

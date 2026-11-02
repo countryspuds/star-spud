@@ -206,7 +206,7 @@ function NotFound() {
     <Card className={styles.notFound}>
       <img src={potatoSad} alt="" width={96} height={96} className="pixelated" />
       <Label>NOT FOUND</Label>
-      <h1 className={styles.h1}>글이 없어요</h1>
+      <h1 className={styles.h1}>이 글은 찾을 수 없어요</h1>
       <p>삭제됐거나 주소가 잘못됐어요. 삭제한 글은 30일 안에 되살릴 수 있어요.</p>
       <PillLink to="/community" tone="primary">
         피드로 가기

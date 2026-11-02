@@ -58,10 +58,10 @@ function AuthChip() {
       <Link
         to={onboarding ? "/onboarding" : "/me"}
         className={styles.chip}
-        aria-label={onboarding ? "온보딩 이어하기" : "내 프로필"}
+        aria-label={onboarding ? "가입 이어하기" : "내 프로필"}
       >
         <Avatar avatarUrl={me.avatarUrl} potatoAvatar={me.potatoAvatar} size={22} />
-        <span className={styles.chipName}>{onboarding ? "온보딩 이어하기" : me.nickname}</span>
+        <span className={styles.chipName}>{onboarding ? "가입 이어하기" : me.nickname}</span>
       </Link>
     </>
   );

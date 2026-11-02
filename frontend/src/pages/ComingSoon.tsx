@@ -46,7 +46,7 @@ export function ComingSoon({ section }: { section: string }) {
         <Label>COMING SOON · {section}</Label>
         <h1 className={styles.title}>이 페이지는 아직 땅속에 있어요</h1>
         <p className={styles.body}>
-          감자가 싹을 틔우는 중이에요. 먼저 지도에서 오늘 밤 갈 곳부터 찾아보세요.
+          조금 더 자라야 해요. 먼저 지도에서 오늘 밤 갈 곳부터 찾아보세요.
         </p>
 
         <div className={styles.progressWrap}>
@@ -63,7 +63,7 @@ export function ComingSoon({ section }: { section: string }) {
             ))}
           </div>
           <span className={styles.progressCaption}>
-            싹 트는 중 / Phase 1 · {PROGRESS_DONE}/{PROGRESS_TOTAL}
+            자라는 중 · {PROGRESS_DONE}/{PROGRESS_TOTAL}
           </span>
         </div>
 

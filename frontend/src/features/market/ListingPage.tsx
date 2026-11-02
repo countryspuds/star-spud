@@ -65,7 +65,7 @@ function SellerCard({ seller }: { seller: MarketListingDetail["seller"] }) {
           ))}
         </dl>
       </div>
-      <span className={styles.sellerGo}>{mine ? "내 프로필 →" : "프로필 · Phase 3"}</span>
+      <span className={styles.sellerGo}>{mine ? "내 프로필 →" : "프로필 · 곧 열려요"}</span>
     </>
   );
   return (
@@ -88,7 +88,7 @@ function NotFound() {
     <Card className={styles.notFound}>
       <img src={potatoSad} alt="" width={96} height={96} className="pixelated" />
       <Label>NOT FOUND</Label>
-      <h1 className={styles.h1}>상품이 없어요</h1>
+      <h1 className={styles.h1}>이 상품은 찾을 수 없어요</h1>
       <p>내려갔거나 주소가 잘못됐어요.</p>
       <PillLink to="/market" tone="primary">
         장터로 가기
@@ -148,8 +148,8 @@ function Detail({ id }: { id: string }) {
             </ul>
             <p className={styles.desc}>{item.description}</p>
             <div className={styles.actions}>
-              <PillButton tone="primary" disabled title="Phase 3" className={styles.chatBtn}>
-                채팅하기 · Phase 3
+              <PillButton tone="primary" disabled title="곧 열려요" className={styles.chatBtn}>
+                채팅하기 · 곧 열려요
               </PillButton>
               <PillButton
                 className={item.likedByMe ? styles.likePillOn : undefined}

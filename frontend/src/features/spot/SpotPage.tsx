@@ -54,9 +54,14 @@ function PhotoCard({ spot }: { spot: SpotDetail }) {
       {photos.length === 0 ? (
         <img src={photoPlaceholder} alt="" className={styles.photoSingle} />
       ) : (
-        <div className={styles.mosaic}>
+        <div className={styles.mosaic} data-count={photos.length}>
           {photos.map((src, i) => (
-            <img key={i} src={src} alt="" loading="lazy" />
+            <img
+              key={i}
+              src={src}
+              alt={`${spot.name} 공개 감자 기록 사진 ${i + 1}`}
+              loading="lazy"
+            />
           ))}
         </div>
       )}
@@ -81,7 +86,9 @@ function InfoCard({ spot }: { spot: SpotDetail }) {
   ];
   return (
     <Card variant="glass" className={styles.info}>
-      <Label>정보</Label>
+      <h2 className={styles.cardHeading}>
+        <Label>정보</Label>
+      </h2>
       <dl className={styles.table}>
         {rows.map(([k, v]) => (
           <div key={k}>
@@ -100,7 +107,7 @@ function NotFound() {
     <Card className={styles.notFound}>
       <img src={potatoSad} alt="" width={120} height={120} className="pixelated" />
       <Label>NOT FOUND</Label>
-      <h1 className={styles.notFoundTitle}>이 명소는 찾을 수 없어요</h1>
+      <h1 className={styles.notFoundTitle}>감자가 이 명소를 찾지 못했어요</h1>
       <p className={styles.notFoundBody}>주소가 틀렸거나, 비공개 처리된 명소예요.</p>
       <PillLink to="/map" tone="primary">
         지도로 가기

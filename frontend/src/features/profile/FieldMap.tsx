@@ -73,12 +73,12 @@ export function FieldMap({ potatoes }: { potatoes: Potato[] }) {
       <div className={styles.fieldHead}>
         <Label>전국 감자밭</Label>
         <span className={styles.fieldCount}>
-          {LAND.count.toLocaleString("ko-KR")}셀 중 <strong>{planted}</strong> · {pct}%
+          {LAND.count.toLocaleString("ko-KR")}칸 중 <strong>{planted}</strong> · {pct}%
         </span>
       </div>
       <div className={styles.fieldLegend}>
         <span>
-          <i style={{ background: "var(--potato-2)" }} /> 심은 셀
+          <i style={{ background: "var(--potato-2)" }} /> 심은 칸
         </span>
         <span>
           <i style={{ background: EMPTY_FILL }} /> 아직

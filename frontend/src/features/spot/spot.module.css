@@ -16,6 +16,20 @@
   color: var(--fg);
 }
 
+.back:focus-visible,
+.report:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* 카드 머리 라벨을 제목 구조에 넣되 모양은 Label 그대로 */
+.cardHeading {
+  display: flex;
+  font-size: inherit;
+  font-weight: 400;
+}
+
 /* 헤더 카드 */
 .head {
   padding: 22px 24px;
@@ -126,8 +140,34 @@
   background: #12161f;
 }
 
-.photoSingle {
+.photoSingle,
+.mosaic[data-count="1"] img {
   aspect-ratio: 16 / 9;
+}
+
+/* 사진 수에 맞춰 빈칸 없이 채운다 (최대 6장) */
+.mosaic[data-count="1"] {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.mosaic[data-count="2"] {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.mosaic[data-count="4"] {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.mosaic[data-count="5"] {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.mosaic[data-count="5"] img {
+  grid-column: span 2;
+}
+
+.mosaic[data-count="5"] img:nth-child(-n + 2) {
+  grid-column: span 3;
 }
 
 .photoCaption {
@@ -199,8 +239,8 @@
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  height: 28px;
-  padding: 0 11px;
+  height: 32px;
+  padding: 0 12px;
   border-radius: var(--radius-pill);
   border: 1px solid var(--edge);
   background: transparent;
@@ -214,6 +254,10 @@
   background: var(--fg);
   border-color: var(--fg);
   color: #141414;
+}
+
+.tab:hover {
+  color: var(--fg);
 }
 
 .tab:focus-visible,
@@ -392,7 +436,7 @@
 
 .empty {
   font-size: 13px;
-  color: var(--fg-3);
+  color: var(--fg-2);
   padding: 8px 0;
 }
 
@@ -401,6 +445,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  flex-wrap: wrap;
   min-height: 24px;
 }
 
@@ -413,36 +458,40 @@
   margin-left: auto;
   background: none;
   border: 0;
-  padding: 0;
+  padding: 8px 0;
+  margin-block: -8px; /* 터치 영역만 넓히고 줄 높이는 그대로 */
   font-size: 11px;
-  color: var(--fg-3);
+  color: var(--fg-2);
   cursor: pointer;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
 .report:hover {
-  color: var(--fg-2);
+  color: var(--fg);
+}
+
+.formError {
+  font-size: 13px;
+  color: #ff8a8a;
 }
 
 /* 신고 모달 */
-.modalBackdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 50;
-  background: rgba(10, 13, 20, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-}
-
 .modal {
-  width: min(400px, 100%);
-  padding: 24px;
+  width: min(400px, calc(100% - 32px));
+  padding: 0;
   border-radius: var(--radius-card);
   border: 1px solid var(--edge);
   background: var(--card);
+  color: var(--fg);
+}
+
+.modal::backdrop {
+  background: rgba(10, 13, 20, 0.7);
+}
+
+.modalInner {
+  padding: 24px;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -470,7 +519,7 @@
   gap: 8px;
 }
 
-.reason {
+.reasonOption {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -478,7 +527,7 @@
   cursor: pointer;
 }
 
-.reason input {
+.reasonOption input {
   width: 16px;
   height: 16px;
   margin: 0;
@@ -519,16 +568,18 @@
   margin-bottom: 8px;
 }
 
+@media (max-width: 600px) {
+  .mosaic[data-count="4"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 /* 모바일 하단 고정 CTA 바 */
 .mobileBar {
   display: none;
 }
 
 @media (max-width: 860px) {
-  .page {
-    padding-bottom: 64px;
-  }
-
   .grid {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -546,15 +597,15 @@
     display: none;
   }
 
+  /* sticky: 읽는 동안 화면 아래에 붙고, 페이지 끝에서는 푸터를 가리지 않는다 */
   .mobileBar {
     display: flex;
     align-items: center;
-    position: fixed;
-    left: 0;
-    right: 0;
+    position: sticky;
     bottom: 0;
     z-index: 20;
     height: 64px;
+    margin-inline: -16px;
     padding: 0 16px;
     background: var(--bg);
     border-top: 1px solid var(--edge);

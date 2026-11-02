@@ -245,17 +245,14 @@ function AlertsForm({ initial }: { initial: NotificationSettings }) {
     <Card variant="glass" className={styles.settingsCard}>
       <div className={styles.cardHead}>
         <Label>알림</Label>
-        <span className={styles.mono}>MVP는 앱 내 알림함</span>
+        <span className={styles.mono}>알림함으로 받아요</span>
       </div>
       <ul className={styles.alertRows}>
         {ALERT_ROWS.map((r) => (
           <li key={r.key} className={styles.alertRow}>
             <div className={styles.alertText}>
               <span className={styles.alertTitle}>{r.title}</span>
-              <span className={styles.alertSub}>
-                {r.phase2 ? "Phase 2 · " : ""}
-                {r.sub}
-              </span>
+              <span className={styles.alertSub}>{r.sub}</span>
             </div>
             <button
               type="button"
@@ -307,13 +304,13 @@ function AccountCard({ me }: { me: Me }) {
           <li className={styles.accountRow}>
             <span className={styles.alertTitle}>네이버</span>
             <PillButton size="sm" disabled>
-              Phase 2
+              곧 열려요
             </PillButton>
           </li>
           <li className={styles.accountRow}>
             <span className={styles.alertTitle}>이메일 로그인</span>
             <PillButton size="sm" disabled>
-              Phase 2
+              곧 열려요
             </PillButton>
           </li>
         </ul>
@@ -376,7 +373,7 @@ function HelpCard() {
         <li>
           <Link to="/faq" className={styles.helpLink}>
             <span className={styles.alertTitle}>자주 묻는 질문</span>
-            <span className={styles.alertSub}>Phase 2 · 준비 중</span>
+            <span className={styles.alertSub}>곧 열려요</span>
           </Link>
         </li>
       </ul>

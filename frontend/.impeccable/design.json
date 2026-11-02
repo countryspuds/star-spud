@@ -1,0 +1,735 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-02T14:39:20.711Z",
+  "title": "Design System: 별보러감자 (Star-Spud)",
+  "extensions": {
+    "colorMeta": {
+      "midnight-navy": {
+        "role": "neutral",
+        "displayName": "자정 남청",
+        "canonical": "#161b24",
+        "tonalRamp": [
+          "#0a0b0e",
+          "#21252c",
+          "#3c424d",
+          "#5b616d",
+          "#7c838e",
+          "#9fa5b1",
+          "#c5c9d0",
+          "#edeef1"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "기본 면",
+        "canonical": "#1f2530",
+        "tonalRamp": [
+          "#090b0e",
+          "#21252d",
+          "#3c424e",
+          "#5a616e",
+          "#7b8390",
+          "#9ea5b3",
+          "#c5c9d1",
+          "#edeef1"
+        ]
+      },
+      "surface-raised": {
+        "role": "neutral",
+        "displayName": "올린 면",
+        "canonical": "#242b38",
+        "tonalRamp": [
+          "#090b0f",
+          "#20252e",
+          "#3b4250",
+          "#596270",
+          "#7a8392",
+          "#9da5b5",
+          "#c4c9d3",
+          "#edeef1"
+        ]
+      },
+      "surface-well": {
+        "role": "neutral",
+        "displayName": "깊은 우물",
+        "canonical": "#12161f",
+        "tonalRamp": [
+          "#0a0b0e",
+          "#22252c",
+          "#3d424d",
+          "#5c616d",
+          "#7d828e",
+          "#a0a5b1",
+          "#c6c9d0",
+          "#edeef1"
+        ]
+      },
+      "glass-card": {
+        "role": "neutral",
+        "displayName": "유리 카드",
+        "canonical": "rgba(31, 37, 48, 0.45)"
+      },
+      "glass-fill": {
+        "role": "neutral",
+        "displayName": "유리 칠",
+        "canonical": "rgba(255, 255, 255, 0.06)"
+      },
+      "edge": {
+        "role": "neutral",
+        "displayName": "가장자리",
+        "canonical": "rgba(255, 255, 255, 0.09)"
+      },
+      "map-scrim": {
+        "role": "neutral",
+        "displayName": "지도 위 막",
+        "canonical": "rgba(22, 27, 36, 0.75)"
+      },
+      "starlight": {
+        "role": "neutral",
+        "displayName": "별빛",
+        "canonical": "#eaeef5",
+        "tonalRamp": [
+          "#0a0b0d",
+          "#232529",
+          "#3f4248",
+          "#5e6167",
+          "#7f8289",
+          "#a2a5ab",
+          "#c7c9cd",
+          "#eeeef0"
+        ]
+      },
+      "dusk-gray": {
+        "role": "neutral",
+        "displayName": "땅거미 회색",
+        "canonical": "#98a2b3",
+        "tonalRamp": [
+          "#090b0f",
+          "#20252f",
+          "#3a4251",
+          "#596271",
+          "#798393",
+          "#9ca6b5",
+          "#c4c9d3",
+          "#edeef2"
+        ]
+      },
+      "deep-dusk-gray": {
+        "role": "neutral",
+        "displayName": "깊은 땅거미",
+        "canonical": "#6b7382",
+        "tonalRamp": [
+          "#090b0f",
+          "#20252e",
+          "#3b4250",
+          "#5a6170",
+          "#7a8392",
+          "#9da5b4",
+          "#c4c9d2",
+          "#edeef1"
+        ]
+      },
+      "caption-on-photo": {
+        "role": "neutral",
+        "displayName": "사진 위 캡션",
+        "canonical": "#c9d1dd",
+        "tonalRamp": [
+          "#0a0b0e",
+          "#21252c",
+          "#3c424c",
+          "#5b626c",
+          "#7c838e",
+          "#9ea6b0",
+          "#c5c9d0",
+          "#edeef1"
+        ]
+      },
+      "glow-lime": {
+        "role": "primary",
+        "displayName": "축광 라임",
+        "canonical": "#d9fc46",
+        "tonalRamp": [
+          "#080e00",
+          "#1e2b00",
+          "#384c00",
+          "#556e00",
+          "#759100",
+          "#97b400",
+          "#c0d481",
+          "#ebf2da"
+        ]
+      },
+      "action-blue": {
+        "role": "primary",
+        "displayName": "행동 파랑",
+        "canonical": "#4f7cff",
+        "tonalRamp": [
+          "#020727",
+          "#071569",
+          "#132aaa",
+          "#2c51d1",
+          "#4a76f9",
+          "#6f9dff",
+          "#a8c8ff",
+          "#e4efff"
+        ]
+      },
+      "sprout-green": {
+        "role": "secondary",
+        "displayName": "새싹 초록",
+        "canonical": "#5ea85c",
+        "tonalRamp": [
+          "#011001",
+          "#002f00",
+          "#005200",
+          "#287329",
+          "#4c964b",
+          "#74b972",
+          "#aed6ab",
+          "#e6f3e5"
+        ]
+      },
+      "soft-alert": {
+        "role": "secondary",
+        "displayName": "부드러운 경고",
+        "canonical": "#ff8a8a",
+        "tonalRamp": [
+          "#1b0304",
+          "#4b030d",
+          "#7c0d1e",
+          "#a2373d",
+          "#c95a5c",
+          "#ec8181",
+          "#f8b6b3",
+          "#fee9e8"
+        ]
+      },
+      "daylight-card": {
+        "role": "neutral",
+        "displayName": "낮 카드",
+        "canonical": "#f3f5f8",
+        "tonalRamp": [
+          "#0b0b0c",
+          "#242527",
+          "#404244",
+          "#606164",
+          "#818285",
+          "#a3a5a8",
+          "#c8c9cb",
+          "#eeeeef"
+        ]
+      },
+      "daylight-ink": {
+        "role": "neutral",
+        "displayName": "낮 카드 글자",
+        "canonical": "#141414",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "tile-white": {
+        "role": "neutral",
+        "displayName": "타일",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "tile-muted": {
+        "role": "neutral",
+        "displayName": "타일 보조 글자",
+        "canonical": "#5b6474",
+        "tonalRamp": [
+          "#090b0f",
+          "#20252f",
+          "#3a4251",
+          "#596272",
+          "#798394",
+          "#9ca5b6",
+          "#c4c9d3",
+          "#edeef2"
+        ]
+      },
+      "kakao-yellow": {
+        "role": "tertiary",
+        "displayName": "카카오 노랑",
+        "canonical": "#fee500",
+        "tonalRamp": [
+          "#110a00",
+          "#342200",
+          "#5a3e00",
+          "#7a5f00",
+          "#9c8200",
+          "#bda600",
+          "#d7cc79",
+          "#f3f0d8"
+        ]
+      },
+      "kakao-ink": {
+        "role": "tertiary",
+        "displayName": "카카오 글자",
+        "canonical": "#191919",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "star-score-1": {
+        "role": "tertiary",
+        "displayName": "star-score-1",
+        "canonical": "#1a2030",
+        "tonalRamp": [
+          "#090b10",
+          "#202530",
+          "#3b4253",
+          "#596174",
+          "#7a8296",
+          "#9da5b8",
+          "#c4c9d5",
+          "#edeef2"
+        ]
+      },
+      "star-score-2": {
+        "role": "tertiary",
+        "displayName": "star-score-2",
+        "canonical": "#2f4668",
+        "tonalRamp": [
+          "#060b14",
+          "#16253b",
+          "#2c4264",
+          "#4a6286",
+          "#6a84a9",
+          "#8ea7cb",
+          "#bbcae1",
+          "#eaeff6"
+        ]
+      },
+      "star-score-3": {
+        "role": "tertiary",
+        "displayName": "star-score-3",
+        "canonical": "#5f9a85",
+        "tonalRamp": [
+          "#020e0a",
+          "#032d21",
+          "#0c4e3c",
+          "#336e5b",
+          "#55907b",
+          "#7cb39e",
+          "#b2d2c5",
+          "#e7f1ed"
+        ]
+      },
+      "star-score-4": {
+        "role": "tertiary",
+        "displayName": "star-score-4",
+        "canonical": "#b9e258",
+        "tonalRamp": [
+          "#070e00",
+          "#192c00",
+          "#304d00",
+          "#4e6f00",
+          "#6e9200",
+          "#91b533",
+          "#bcd490",
+          "#eaf2de"
+        ]
+      },
+      "lp-0": {
+        "role": "tertiary",
+        "displayName": "lp-0",
+        "canonical": "#2d3650",
+        "tonalRamp": [
+          "#080b12",
+          "#1e2436",
+          "#38415c",
+          "#56607d",
+          "#7782a0",
+          "#9aa4c2",
+          "#c2c9db",
+          "#eceef4"
+        ]
+      },
+      "lp-1": {
+        "role": "tertiary",
+        "displayName": "lp-1",
+        "canonical": "#4a5ad6",
+        "tonalRamp": [
+          "#050625",
+          "#151465",
+          "#2829a4",
+          "#414fca",
+          "#5f73f2",
+          "#819aff",
+          "#b2c5ff",
+          "#e7eeff"
+        ]
+      },
+      "lp-2": {
+        "role": "tertiary",
+        "displayName": "lp-2",
+        "canonical": "#e5c33d",
+        "tonalRamp": [
+          "#120a00",
+          "#362100",
+          "#5c3c00",
+          "#7d5d00",
+          "#a07f00",
+          "#c1a322",
+          "#dac98b",
+          "#f4efdc"
+        ]
+      },
+      "lp-3": {
+        "role": "tertiary",
+        "displayName": "lp-3",
+        "canonical": "#c8503a",
+        "tonalRamp": [
+          "#1c0200",
+          "#4e0000",
+          "#820000",
+          "#a8321d",
+          "#cf5740",
+          "#f27f68",
+          "#fcb5a6",
+          "#ffe9e4"
+        ]
+      },
+      "potato-1": {
+        "role": "tertiary",
+        "displayName": "potato-1",
+        "canonical": "#f0d08a",
+        "tonalRamp": [
+          "#110a00",
+          "#342200",
+          "#583d00",
+          "#795c0f",
+          "#9c7e38",
+          "#bea162",
+          "#d8c7a3",
+          "#f3eee3"
+        ]
+      },
+      "potato-2": {
+        "role": "tertiary",
+        "displayName": "potato-2",
+        "canonical": "#d9a95e",
+        "tonalRamp": [
+          "#130900",
+          "#391e00",
+          "#613700",
+          "#835700",
+          "#a7792b",
+          "#c99d58",
+          "#dfc59e",
+          "#f5ede1"
+        ]
+      },
+      "potato-3": {
+        "role": "tertiary",
+        "displayName": "potato-3",
+        "canonical": "#b98545",
+        "tonalRamp": [
+          "#140800",
+          "#3b1d00",
+          "#633500",
+          "#86550a",
+          "#aa7636",
+          "#cc9a60",
+          "#e2c3a2",
+          "#f6ede2"
+        ]
+      },
+      "potato-4": {
+        "role": "tertiary",
+        "displayName": "potato-4",
+        "canonical": "#8a5a2e",
+        "tonalRamp": [
+          "#140801",
+          "#3a1d00",
+          "#623501",
+          "#845529",
+          "#a8764a",
+          "#ca9a71",
+          "#e1c3aa",
+          "#f6ede5"
+        ]
+      },
+      "aq-good": {
+        "role": "tertiary",
+        "displayName": "aq-good",
+        "canonical": "#3b82f6",
+        "tonalRamp": [
+          "#000925",
+          "#001b64",
+          "#0034a3",
+          "#0e59c9",
+          "#367df0",
+          "#60a3ff",
+          "#a2cbff",
+          "#e2efff"
+        ]
+      },
+      "aq-ok": {
+        "role": "tertiary",
+        "displayName": "aq-ok",
+        "canonical": "#22c55e",
+        "tonalRamp": [
+          "#001200",
+          "#003400",
+          "#005900",
+          "#007c0f",
+          "#00a03a",
+          "#38c364",
+          "#97dda4",
+          "#e0f5e3"
+        ]
+      },
+      "aq-bad": {
+        "role": "tertiary",
+        "displayName": "aq-bad",
+        "canonical": "#f59e0b",
+        "tonalRamp": [
+          "#190500",
+          "#461200",
+          "#752600",
+          "#994900",
+          "#bf6b00",
+          "#e19111",
+          "#efbf88",
+          "#fbecdb"
+        ]
+      },
+      "aq-worst": {
+        "role": "tertiary",
+        "displayName": "aq-worst",
+        "canonical": "#ef4444",
+        "tonalRamp": [
+          "#210000",
+          "#590000",
+          "#920000",
+          "#bb0016",
+          "#e4393b",
+          "#ff6a64",
+          "#ffaca3",
+          "#ffe6e3"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "캘린더의 큰 월 숫자처럼 화면 하나에 하나만 쓴다."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "명소 이름 같은 페이지 제목."
+      },
+      "stat": {
+        "displayName": "Stat",
+        "purpose": "별보기 지수 같은 큰 숫자."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "위젯 제목."
+      },
+      "card-title": {
+        "displayName": "Card Title",
+        "purpose": "카드와 목록 항목의 제목."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "기본 본문."
+      },
+      "body-sm": {
+        "displayName": "Body Small",
+        "purpose": "보조 문장과 컨트롤 글자."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "대문자 Mono 카드 머리 라벨."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "예시 데이터와 짧은 메타 정보."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "state-change",
+        "value": "0.15s",
+        "purpose": "색, 테두리, 투명도의 상태 전환."
+      },
+      {
+        "name": "puzzle-zoom",
+        "value": "400ms ease-out",
+        "purpose": "시·도, 시·군·구 퍼즐 확대."
+      },
+      {
+        "name": "puzzle-fade",
+        "value": "300ms ease-out",
+        "purpose": "퍼즐 조각과 라벨의 전환."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "bp-600",
+        "value": "600px"
+      },
+      {
+        "name": "bp-860",
+        "value": "860px"
+      },
+      {
+        "name": "bp-900",
+        "value": "900px"
+      },
+      {
+        "name": "bp-1000",
+        "value": "1000px"
+      },
+      {
+        "name": "bp-1100",
+        "value": "1100px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "주 버튼",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "길찾기, 감자 심기, 글쓰기 같은 주 동작.",
+      "html": "<button class=\"ds-pill ds-primary\">길찾기</button>",
+      "css": ".ds-pill { display: inline-flex; align-items: center; justify-content: center; height: 36px; padding: 0 18px; border-radius: var(--radius-pill); border: 1px solid transparent; font-family: var(--font-sans); font-weight: 600; font-size: 14px; white-space: nowrap; cursor: pointer; } .ds-primary { background: var(--blue); color: #fff; } .ds-primary:focus-visible { outline: 2px solid var(--lime); outline-offset: 2px; }"
+    },
+    {
+      "name": "보조 버튼",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "명소 저장 같은 보조 동작.",
+      "html": "<button class=\"ds-pill-2\">명소 저장</button>",
+      "css": ".ds-pill-2 { display: inline-flex; align-items: center; justify-content: center; height: 36px; padding: 0 18px; border-radius: var(--radius-pill); background: var(--glass); border: 1px solid var(--edge); color: var(--fg); font-family: var(--font-sans); font-weight: 600; font-size: 14px; cursor: pointer; } .ds-pill-2:focus-visible { outline: 2px solid var(--lime); outline-offset: 2px; }"
+    },
+    {
+      "name": "입력창",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "폼 입력. 포커스에 라임 링.",
+      "html": "<input class=\"ds-input\" placeholder=\"닉네임\" aria-label=\"닉네임\" />",
+      "css": ".ds-input { width: 260px; height: 46px; padding: 0 14px; border-radius: 12px; border: 1px solid var(--edge); background: rgba(255, 255, 255, 0.04); color: var(--fg); font-family: var(--font-sans); font-size: 14px; } .ds-input:focus-visible { outline: 2px solid var(--lime); outline-offset: 1px; }"
+    },
+    {
+      "name": "내비게이션",
+      "kind": "nav",
+      "description": "48px 전역 메뉴. 활성은 밝은 글자.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-on\" href=\"#\">홈</a><a href=\"#\">지도</a><a href=\"#\">캘린더</a><a href=\"#\">프로필</a></nav>",
+      "css": ".ds-nav { display: flex; gap: 24px; height: 48px; align-items: center; font-family: var(--font-sans); font-size: 14px; font-weight: 500; } .ds-nav a { color: var(--fg-2); text-decoration: none; transition: color 0.15s; } .ds-nav a:hover, .ds-nav a.ds-on { color: var(--fg); }"
+    },
+    {
+      "name": "탭",
+      "kind": "chip",
+      "refersTo": "tab-active",
+      "description": "지도 탭과 날짜 선택. 활성은 면을 뒤집는다.",
+      "html": "<div class=\"ds-tabs\"><button class=\"ds-tab ds-tab-on\">별보기</button><button class=\"ds-tab\">광공해</button></div>",
+      "css": ".ds-tabs { display: flex; gap: 6px; } .ds-tab { height: 32px; padding: 0 14px; border: 0; border-radius: var(--radius-pill); background: rgba(22, 27, 36, 0.75); color: #c9d1dd; font-family: var(--font-sans); font-size: 13px; font-weight: 600; cursor: pointer; } .ds-tab:hover { color: #fff; } .ds-tab-on { background: #eaeef5; color: #141414; } .ds-tab:focus-visible { outline: 2px solid var(--lime); outline-offset: 2px; }"
+    },
+    {
+      "name": "판정 칩",
+      "kind": "chip",
+      "description": "오늘 밤 판정. 글자색과 같은 테두리, 모르면 점선.",
+      "html": "<span class=\"ds-verdict\">좋음</span> <span class=\"ds-verdict ds-unknown\">알 수 없음</span>",
+      "css": ".ds-verdict { display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: var(--radius-pill); border: 1px solid currentColor; font-family: var(--font-sans); font-size: 12px; font-weight: 600; color: var(--sprout); } .ds-unknown { border-style: dashed; color: var(--fg-2); }"
+    },
+    {
+      "name": "카드",
+      "kind": "card",
+      "refersTo": "card-solid",
+      "description": "기본 표면. 22px 모서리, 1px 테두리, 그림자 없음.",
+      "html": "<section class=\"ds-card\"><span class=\"ds-label\">Star score · 5 km grid</span><h3 class=\"ds-title\">별보기 지도</h3></section>",
+      "css": ".ds-card { width: 280px; padding: 18px 20px; border-radius: var(--radius-card); border: 1px solid var(--edge); background: var(--card); color: var(--fg); font-family: var(--font-sans); } .ds-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-2); } .ds-title { margin: 4px 0 0; font-size: 18px; font-weight: 600; }"
+    },
+    {
+      "name": "세부값 타일",
+      "kind": "custom",
+      "refersTo": "tile",
+      "description": "밝은 면의 조건 값. 글자색을 함께 지정한다.",
+      "html": "<div class=\"ds-tile\"><span class=\"ds-tile-label\">구름량</span><span class=\"ds-tile-value\">40%</span><span class=\"ds-tile-sub\">전운량 예보</span></div>",
+      "css": ".ds-tile { display: flex; flex-direction: column; gap: 2px; width: 160px; padding: 10px 12px; border-radius: 14px; background: #fff; color: #141414; font-family: var(--font-sans); } .ds-tile-label { font-size: 11px; color: #5b6474; } .ds-tile-value { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; font-variant-numeric: tabular-nums; } .ds-tile-sub { font-family: var(--font-mono); font-size: 11px; color: #5b6474; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "감자의 관측 일지",
+    "overview": "별보러감자의 화면은 감자가 밤마다 적어 두는 관측 기록이다. 틀은 정밀한 계기처럼 차분하다. 자정 남청 바탕에 둥근 카드가 줄지어 있고, 값은 대문자 mono 라벨과 줄 맞는 숫자로 적힌다. 장난기는 그 틀 안에 놓인 픽셀 감자, 픽셀 달, 5 km 도트 지도에서 나온다. 계기처럼 믿을 수 있어야 하고, 감자처럼 웃음이 나야 한다.\n\n밀도는 높은 편이다. 본문은 14px, 라벨과 캡션은 10~11px까지 내려가 한 화면에 조건 값과 시각을 많이 담는다. 페이지는 최대 폭 없이 화면을 다 쓰고, 넓은 화면에서는 벤토 격자로, 860px 이하에서는 한 줄로 쌓인다.\n\n모션은 조용하다. 반복 애니메이션 없이 상태가 바뀔 때 짧은 전환만 쓴다. 표면은 평평하고, 층은 그림자가 아니라 면의 색과 1px 테두리로 나눈다.",
+    "keyCharacteristics": [
+      "항상 어두운 화면. 라이트 테마가 없고 `color-scheme: dark`로 고정한다.",
+      "각진 픽셀이 둥근 카드 안에 놓이는 의도된 대비.",
+      "대문자 mono 라벨과 tabular 숫자가 만드는 관측 기록의 말투.",
+      "그림자가 없는 평면 구조.",
+      "예시 값에는 항상 \"예시 데이터\" 캡션을 붙이는 정직한 표시."
+    ],
+    "rules": [
+      {
+        "name": "The Data Palette Rule",
+        "body": "점수, 광공해, 감자, 미세먼지 팔레트의 색은 값을 뜻한다. 장식에 빌려 쓰지 않는다.",
+        "section": "colors"
+      },
+      {
+        "name": "The Logbook Numerals Rule",
+        "body": "줄을 맞춰 비교하는 숫자에는 `font-variant-numeric: tabular-nums`를 쓴다. 시각과 좌표성 값은 Mono로 적는다.",
+        "section": "typography"
+      },
+      {
+        "name": "The No-Shadow Rule",
+        "body": "`box-shadow`를 쓰지 않는다. 표면을 띄워야 하면 면의 색, 테두리, blur로 해결한다.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Glass Surface Rule",
+        "body": "반투명 카드는 지도·사진 위 전용이 아니라 일반 표면 중 하나다. 불투명 카드와 함께 쓸 수 있다.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Square Pixel Rule",
+        "body": "도트와 픽셀 요소를 둥글리거나 매끄럽게 보정하지 않는다. 둥근 카드 안의 각진 픽셀이 이 시스템의 서명이다.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "**Do** 층을 면의 색과 1px `edge` 테두리로 나눈다.",
+      "**Do** 지도 셀, 달, 감자에 `image-rendering: pixelated`를 적용한다.",
+      "**Do** 상태 전환은 0.15s 안팎의 색·투명도 변화로 짧게 끝낸다.",
+      "**Do** 카드 머리에 대문자 Mono 라벨을 두고, 비교하는 숫자는 tabular로 맞춘다.",
+      "**Do** 포커스는 라임 2px 링으로 표시한다.",
+      "**Do** mock 값에는 \"예시 데이터\" 캡션을 붙인다."
+    ],
+    "donts": [
+      "**Don't** `box-shadow`로 표면을 띄우지 않는다.",
+      "**Don't** 도트와 픽셀 요소를 둥글리거나 매끄럽게 보정하지 않는다.",
+      "**Don't** 라임을 밝은 바탕에 쓰지 않는다.",
+      "**Don't** 점수·광공해·감자 팔레트를 장식에 쓰지 않는다.",
+      "**Don't** 반복 애니메이션이나 큰 움직임을 장식으로 넣지 않는다.",
+      "**Don't** 페이지에 최대 폭을 걸지 않는다."
+    ]
+  }
+}

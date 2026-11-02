@@ -122,7 +122,7 @@ grid-template-columns: 1.5fr 1fr;  grid-template-rows: clamp(480px, 62vh, 760px)
 
 - 이달의 사진은 하나만 (슬라이드 점 없음). 데이터: `{ title, place, author, date, bortle, likes, src }`.
 - 별보기 지수: 0~100. mock 공식 `0.4*(1-구름) + 0.3*(달 어두움) + 0.15*시정 + 0.15*이벤트보너스` ×100. 이벤트 날짜엔 마커.
-- 세부값 타일: 구름량 %, 달 %(위상 + 월출시각), 천문박명 끝(+월몰). 아래 한 줄 습도/바람/시정/기온.
+- 세부값 타일: 구름량 %, 달 %(위상 + 월출시각), 캄캄해지는 시각(천문박명 끝, +월몰). 입문자용 홈이라 쉬운 말로 쓰고, 명소 상세와 캘린더는 '천문박명'을 유지한다. 아래 한 줄 습도/바람/시정/기온.
 
 ---
 
@@ -191,8 +191,8 @@ grid-template-columns: 300px minmax(0,1fr); gap:16px
 카드(--card) 가득, 가운데 정렬 세로 스택 gap 22px, max-width 520px:
 
 - `potato/potato-sad.svg` 192px (pixelated)
-- 라벨 "COMING SOON · {section}" / 제목 32px 700 "이 페이지는 아직 땅속에 있어요" / 본문 15px `--fg-2` "감자가 싹을 틔우는 중이에요. 먼저 지도에서 오늘 밤 갈 곳부터 찾아보세요."
-- 픽셀 진행 바: 10칸, gap 3px, 높이 12px, 채운 칸 `--sprout`, 빈 칸 `rgba(255,255,255,.12)`. 아래 mono "싹 트는 중 / Phase 1 · 4/10"
+- 라벨 "COMING SOON · {section}" / 제목 32px 700 "이 페이지는 아직 땅속에 있어요" / 본문 15px `--fg-2` "조금 더 자라야 해요. 먼저 지도에서 오늘 밤 갈 곳부터 찾아보세요."
+- 픽셀 진행 바: 10칸, gap 3px, 높이 12px, 채운 칸 `--sprout`, 빈 칸 `rgba(255,255,255,.12)`. 아래 mono "자라는 중 · 4/10"
 - 버튼: [지도로 가기](primary, `/map`) [홈으로](보조, `/`)
 - 배경에 픽셀 별 15~~20개 (2~~4px 흰 사각형, opacity .35~.9) 절대배치
 
@@ -377,7 +377,7 @@ mock 이미지: `assets/maps/starscore-5km.svg` (광공해 + 명소 앵커 20개
 
 **감자밭 `/me`**: 헤더(라벨 "MY FIELD · {N} POTATOES" + h1 24px "내 감자밭" + 우측 primary "감자 심기" → `/map`). 2열 grid:
 
-- 좌 "전국 감자밭"(반투명 카드, min-height 520px): 감자 있는 셀만 감자색 4톤으로 칠한 도트 지도(`MapCanvas` 재사용, 나머지 셀 `#2a3140`), 우상단 mono "4,144셀 중 **{n}** · {%}", 하단 범례 "■ 심은 셀 · ■ 아직 · 시·도 {k}/17 밟음". 데이터 `GET /api/v1/me/potatoes` → 명소 좌표 → 셀.
+- 좌 "전국 감자밭"(반투명 카드, min-height 520px): 감자 있는 셀만 감자색 4톤으로 칠한 도트 지도(`MapCanvas` 재사용, 나머지 셀 `#2a3140`), 우상단 mono "4,144칸 중 **{n}** · {%}", 하단 범례 "■ 심은 칸 · ■ 아직 · 시·도 {k}/17 밟음". 데이터 `GET /api/v1/me/potatoes` → 명소 좌표 → 셀.
 - 우 "내 감자"(반투명 카드): 상단 필터 pill "전체 N" / "배고픔 N". 행 = `grid 36px minmax(0,1fr) auto`: 감자 일러스트(등급 Lv1~4, `state=hungry`는 말풍선, `sprouted`는 싹 — `specs/04` 표시 규칙) / 명소명 14px 600 + mono 날짜(마지막 방문) + 최신 후기 발췌 12px(ellipsis) / 우측 mono 11px "Lv{n} · 먹이 {m}" (hungry면 `#ff8a8a` "배고파요"). 정렬: 상태 우선(hungry·sprouted) → 최근 방문. 행 클릭 → 감자 상세(`/me/potatoes/:id`, Phase 1 후반: 먹이 목록·기록 수정·삭제·공개 여부). 하단 mono 10px 안내: "큰 천체 이벤트가 지나가도록 안 가면 감자가 배고파해요. 다시 가서 기록하면 등급이 올라요."
 - **폐기**: 이전 디자인의 "싹 = 60일 + 지수 80" 문구, 타임라인의 "싹 트는 중" 긍정 표현.
 
@@ -434,7 +434,7 @@ mock 이미지: `assets/maps/starscore-5km.svg` (광공해 + 명소 앵커 20개
 ← 지도로 (13px --fg-2)
 헤더 카드(--card, padding 22px 24px):
   mono 라벨 "{SIDO} · {SIGUNGU} · BORTLE {n}"          우측: 유형 칩(자연/천문대/캠핑장/도심 근교, mono 10px 테두리)
-  h1 28px 700 명소명                                     우측: 조건 칩 "오늘 밤 {good|fair|bad}" (good --sprout / fair #e5c33d / bad --fg-3 / unknown 점선)
+  h1 28px 700 명소명                                     우측: 조건 칩 "오늘 밤 {good|fair|bad}" (good --sprout / fair #e5c33d / bad --fg-2 / unknown --fg-2 점선)
   13px --fg-2: "{거리} km · 차박 {가능|불가} · 주차 {n}대 · 화장실 {있음|없음}"   ← specs/01 flags
 2열 grid minmax(0,1.2fr) minmax(0,1fr), gap 16px:
   좌: 사진 카드 — 공개 감자 기록 사진 모자이크(최대 6, 2×3, radius 10px). 없으면 유형별 기본 이미지(assets/photo-of-month-placeholder.png 임시).
@@ -458,7 +458,7 @@ mock 이미지: `assets/maps/starscore-5km.svg` (광공해 + 명소 앵커 20개
 specs/04의 `POST /api/v1/spots/{id}/potato/feeds`. 카드(--card, max-width 640px 가운데):
 
 - 헤더: 감자 일러스트 64px(기존 감자 있으면 현재 등급, 없으면 Lv1 실루엣) + "{명소명}에 감자 심기" / "먹이 주기 · Lv{n} → Lv{n+1}" 20px 700 + mono "기록 1건 = 먹이 1개"
-- 방문일: date input(기본 오늘, max 오늘, min 2000-01-01). 같은 날 기록이 있으면 인라인 오류 "그날 기록이 이미 있어요 → 수정하기"(409).
+- 방문일: date input(기본 오늘, max 오늘, min 2000-01-01). 같은 날 기록이 있으면 인라인 오류 "그날은 이미 먹이를 줬어요 → 수정하기"(409).
 - 후기: textarea 4행, 2~2000자, 카운터. placeholder "하늘은 어땠는지, 주차·화장실·진입로는 어땠는지."
 - 사진: 드롭존 + 썸네일 ≤5(첫 장 대표). HEIC는 클라이언트 변환 실패 시 거부 문구.
 - 공개 여부: 토글 "이 감자를 공개할게요"(기본 on) + 설명 "공개 감자는 명소 상세에 보여요. 비공개면 내 감자밭에서만."
@@ -474,7 +474,7 @@ specs/04의 `POST /api/v1/spots/{id}/potato/feeds`. 카드(--card, max-width 640
 ### 18.4 알림함 `/notifications` (specs/10, MVP: 앱 내 알림함)
 
 - 네비 우측 아바타 칩 왼쪽에 종 아이콘(16px stroke svg) + 미읽음 점(--lime 6px). 클릭 → 페이지.
-- 리스트(--card): 행 = 유형 아이콘(배고픔 = 감자 + 말풍선, 이벤트 = 픽셀 달) / 제목 14px 600(미읽음은 --fg, 읽음 --fg-2) + 본문 13px + mono 시각 / 클릭 시 `link`로 이동 + 읽음 처리. 상단 "모두 읽음". 빈 상태: 시무룩 감자 + "아직 알림이 없어요".
+- 리스트(--card): 행 = 유형 아이콘(배고픔 = 감자 + 말풍선, 이벤트 = 픽셀 달) / 제목 14px 600(미읽음은 --fg, 읽음 --fg-2) + 본문 13px + mono 시각 / 클릭 시 `link`로 이동 + 읽음 처리. 상단 "모두 읽음". 빈 상태: 시무룩 감자 + "아직 감자가 조용해요".
 - `GET /api/v1/me/notifications?cursor=` · `POST /api/v1/me/notifications/{id}/read` · `POST .../read-all`. mock 3건(배고픔 1, 이벤트 2).
 
 ### 18.5 mock 추가
